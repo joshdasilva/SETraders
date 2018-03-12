@@ -48,8 +48,8 @@ public class TradingAccountController implements Initializable {
     @FXML
     private JFXListView twitterListView;
 
-    @FXML 
-    private JFXListView companyListView;
+    //@FXML 
+   // private JFXListView companyListView;
    
     //transaction table
     @FXML
@@ -69,6 +69,20 @@ public class TradingAccountController implements Initializable {
     
     @FXML
     private TableColumn<Transaction, String> marginCol;
+    
+    //price table
+    
+    @FXML
+    private TableView<Table> tableView1;
+        
+    @FXML
+    private TableColumn<Table, String> companycfdCol;
+    
+    @FXML
+    private TableColumn<Table, String> pricecfdCol;
+    
+    @FXML
+    private TableColumn<Table, String> changecfdCol;
     
     // delete after making db
     @FXML
@@ -100,9 +114,34 @@ public class TradingAccountController implements Initializable {
     
     private ObservableList<String> forexList = FXCollections.observableArrayList("GBP/EUR", "GBP/USD", "GBP/SGD", "GBP/INR", "GBP/HKD", "GBP/JPY");
     private ObservableList<String> cryptoList = FXCollections.observableArrayList("btc", "eth", "xrp", "neo", "eos", "ltc");
-    private ObservableList<String> companyList = FXCollections.observableArrayList("Apple", "Alphabet","Berkshire Hathaway","Facebook","AT&T","JPMorgan Chase","Bank of America","Samsung Electroincs","Visa","Coca-Cola","Oracle","IBM", "Tesla", "Bose", "AMD", "Intel", "Tesco", "Netflix","Amazon","Spotify", "Microsoft");
     ObservableList<Transaction> list = FXCollections.observableArrayList();
     
+     ObservableList<Table> data = FXCollections.observableArrayList(
+            new Table("Apple","£120","2"),
+            new Table("Alphabet","2","1"),
+            new Table("Berkshire Hathaway","1","1"),
+            new Table("Facebook","1","2"),
+            new Table("AT&T","2","1"),
+            new Table("Berkshire Hathaway","1","1"),
+            new Table("JPMorgan Chase","1","2"),
+            new Table("Bank of America","2","1"),
+            new Table("Samsung Electroincs","1","1"),
+            new Table("Visa","1","2"),
+            new Table("Coca-Cola","2","1"),
+            new Table("Oracle","1","2"),
+            new Table("IBM","2","1"),
+            new Table("Tesla","1","1"),
+            new Table("Bose","1","2"),
+            new Table("AMD","2","1"),
+            new Table("Microsoft","1","1"),
+            new Table("Intel","1","2"),
+            new Table("Tesco","2","1"),
+            new Table("Berkshire Hathaway","1","1"),
+            new Table("Apple","1","2"),
+            new Table("Amazon","2","1"),
+            new Table("Spotify","1","1")
+            );
+     
     @FXML
     private void handleClose(MouseEvent event){
     System.exit(0);
@@ -223,10 +262,15 @@ public class TradingAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler = DatabaseHandler.getInstance(); 
-       
+               companycfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("companycfdCol"));
+        pricecfdCol.setCellValueFactory(new PropertyValueFactory<Table,String>("pricecfdCol"));
+        changecfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("changecfdCol"));
+
+       tableView1.setItems(data);
         initcol();
         loadTransactionlist();
-       
+        
+
 
        
    /*  databaseHandler = new DatabaseHandler();
@@ -237,18 +281,6 @@ public class TradingAccountController implements Initializable {
         series.setName("Apple");
         lineChart.getData().add(series); */
     
-    }
-        private void checkData() {
-        String qu = "SELECT company FROM TRANS";
-        ResultSet rs = databaseHandler.execQuery(qu);
-        try {
-            while (rs.next()) {
-                String titlex = rs.getString("company");
-                System.out.println(titlex);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
         
     private void initcol(){
@@ -265,8 +297,8 @@ public class TradingAccountController implements Initializable {
     
     private void loadTransactionlist(){
 
-        companyListView.getItems().clear();
-        companyListView.setItems(companyList);
+        //companyListView.getItems().clear();
+       // companyListView.setItems(companyList);
         
         DatabaseHandler handler = DatabaseHandler.getInstance();
         
@@ -280,7 +312,7 @@ public class TradingAccountController implements Initializable {
                 String typex = rs.getString("type");
                 String marginx = rs.getString("margin");
                 String dateandtimex = rs.getString("time");
-                System.out.println(transidx);
+ 
                 list.add(new Transaction(transidx, companyx, typex, marginx, dateandtimex));
 
             }
@@ -328,6 +360,48 @@ public class TradingAccountController implements Initializable {
         }
 
 
+
+    }
+     
+          public static class Table {
+
+        private final SimpleStringProperty companycfdCol;
+        private final SimpleStringProperty pricecfdCol;
+        private final SimpleStringProperty changecfdCol;
+
+
+        public Table(String rcc, String rpc, String rgc) {
+            this.companycfdCol = new SimpleStringProperty(rcc);
+            this.pricecfdCol = new SimpleStringProperty(rpc);
+            this.changecfdCol = new SimpleStringProperty(rgc);
+
+
+        }
+
+        public String getCompanycfdCol() {
+            return companycfdCol.get();
+        }
+        
+        public void setCompanycfdCol(String v) {
+             companycfdCol.set(v);
+        }
+
+        public String getPricecfdCol() {
+            return pricecfdCol.get();
+        }
+        
+        public void setPricecfdCol(String v) {
+             pricecfdCol.set(v);
+        }
+
+        public String getChangecfdCol() {
+            return changecfdCol.get();
+        }
+                
+        public void setChangecfdCol(String v) {
+             changecfdCol.set(v);
+        }
+        
 
     }
 
