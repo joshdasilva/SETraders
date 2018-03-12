@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tables>
+
+    <table-entry name="MEMBER" col-data="id varchar(200) primary key,name varchar(200),mobile varchar(20),email varchar(100)"/>
+
+</tables>
