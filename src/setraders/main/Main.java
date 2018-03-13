@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package setraders.ui.tradingaccount;
+package setraders.main;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage; 
 import javafx.stage.StageStyle;
 import setraders.database.DatabaseHandler;
+import static javafx.application.Application.launch;
 
 /**
  *

@@ -26,7 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import setraders.settings.Credentials;
-import setraders.ui.tradingaccount.Main;
+import setraders.main.Main;
 import setraders.ui.tradingaccount.TradingAccountController;
 import org.apache.commons.codec.digest.DigestUtils;     //password protection
 
