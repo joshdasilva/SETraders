@@ -179,7 +179,7 @@ public class TradingAccountController implements Initializable {
     
     @FXML
     private void handleBuyCFDButtonAction(ActionEvent event){
-        String bookID = id.getText();
+        String bookID = id.getText();                                                    //testing textfields to simulate transactions
         String bookAuthor = author.getText();
         String bookName = title.getText();
         String bookPublisher = publisher.getText();
@@ -261,7 +261,7 @@ public class TradingAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler = DatabaseHandler.getInstance(); 
-               companycfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("companycfdCol"));
+        companycfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("companycfdCol"));
         pricecfdCol.setCellValueFactory(new PropertyValueFactory<Table,String>("pricecfdCol"));
         changecfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("changecfdCol"));
 

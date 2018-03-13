@@ -116,16 +116,15 @@ public class ClientController implements Initializable {
  
         if (option.get() == ButtonType.OK) { 
         try {
-
+            
             Parent parent = FXMLLoader.load(getClass().getResource("/setraders/ui/tradingaccount/TradingAccount.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
+            primaryStageObj = stage;
             stage.setTitle("SE Traders");
             stage.setScene(new Scene(parent));
-          //  primaryStageObj = stage;
+            
             stage.show();
-        /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/setraders/ui/tradingaccount/TradingAccount.fxml"));
-           loader.setController(this);
-           Parent root = (Parent)   loader.load();*/
+
         } catch (IOException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
