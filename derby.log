@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-Tue Mar 13 10:20:22 GMT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0162-1ee0-0d01-000006329c70 
+Tue Mar 13 10:35:09 GMT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0162-1eed-92c7-00000633caf0 
 on database directory D:\Documents\NetBeansProjects\SETraders\database with class loader sun.misc.Launcher$AppClassLoader@33909752 
-Loaded from file:/D:/Documents/NetBeansProjects/SETraders/dist/run543648082/lib/derby.jar
+Loaded from file:/D:/Documents/NetBeansProjects/SETraders/dist/run383666918/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_66-b18
 user.dir=D:\Documents\NetBeansProjects\SETraders

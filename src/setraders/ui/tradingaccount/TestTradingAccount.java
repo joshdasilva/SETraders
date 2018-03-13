@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
-public class TestTradingAccount extends Application {
+/*public class TestTradingAccount extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -22,11 +22,12 @@ public class TestTradingAccount extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("SE Traders Login");
-    }
+    } 
 
     public static void main(String[] args) {
         launch(args);
     }
+
     
-}
+} */
 

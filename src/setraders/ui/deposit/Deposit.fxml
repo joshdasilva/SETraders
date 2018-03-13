@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="485.0" style="-fx-background-color: #100f20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.deposit.DepositController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="485.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.deposit.DepositController">
    <children>
       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="SE Trader" textFill="#e7e6e6" />
       <Label layoutX="45.0" layoutY="76.0" prefHeight="17.0" prefWidth="130.0" text="Deposit Amount:" textFill="#e7e6e6">
@@ -24,10 +24,10 @@
             <Font size="13.5" />
          </font>
       </Label>
-      <JFXButton layoutX="98.0" layoutY="167.0" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Credit/Debt" textFill="#e7e6e6" />
-      <JFXButton layoutX="299.0" layoutY="167.0" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Paypal" textFill="#e7e6e6" />
-      <JFXButton layoutX="133.0" layoutY="256.0" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
-      <JFXButton layoutX="296.0" layoutY="254.0" onAction="#handleDepositCancel" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+      <JFXButton layoutX="98.0" layoutY="167.0" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #e45652;" text="Credit/Debt" textFill="#e7e6e6" />
+      <JFXButton layoutX="257.0" layoutY="167.0" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Paypal" textFill="#e7e6e6" />
+      <JFXButton layoutX="138.0" layoutY="248.0" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
+      <JFXButton layoutX="235.0" layoutY="248.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
       <TextField layoutX="168.0" layoutY="74.0" />
    </children>
 </Pane>
