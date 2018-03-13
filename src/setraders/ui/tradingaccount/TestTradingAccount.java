@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
-/*public class TestTradingAccount extends Application {
+public class TestTradingAccount extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -29,5 +29,5 @@ import javafx.stage.StageStyle;
     }
 
     
-} */
+} 
 

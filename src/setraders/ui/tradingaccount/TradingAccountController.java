@@ -5,7 +5,7 @@
  */
 package setraders.ui.tradingaccount;
 
-import com.jfoenix.controls.JFXButton;
+
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,13 +43,16 @@ import setraders.alert.AlertMaker;
 import setraders.database.DataHelper;
 import setraders.database.DatabaseHandler;
 import setraders.ui.client.ClientController;
-
+import setraders.ui.tables.PriceTable;
+import setraders.ui.tables.Transaction;
 /**
  *
  * @author Josh Da Silva
  */
+
 public class TradingAccountController implements Initializable {
     
+    //chart
     @FXML
     private LineChart<String, Number> lineChart;
     XYChart.Series<String, Number> series, series1, series2, series3;
@@ -58,11 +60,8 @@ public class TradingAccountController implements Initializable {
     //listboxes
     @FXML
     private JFXListView twitterListView;
-
-    //@FXML 
-   // private JFXListView companyListView;
    
-    //transaction table
+    //transaction table start
     @FXML
     private TableView<Transaction> tableView;
     
@@ -80,110 +79,165 @@ public class TradingAccountController implements Initializable {
     
     @FXML
     private TableColumn<Transaction, String> marginCol;
+     //transaction table end
     
-    //price table
-    
+    //price table start
     @FXML
-    private TableView<Table> tableView1;
+    private TableView<PriceTable> priceTable;
         
     @FXML
-    private TableColumn<Table, String> companycfdCol;
+    private TableColumn<PriceTable, String> companycfdCol;
     
     @FXML
-    private TableColumn<Table, String> pricecfdCol;
+    private TableColumn<PriceTable, String> pricecfdCol;
     
     @FXML
-    private TableColumn<Table, String> changecfdCol;
+    private TableColumn<PriceTable, String> changecfdCol;
     
-    // delete after making db
     @FXML
     private AnchorPane mainContainer;
     
     @FXML
-    private JFXTextField title;
-    @FXML
-    private JFXTextField id;
-    @FXML
-    private JFXTextField author;
-    @FXML
-    private JFXTextField timeid;
-    @FXML
-    private JFXTextField publisher;
-
-
-    @FXML
     private StackPane rootPane;
     private Boolean isInEditMode = Boolean.FALSE;
-
+    //price table end
+    
+    
+    // Data input simulator text fields for generating transaction _ delete when done//
+    @FXML
+    private JFXTextField companytxt;
+    @FXML
+    private JFXTextField transidtxt;
+    @FXML
+    private JFXTextField typetxt;
+    @FXML
+    private JFXTextField timeidtxt;
+    @FXML
+    private JFXTextField amounttxt;
     // end here
     
     DatabaseHandler databaseHandler;
     
-    private  double xOffset = 0;
+    //for mousedrag
+    private  double xOffset = 0;         
     private  double yOffset = 0;
     
-    private ObservableList<String> forexList = FXCollections.observableArrayList("GBP/EUR", "GBP/USD", "GBP/SGD", "GBP/INR", "GBP/HKD", "GBP/JPY");
-    private ObservableList<String> cryptoList = FXCollections.observableArrayList("btc", "eth", "xrp", "neo", "eos", "ltc");
+    //to store transaction items when fetched from table
     ObservableList<Transaction> list = FXCollections.observableArrayList();
-     
-     ObservableList<Table> data = FXCollections.observableArrayList(
-            new Table("Apple","£120","2"),
-            new Table("Alphabet","2","1"),
-            new Table("Berkshire Hathaway","1","1"),
-            new Table("Facebook","1","2"),
-            new Table("AT&T","2","1"),
-            new Table("Berkshire Hathaway","1","1"),
-            new Table("JPMorgan Chase","1","2"),
-            new Table("Bank of America","2","1"),
-            new Table("Samsung Electroincs","1","1"),
-            new Table("Visa","1","2"),
-            new Table("Coca-Cola","2","1"),
-            new Table("Oracle","1","2"),
-            new Table("IBM","2","1"),
-            new Table("Tesla","1","1"),
-            new Table("Bose","1","2"),
-            new Table("AMD","2","1"),
-            new Table("Microsoft","1","1"),
-            new Table("Intel","1","2"),
-            new Table("Tesco","2","1"),
-            new Table("Berkshire Hathaway","1","1"),
-            new Table("Apple","1","2"),
-            new Table("Amazon","2","1"),
-            new Table("Spotify","1","1")
+   
+    /*
+    //list to store Forex pair data
+    private ObservableList<PriceTable> forexList = FXCollections.observableArrayList(
+    
+            new PriceTable("GBP/EUR","£120","2"),
+            new PriceTable("GBP/USD","2","1"),
+            new PriceTable("GBP/SGD","1","1"),
+            new PriceTable("GBP/INR","1","2"),
+            new PriceTable("GBP/HKD","2","1"),
+            new PriceTable("GBP/JPY","1","1"),
+            new PriceTable("JPMorgan Chase","1","2"),
+            new PriceTable("Bank of America","2","1"),
+            new PriceTable("Samsung Electroincs","1","1"),
+            new PriceTable("Visa","1","2"),
+            new PriceTable("Coca-Cola","2","1"),
+            new PriceTable("Oracle","1","2"),
+            new PriceTable("IBM","2","1"),
+            new PriceTable("Tesla","1","1"),
+            new PriceTable("Bose","1","2"),
+            new PriceTable("AMD","2","1"),
+            new PriceTable("Microsoft","1","1"),
+            new PriceTable("Intel","1","2"),
+            new PriceTable("Tesco","2","1"),
+            new PriceTable("Berkshire Hathaway","1","1"),
+            new PriceTable("Apple","1","2"),
+            new PriceTable("Amazon","2","1"),
+            new PriceTable("Spotify","1","1")
+            );
+    
+    //list to store cryptocurrency data
+    private ObservableList<PriceTable> cryptoList = FXCollections.observableArrayList(
+
+            new PriceTable("btc","£120","2"),
+            new PriceTable("eth","2","1"),
+            new PriceTable("xrp","1","1"),
+            new PriceTable("neo","1","2"),
+            new PriceTable("eos","2","1"),
+            new PriceTable("ltc","1","1"),
+            new PriceTable("JPMorgan Chase","1","2"),
+            new PriceTable("Bank of America","2","1"),
+            new PriceTable("Samsung Electroincs","1","1"),
+            new PriceTable("Visa","1","2"),
+            new PriceTable("Coca-Cola","2","1"),
+            new PriceTable("Oracle","1","2"),
+            new PriceTable("IBM","2","1"),
+            new PriceTable("Tesla","1","1"),
+            new PriceTable("Bose","1","2"),
+            new PriceTable("AMD","2","1"),
+            new PriceTable("Microsoft","1","1"),
+            new PriceTable("Intel","1","2"),
+            new PriceTable("Tesco","2","1"),
+            new PriceTable("Berkshire Hathaway","1","1"),
+            new PriceTable("Apple","1","2"),
+            new PriceTable("Amazon","2","1"),
+            new PriceTable("Spotify","1","1")
+            );
+    */
+    //list to store company data 
+    ObservableList<PriceTable> data = FXCollections.observableArrayList(
+           
+            new PriceTable("Apple","£120","2"),
+            new PriceTable("Alphabet","2","1"),
+            new PriceTable("Berkshire Hathaway","1","1"),
+            new PriceTable("Facebook","1","2"),
+            new PriceTable("AT&T","2","1"),
+            new PriceTable("Berkshire Hathaway","1","1"),
+            new PriceTable("JPMorgan Chase","1","2"),
+            new PriceTable("Bank of America","2","1"),
+            new PriceTable("Samsung Electroincs","1","1"),
+            new PriceTable("Visa","1","2"),
+            new PriceTable("Coca-Cola","2","1"),
+            new PriceTable("Oracle","1","2"),
+            new PriceTable("IBM","2","1"),
+            new PriceTable("Tesla","1","1"),
+            new PriceTable("Bose","1","2"),
+            new PriceTable("AMD","2","1"),
+            new PriceTable("Microsoft","1","1"),
+            new PriceTable("Intel","1","2"),
+            new PriceTable("Tesco","2","1"),
+            new PriceTable("Berkshire Hathaway","1","1"),
+            new PriceTable("Apple","1","2"),
+            new PriceTable("Amazon","2","1"),
+            new PriceTable("Spotify","1","1")
             );
      
-    @FXML
+    @FXML//close button
     private void handleClose(MouseEvent event){
     System.exit(0);
     }
    
-    @FXML
+    @FXML//minimise button
     private void handleMin(MouseEvent event){
     ClientController.getStageObj().setIconified(true);
     }
    
-    @FXML
-    private void handleDrag(MouseEvent event) {
-            
+    @FXML//drag application window
+    private void handleDrag(MouseEvent event) {        
     ClientController.getStageObj().setX(event.getScreenX()- xOffset);
     ClientController.getStageObj().setY(event.getScreenY() -yOffset);
-        
     }
     
-    @FXML
+    @FXML//drag value for application window
     private void handleDragValue(MouseEvent event) {
-        
-          xOffset = event.getSceneX();
-          yOffset = event.getSceneY();
-        
+    xOffset = event.getSceneX();
+    yOffset = event.getSceneY();
     }
     
-    @FXML
+    @FXML//deposit button
     private void handleDepositButtonAction(ActionEvent event){
         try{
-      ClientController.getStageObj().setIconified(true);
-      
-       Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/deposit/Deposit.fxml"));
+        ClientController.getStageObj().setIconified(true);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/deposit/Deposit.fxml"));
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -195,12 +249,12 @@ public class TradingAccountController implements Initializable {
         }
     }
     
-    @FXML
+    @FXML//withdraw button
     private void handleWithdrawButtonAction(ActionEvent event){
         try{
-      ClientController.getStageObj().setIconified(true);
+        ClientController.getStageObj().setIconified(true);
       
-       Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/withdraw/Withdraw.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/withdraw/Withdraw.fxml"));
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -212,53 +266,53 @@ public class TradingAccountController implements Initializable {
         }
     }
     
-    @FXML
+    @FXML //test simulation to get data from text field to load to db ___use this code to add data to transaction list database
     private void handleBuyCFDButtonAction(ActionEvent event){
-        String bookID = id.getText();                                                    //testing textfields to simulate transactions
-        String bookAuthor = author.getText();
-        String bookName = title.getText();
-        String bookPublisher = publisher.getText();
-        String bookTime = timeid.getText();
-
+        String transID = transidtxt.getText();                                                    
+        String transType = typetxt.getText();
+        String transCompany = companytxt.getText();
+        String transAmount = amounttxt.getText();
+        String transTime = timeidtxt.getText();
 
         if (isInEditMode) {
             handleEditOperation();
             return;
         }
-
-        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(bookID, bookName, bookAuthor, bookPublisher, bookTime);
+        
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", bookName + "'s transaction completed");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
             clearEntries();
-            refresh();
+            refreshTransactionTable();
         } else {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
         }
     }
     
-
-    public void inflateUI(TradingAccountController.Transaction transaction) {
-        title.setText(transaction.getTransactionid());
-        id.setText(transaction.getCompany());
-        author.setText(transaction.getType());
-        publisher.setText(transaction.getMargin());
-        timeid.setText(transaction.getTime());
-        id.setEditable(false);
-        isInEditMode = Boolean.TRUE;
-      
+    //test simulation to get data from text field to load to db
+    public void inflateUI( Transaction transaction) {
+        companytxt.setText(transaction.getTransactionid());
+        transidtxt.setText(transaction.getCompany());
+        typetxt.setText(transaction.getType());
+        amounttxt.setText(transaction.getMargin());
+        timeidtxt.setText(transaction.getTime());
+        transidtxt.setEditable(false);
+        isInEditMode = Boolean.TRUE; 
     }
-
+    
+    //test simulation clear textfields
     private void clearEntries() {
-        title.clear();
-        id.clear();
-        author.clear();
-        publisher.clear();
-        timeid.clear();
+        companytxt.clear();
+        transidtxt.clear();
+        typetxt.clear();
+        amounttxt.clear();
+        timeidtxt.clear();
     }
-
+    
+    //test simulation text field edit operation
     private void handleEditOperation() {
-        TradingAccountController.Transaction transaction = new TradingAccountController.Transaction(title.getText(), id.getText(), author.getText(), publisher.getText(), timeid.getText());
+        Transaction transaction = new  Transaction(companytxt.getText(), transidtxt.getText(), typetxt.getText(), amounttxt.getText(), timeidtxt.getText());
         if (databaseHandler.updateTransaction(transaction)) {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Success", "Update complete");
         } else {
@@ -266,12 +320,12 @@ public class TradingAccountController implements Initializable {
         }
     }
     
-    @FXML
+    @FXML //short button
     private void handleShortCFDButtonAction(ActionEvent event){
         
     }
     
-    @FXML
+    @FXML //logout button
     private void handleLogoutButtonAction(ActionEvent event){
         try{
         Parent sceneParent = FXMLLoader.load(getClass().getResource("/setraders/ui/client/Client.fxml"));
@@ -284,77 +338,61 @@ public class TradingAccountController implements Initializable {
         }
     }
     
-    @FXML
+    @FXML //notification button
     private void handleNotiToggleButtonAction(ActionEvent event){
         double demostock=200;
-            Notifications notificationBuilder = Notifications.create()
+        Notifications notificationBuilder = Notifications.create()
         .title("Price Alert")
         .text("Your stock has hit £"+ demostock)
         .graphic(null)
         .hideAfter(Duration.seconds(5))
         .position(Pos.BOTTOM_RIGHT)
-        .onAction(new EventHandler <ActionEvent>() {
+        .onAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event1) {
                 System.out.println("Clicked on notification");
             }
         });
         notificationBuilder.darkStyle();
         notificationBuilder.showInformation();
     }
-
-/*    
-    @FXML
-    private void handleFAQButtonAction(ActionEvent event){
-        
-    }
     
-    @FXML
-    private void handleFAQButtonAction(ActionEvent event){
-        
-    }
-*/
-    
-    @Override
+    @Override//loaded at start
     public void initialize(URL url, ResourceBundle rb) {
-        databaseHandler = DatabaseHandler.getInstance(); 
-        companycfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("companycfdCol"));
-        pricecfdCol.setCellValueFactory(new PropertyValueFactory<Table,String>("pricecfdCol"));
-        changecfdCol.setCellValueFactory(new PropertyValueFactory<Table, String>("changecfdCol"));
-
-       tableView1.setItems(data);
-        initcol();
-        loadTransactionlist();
         
-
-
-       
-   /*  databaseHandler = new DatabaseHandler();
-       checkData();
-       leftListView.getItems().clear();
-        leftListView.setItems(obList);
+        databaseHandler = DatabaseHandler.getInstance();
+        
+        initColumns();
+        loadPriceTable();
+        loadTransactionTable();
+        
+        /*//line chart code
         series = new XYChart.Series<>();
         series.setName("Apple");
-        lineChart.getData().add(series); */
-    
+        lineChart.getData().add(series); 
+        */
     }
-        
-    private void initcol(){
+    
+    //initialise transaction and price table columns    
+    private void initColumns(){  
         transactionidCol.setCellValueFactory(new PropertyValueFactory<>("transactionid"));
         companyCol.setCellValueFactory(new PropertyValueFactory<>("company"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         marginCol.setCellValueFactory(new PropertyValueFactory<>("margin"));
         timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
-    }
+        
+        companycfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("companycfdCol"));
+        pricecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable,String>("pricecfdCol"));
+        changecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("changecfdCol"));
     
-    private void refresh(){
-        loadTransactionlist();
     }
+    //load price table data
+    private void loadPriceTable(){
+        priceTable.setItems(data);   
     
-    private void loadTransactionlist(){
-
-        //companyListView.getItems().clear();
-       // companyListView.setItems(companyList);
+    }
+    //load transaction table data from database
+    private void loadTransactionTable(){
         
         DatabaseHandler handler = DatabaseHandler.getInstance();
         
@@ -378,88 +416,8 @@ public class TradingAccountController implements Initializable {
 
         tableView.setItems(list);
     }
-    
-     public static class Transaction {
-
-        private final SimpleStringProperty transactionid;
-        private final SimpleStringProperty company;
-        private final SimpleStringProperty type;
-        private final SimpleStringProperty margin;
-        private final SimpleStringProperty time;
-
-        public Transaction(String tid, String cid, String tyid, String mid, String datid) {
-            this.transactionid = new SimpleStringProperty(tid);
-            this.company = new SimpleStringProperty(cid);
-            this.type = new SimpleStringProperty(tyid);
-            this.margin = new SimpleStringProperty(mid);
-            this.time = new SimpleStringProperty(datid);
-
-        }
-
-        public String getTransactionid() {
-            return transactionid.get();
-        }
-
-        public String getCompany() {
-            return company.get();
-        }
-
-        public String getType() {
-            return type.get();
-        }
-
-        public String getMargin() {
-            return margin.get();
-        }
-         public String getTime() {
-            return time.get();
-        }
-
-
-
-    }
-     
-          public static class Table {
-
-        private final SimpleStringProperty companycfdCol;
-        private final SimpleStringProperty pricecfdCol;
-        private final SimpleStringProperty changecfdCol;
-
-
-        public Table(String rcc, String rpc, String rgc) {
-            this.companycfdCol = new SimpleStringProperty(rcc);
-            this.pricecfdCol = new SimpleStringProperty(rpc);
-            this.changecfdCol = new SimpleStringProperty(rgc);
-
-
-        }
-
-        public String getCompanycfdCol() {
-            return companycfdCol.get();
-        }
-        
-        public void setCompanycfdCol(String v) {
-             companycfdCol.set(v);
-        }
-
-        public String getPricecfdCol() {
-            return pricecfdCol.get();
-        }
-        
-        public void setPricecfdCol(String v) {
-             pricecfdCol.set(v);
-        }
-
-        public String getChangecfdCol() {
-            return changecfdCol.get();
-        }
-                
-        public void setChangecfdCol(String v) {
-             changecfdCol.set(v);
-        }
-        
-
-    }
-
-    
+    //Transaction table
+    private void refreshTransactionTable(){
+        loadTransactionTable();
+    } 
 }
