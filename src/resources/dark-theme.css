@@ -6,7 +6,7 @@
 * {
     -fx-primary : #2A2E37;
     -fx-secondary : #FFFFFF;
-    -fx-primarytext : #B2B2B2;
+    -fx-primarytext : #FFFFFF;
     -fx-blue: #1976D2;
     -fx-red: #FF0000;
     -fx-green:#2E7D32;
@@ -168,13 +168,13 @@
 /*TableView Default*/
 .table-view{
     -fx-background-color: derive(-fx-primary, 10%);
-    -fx-font-size: 16px; 
+    -fx-font-size: 13px; 
 }
 .table-view:focused{
     -fx-background-color: derive(-fx-primary, 20%);
 }
 .table-row-cell {
-    -fx-cell-size: 40px;
+    -fx-cell-size: 31px;
 }
 .table-view .column-header-background{
     -fx-background-color: -fx-primary;

@@ -98,8 +98,7 @@ public class TradingAccountController implements Initializable {
     private JFXTextField timeid;
     @FXML
     private JFXTextField publisher;
-    @FXML
-    private JFXButton saveButton;
+
 
     @FXML
     private StackPane rootPane;
@@ -115,7 +114,7 @@ public class TradingAccountController implements Initializable {
     private ObservableList<String> forexList = FXCollections.observableArrayList("GBP/EUR", "GBP/USD", "GBP/SGD", "GBP/INR", "GBP/HKD", "GBP/JPY");
     private ObservableList<String> cryptoList = FXCollections.observableArrayList("btc", "eth", "xrp", "neo", "eos", "ltc");
     ObservableList<Transaction> list = FXCollections.observableArrayList();
-    
+     
      ObservableList<Table> data = FXCollections.observableArrayList(
             new Table("Apple","£120","2"),
             new Table("Alphabet","2","1"),
@@ -195,7 +194,7 @@ public class TradingAccountController implements Initializable {
         setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(bookID, bookName, bookAuthor, bookPublisher, bookTime);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", bookName + " has been added");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", bookName + "'s transaction completed");
             clearEntries();
             refresh();
         } else {

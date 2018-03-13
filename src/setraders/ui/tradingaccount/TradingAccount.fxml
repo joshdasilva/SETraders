@@ -35,7 +35,7 @@
          <tabs>
             <Tab closable="false" text="CFD's">
                <content>
-                  <AnchorPane fx:id="mainContainer" minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;">
+                  <AnchorPane fx:id="mainContainer1" minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;">
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
@@ -43,25 +43,25 @@
                                  <children>
                                     <VBox prefHeight="900.0" prefWidth="433.33">
                                        <children>
-                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                          <StackPane fx:id="rootPane" prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <AnchorPane fx:id="mainContainer" prefHeight="200.0" prefWidth="200.0">
                                                    <children>
                                                       <TableView fx:id="tableView1" prefHeight="670.0" prefWidth="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
                                                          <columns>
                                                             <TableColumn fx:id="companycfdCol" maxWidth="3100.0" prefWidth="160.0" text="Company" />
-                                                            <TableColumn fx:id="pricecfdCol" maxWidth="2500.0" prefWidth="100.0" text="Last Price" />
+                                                            <TableColumn fx:id="pricecfdCol" maxWidth="2500.0" prefWidth="100.0" resizable="false" text="Last Price" />
                                                             <TableColumn fx:id="changecfdCol" maxWidth="2500.0" prefWidth="85.0" text="24h Chg%" />
                                                          </columns>
                                                       </TableView>
-                                                      <Label prefHeight="27.0" prefWidth="68.0" text="Balance:" textFill="#e7e6e6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="30.0">
+                                                      <Label layoutX="40.0" layoutY="18.0" prefHeight="32.0" prefWidth="84.0" text="Balance:" textFill="#e7e6e6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="18.0">
                                                          <font>
-                                                            <Font size="18.0" />
+                                                            <Font size="22.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label prefHeight="27.0" prefWidth="68.0" text="£0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="30.0">
+                                                      <Label layoutX="126.0" layoutY="18.0" prefHeight="27.0" prefWidth="68.0" text="£0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="126.0" AnchorPane.topAnchor="18.0">
                                                          <font>
-                                                            <Font size="18.0" />
+                                                            <Font size="22.0" />
                                                          </font>
                                                       </Label>
                                                       <JFXButton layoutX="40.0" layoutY="750.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy" textFill="#e7e6e6" />
@@ -81,7 +81,7 @@
                                              <children>
                                                 <AnchorPane prefHeight="335.0" prefWidth="500.0">
                                                    <children>
-                                                      <LineChart fx:id="lineChart" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;">
+                                                      <LineChart fx:id="lineChart" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;" AnchorPane.topAnchor="0.0">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" />
                                                          </xAxis>
@@ -100,15 +100,20 @@
                                              <children>
                                                 <AnchorPane id="AnchorPane" prefHeight="335.0" prefWidth="500.0">
                                                    <children>
-                                                      <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
                                                          <columns>
                                                             <TableColumn fx:id="transactionidCol" maxWidth="3100.0" prefWidth="65.0" text="ID" />
                                                             <TableColumn fx:id="companyCol" maxWidth="2500.0" prefWidth="115.0" text="Company" />
-                                                            <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="85.0" text="Buy/Sell" />
+                                                            <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="85.0" resizable="false" text="Buy/Sell" />
                                                             <TableColumn fx:id="marginCol" maxWidth="2500.0" prefWidth="85.0" text="Amount " />
                                                             <TableColumn fx:id="timeCol" maxWidth="2000.0" prefWidth="145.0" text="Time and date" />
                                                          </columns>
                                                       </TableView>
+                                                      <Label layoutX="1.0" layoutY="6.0" prefHeight="32.0" prefWidth="142.0" text="Trade History" textFill="WHITE">
+                                                         <font>
+                                                            <Font size="22.0" />
+                                                         </font>
+                                                      </Label>
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -141,9 +146,9 @@
                            </children>
                         </AnchorPane>
                         <JFXButton layoutX="597.0" layoutY="750.0" onAction="#handleNotiToggleButtonAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
-                        <StackPane fx:id="rootPane" layoutX="974.0" layoutY="245.0" prefHeight="150.0" prefWidth="200.0">
+                        <StackPane layoutX="974.0" layoutY="245.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <AnchorPane id="AnchorPane" fx:id="mainContainer1" prefHeight="338.0" prefWidth="464.0" styleClass="custom-pane">
+                              <AnchorPane id="AnchorPane" prefHeight="338.0" prefWidth="464.0" styleClass="custom-pane">
                                  <children>
                                     <VBox layoutY="-1.0" prefHeight="256.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                                        <children>
@@ -169,9 +174,6 @@
                                           </JFXTextField>
                                           <JFXTextField fx:id="timeid" promptText="time" />
                                           <HBox alignment="CENTER" prefHeight="38.0" prefWidth="158.0" spacing="30.0">
-                                             <children>
-                                                <JFXButton fx:id="saveButton" onAction="#handleBuyCFDButtonAction" prefHeight="66.0" prefWidth="100.0" text="Save" />
-                                             </children>
                                              <padding>
                                                 <Insets bottom="20.0" />
                                              </padding>
