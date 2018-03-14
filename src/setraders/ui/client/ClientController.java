@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import setraders.settings.Credentials;
@@ -44,12 +45,14 @@ public class ClientController implements Initializable {
     private JFXPasswordField password;
     @FXML
     private Label label;
+    @FXML 
+    private AnchorPane anchorPane;
     
     private  double xOffset = 0;
     private  double yOffset = 0;
-    Credentials credential;
-    private static Stage primaryStageObj;
     
+    Credentials credential;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -79,16 +82,20 @@ public class ClientController implements Initializable {
     System.exit(0);
     }
    
+    private Stage getStage() {
+        return (Stage) anchorPane.getScene().getWindow();
+    }
+    
     @FXML
     private void handleMin(MouseEvent event){
-    Main.getStageObj().setIconified(true);
+    getStage().setIconified(true);
     }
    
     @FXML
     private void handleDrag(MouseEvent event) {
             
-    Main.getStageObj().setX(event.getScreenX()- xOffset);
-    Main.getStageObj().setY(event.getScreenY() -yOffset);
+    getStage().setX(event.getScreenX()- xOffset);
+    getStage().setY(event.getScreenY() -yOffset);
         
     }
     
@@ -101,7 +108,7 @@ public class ClientController implements Initializable {
     }
 
     private void closeStage() {
-        ((Stage) username.getScene().getWindow()).close();
+        ((Stage) anchorPane.getScene().getWindow()).close();
     }
 
     void loadMain() {
@@ -119,7 +126,6 @@ public class ClientController implements Initializable {
             
             Parent parent = FXMLLoader.load(getClass().getResource("/setraders/ui/tradingaccount/TradingAccount.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
-            primaryStageObj = stage;
             stage.setTitle("SE Traders");
             stage.setScene(new Scene(parent));
             
@@ -129,10 +135,5 @@ public class ClientController implements Initializable {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
-    }
-        public static Stage getStageObj()
-    {
-        return primaryStageObj;
-    }
-    
+    }    
 }

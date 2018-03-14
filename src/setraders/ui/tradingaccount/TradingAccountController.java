@@ -16,6 +16,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,13 +44,11 @@ import org.controlsfx.control.Notifications;
 import setraders.alert.AlertMaker; 
 import setraders.database.DataHelper;
 import setraders.database.DatabaseHandler;
-import setraders.ui.client.ClientController;
 import setraders.ui.tables.PriceTable;
 import setraders.ui.tables.Transaction;
-/**
- *
- * @author Josh Da Silva
- */
+import setraders.util.SetradersUtility;
+
+
 
 public class TradingAccountController implements Initializable {
     
@@ -98,7 +98,14 @@ public class TradingAccountController implements Initializable {
     private AnchorPane mainContainer;
     
     @FXML
+    private AnchorPane mainRootPane;
+    
+    @FXML
     private StackPane rootPane;
+    
+    @FXML
+    private StackPane stackpane;
+    
     private Boolean isInEditMode = Boolean.FALSE;
     //price table end
     
@@ -214,16 +221,20 @@ public class TradingAccountController implements Initializable {
     private void handleClose(MouseEvent event){
     System.exit(0);
     }
+    
+    private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
+    }
    
     @FXML//minimise button
     private void handleMin(MouseEvent event){
-    ClientController.getStageObj().setIconified(true);
+    getStage().setIconified(true);
     }
    
     @FXML//drag application window
     private void handleDrag(MouseEvent event) {        
-    ClientController.getStageObj().setX(event.getScreenX()- xOffset);
-    ClientController.getStageObj().setY(event.getScreenY() -yOffset);
+    getStage().setX(event.getScreenX()- xOffset);
+    getStage().setY(event.getScreenY() -yOffset);
     }
     
     @FXML//drag value for application window
@@ -235,7 +246,7 @@ public class TradingAccountController implements Initializable {
     @FXML//deposit button
     private void handleDepositButtonAction(ActionEvent event){
         try{
-        ClientController.getStageObj().setIconified(true);
+        getStage().setIconified(true);
         
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/deposit/Deposit.fxml"));
         
@@ -252,7 +263,7 @@ public class TradingAccountController implements Initializable {
     @FXML//withdraw button
     private void handleWithdrawButtonAction(ActionEvent event){
         try{
-        ClientController.getStageObj().setIconified(true);
+        getStage().setIconified(true);
       
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/withdraw/Withdraw.fxml"));
         
@@ -288,6 +299,24 @@ public class TradingAccountController implements Initializable {
         } else {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
         }
+    }
+            
+    @FXML
+    private void exportAsPDF(ActionEvent event) {
+        System.out.println("This worked");
+        List<List> printData = new ArrayList<>();
+        String[] headers = {"Transaction ID", "   Company  ", "  Type  ", "  Amount ", "Time"};
+        printData.add(Arrays.asList(headers));
+        for (Transaction transaction : list) {
+            List<String> row = new ArrayList<>();
+            row.add(transaction.getTransactionid());
+            row.add(transaction.getCompany());
+            row.add(transaction.getMargin());
+            row.add(transaction.getType());
+            row.add(transaction.getTime());
+            printData.add(row);
+        }
+        SetradersUtility.initPDFExprot(stackpane, mainRootPane, getStage(), printData);
     }
     
     //test simulation to get data from text field to load to db

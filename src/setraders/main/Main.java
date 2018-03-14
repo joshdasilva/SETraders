@@ -21,12 +21,10 @@ import static javafx.application.Application.launch;
  */
 public class Main extends Application {
     
-    private static Stage primaryStageObj;
+
     
     @Override
     public void start(Stage stage) throws Exception {
-        
-        primaryStageObj = stage;
         
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/client/Client.fxml"));
         
@@ -41,13 +39,6 @@ public class Main extends Application {
             DatabaseHandler.getInstance();
         }).start();
     }
-    
-    public static Stage getStageObj()
-    {
-        return primaryStageObj;
-    }
-
-
     /**
      * @param args the command line arguments
      */
