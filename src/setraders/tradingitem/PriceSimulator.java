@@ -14,14 +14,14 @@ import java.util.Random;
  */
 public class PriceSimulator
 {
-    static double[] cryptoPrice;
+    static double cryptoPrice;
     static double forexPrice;
     static double stockPrice;
     static Random random = new Random();
 
     public static void randomGenCrypto()
     {
-        cryptoPrice[10] = 0 + (15000-4000) * random.nextDouble();
+        cryptoPrice = 0 + (15000-4000) * random.nextDouble();
         
     }
     
