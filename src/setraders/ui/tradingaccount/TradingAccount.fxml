@@ -24,14 +24,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="fullContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.tradingaccount.TradingAccountController">
+<Pane fx:id="fullContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="1300.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.tradingaccount.TradingAccountController">
    <children>
       <ImageView fitHeight="38.0" fitWidth="1300.0" layoutY="1.0" onMouseDragged="#handleDrag" onMousePressed="#handleDragValue" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="14.0" layoutY="7.0" text="SE TRADERS" textFill="#e7e6e6">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <JFXTabPane layoutY="37.0" prefHeight="900.0" prefWidth="1300.0">
+      <JFXTabPane layoutY="37.0" prefHeight="930.0" prefWidth="1300.0">
          <tabs>
             <Tab closable="false" text="CFD's">
                <content>
@@ -43,7 +43,7 @@
                                  <children>
                                     <VBox prefHeight="900.0" prefWidth="433.33">
                                        <children>
-                                          <StackPane fx:id="rootPane" prefHeight="150.0" prefWidth="200.0">
+                                          <StackPane fx:id="rootPane" prefHeight="870.0" prefWidth="400.0">
                                              <children>
                                                 <AnchorPane fx:id="mainContainer" prefHeight="200.0" prefWidth="200.0">
                                                    <children>
@@ -64,8 +64,15 @@
                                                             <Font size="22.0" />
                                                          </font>
                                                       </Label>
-                                                      <JFXButton layoutX="40.0" layoutY="750.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy" textFill="#e7e6e6" />
-                                                      <JFXButton layoutX="260.0" layoutY="750.0" onAction="#handleShortCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Short" textFill="#e7e6e6" />
+                                                      <JFXButton layoutX="40.0" layoutY="810.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy" textFill="#e7e6e6" />
+                                                      <JFXButton layoutX="260.0" layoutY="810.0" onAction="#handleShortCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Short" textFill="#e7e6e6" />
+                                                      <JFXTextField fx:id="amounttxt" disable="true" labelFloat="true" layoutX="191.0" layoutY="753.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
+                                                      <Label layoutX="40.0" layoutY="755.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
+                                                         <font>
+                                                            <Font size="22.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <JFXComboBox layoutX="194.0" layoutY="22.0" prefHeight="25.0" prefWidth="57.0" promptText="GBP" />
                                                    </children>
                                                    <StackPane.margin>
                                                       <Insets />
@@ -140,8 +147,8 @@
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                    <children>
                                                       <JFXListView fx:id="twitterListView" layoutY="60.0" prefHeight="670.0" prefWidth="350.0" style="-fx-background-color: #e7e6e6;" AnchorPane.rightAnchor="40.0" />
-                                                      <JFXButton layoutX="225.0" layoutY="750.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
-                                                      <JFXButton layoutY="750.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
+                                                      <JFXButton layoutX="225.0" layoutY="810.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
+                                                      <JFXButton layoutX="13.0" layoutY="810.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
                                                       <JFXButton layoutX="225.0" layoutY="10.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #897f7f;" text="Logout" textFill="WHITE" />
                                                    </children></AnchorPane>
                                              </children>
@@ -152,12 +159,12 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <JFXButton layoutX="597.0" layoutY="750.0" onAction="#handleNotiToggleButtonAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
+                        <JFXButton layoutX="597.0" layoutY="810.0" onAction="#handleNotiToggleButtonAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
                         <StackPane layoutX="974.0" layoutY="245.0" prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <AnchorPane id="AnchorPane" prefHeight="338.0" prefWidth="464.0" styleClass="custom-pane">
                                  <children>
-                                    <VBox layoutY="-1.0" prefHeight="256.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+                                    <VBox layoutY="-1.0" prefHeight="327.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="-33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
                                        <children>
                                           <JFXTextField fx:id="transidtxt" labelFloat="true" promptText="transaction ID">
                                              <VBox.margin>
@@ -170,11 +177,6 @@
                                              </VBox.margin>
                                           </JFXTextField>
                                           <JFXTextField fx:id="typetxt" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Buy/Sell">
-                                             <VBox.margin>
-                                                <Insets left="10.0" right="10.0" top="20.0" />
-                                             </VBox.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="Amount">
                                              <VBox.margin>
                                                 <Insets left="10.0" right="10.0" top="20.0" />
                                              </VBox.margin>
