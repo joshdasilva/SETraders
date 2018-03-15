@@ -32,6 +32,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -105,6 +106,9 @@ public class TradingAccountController implements Initializable {
     
     @FXML
     private Pane fullContainer;
+    
+    @FXML
+    private Label balancelabel;
     
     @FXML
     private StackPane rootPane;
@@ -262,6 +266,7 @@ public class TradingAccountController implements Initializable {
         fullContainer.setEffect(blur);
         stage.showAndWait();
         fullContainer.setEffect(null);
+        loadbalance();
   
         
 
@@ -285,6 +290,7 @@ public class TradingAccountController implements Initializable {
         fullContainer.setEffect(blur);
         stage.showAndWait();
         fullContainer.setEffect(null);
+        loadbalance();
 
         } catch (IOException ex) {
         Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
@@ -408,6 +414,7 @@ public class TradingAccountController implements Initializable {
         initColumns();
         loadPriceTable();
         loadTransactionTable();
+        loadbalance();
         
         /*//line chart code
         series = new XYChart.Series<>();
@@ -434,7 +441,27 @@ public class TradingAccountController implements Initializable {
         priceTable.setItems(data);   
     
     }
-    //load transaction table data from database
+   
+   private void loadbalance(){
+        
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        
+        
+        String qu = "SELECT * FROM bal";
+        ResultSet rs = handler.execQuery(qu);
+        try {
+            while (rs.next()) {
+                String bal1 = rs.getString("balance");
+                balancelabel.setText(bal1);
+                //System.out.println(transidx);
+                
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
+//load transaction table data from database
     private void loadTransactionTable(){
         
         DatabaseHandler handler = DatabaseHandler.getInstance();

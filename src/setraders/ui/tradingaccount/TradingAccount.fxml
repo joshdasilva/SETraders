@@ -54,12 +54,12 @@
                                                             <TableColumn fx:id="changecfdCol" maxWidth="2500.0" prefWidth="85.0" text="24h Chg%" />
                                                          </columns>
                                                       </TableView>
-                                                      <Label layoutX="40.0" layoutY="18.0" prefHeight="32.0" prefWidth="84.0" text="Balance:" textFill="#e7e6e6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="18.0">
+                                                      <Label layoutX="40.0" layoutY="18.0" prefHeight="32.0" prefWidth="110.0" text="Balance: £" textFill="#e7e6e6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="18.0">
                                                          <font>
                                                             <Font size="22.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label layoutX="126.0" layoutY="18.0" prefHeight="27.0" prefWidth="68.0" text="£0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="126.0" AnchorPane.topAnchor="18.0">
+                                                      <Label fx:id="balancelabel" layoutX="139.0" layoutY="18.0" prefHeight="27.0" prefWidth="68.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="18.0">
                                                          <font>
                                                             <Font size="22.0" />
                                                          </font>
@@ -72,7 +72,7 @@
                                                             <Font size="22.0" />
                                                          </font>
                                                       </Label>
-                                                      <JFXComboBox layoutX="194.0" layoutY="22.0" prefHeight="25.0" prefWidth="57.0" promptText="GBP" />
+                                                      <JFXComboBox layoutX="219.0" layoutY="22.0" prefHeight="25.0" prefWidth="57.0" promptText="GBP" />
                                                    </children>
                                                    <StackPane.margin>
                                                       <Insets />

@@ -64,7 +64,7 @@ public class WithdrawController implements Initializable{
             clearEntries();
             refresh();
         } else {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to add new book", "Check all the entries and try again");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
         }    
     }
     

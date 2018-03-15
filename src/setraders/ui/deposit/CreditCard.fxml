@@ -24,8 +24,8 @@
       </ImageView>
       <JFXButton layoutX="207.0" layoutY="331.0" onAction="#handleDoneButtonAction" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
       <JFXButton layoutX="300.0" layoutY="331.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
-      <JFXTextField fx:id="cardnumtxt" labelFloat="true" layoutX="239.0" layoutY="67.0" prefHeight="38.0" prefWidth="246.0" promptText="input card number" />
-      <JFXTextField fx:id="exptxt" labelFloat="true" layoutX="241.0" layoutY="120.0" prefHeight="38.0" prefWidth="123.0" promptText="input exp date" />
+      <JFXTextField labelFloat="true" layoutX="239.0" layoutY="67.0" prefHeight="38.0" prefWidth="246.0" promptText="input card number" />
+      <JFXTextField labelFloat="true" layoutX="241.0" layoutY="120.0" prefHeight="38.0" prefWidth="123.0" promptText="input exp date" />
       <Label layoutX="101.0" layoutY="128.0" prefHeight="26.0" prefWidth="123.0" text="Expiry Date:" textFill="#e7e6e6">
          <font>
             <Font size="17.0" />
@@ -36,7 +36,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="cvvtxt" labelFloat="true" layoutX="239.0" layoutY="171.0" prefHeight="38.0" prefWidth="123.0" promptText="input cvv number" />
+      <JFXTextField labelFloat="true" layoutX="239.0" layoutY="171.0" prefHeight="38.0" prefWidth="123.0" promptText="input cvv number" />
       <Label layoutX="240.0" layoutY="237.0" prefHeight="26.0" prefWidth="123.0" text="Powered By" textFill="#e7e6e6">
          <font>
             <Font size="17.0" />

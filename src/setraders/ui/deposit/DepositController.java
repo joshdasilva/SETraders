@@ -20,14 +20,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import setraders.alert.AlertMaker;
 import setraders.database.DataHelper;
 import setraders.database.DatabaseHandler;
@@ -57,7 +54,7 @@ public class DepositController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     databaseHandler = DatabaseHandler.getInstance();
-    loadbal();
+   // loadbal();
     }
     
     @FXML //cancel button
@@ -69,7 +66,7 @@ public class DepositController implements Initializable{
     
     @FXML
     private void handleCreditCardButtonAction( ActionEvent event){
-                      try {
+         try {
         Pane pane = FXMLLoader.load(getClass().getResource("CreditCard.fxml"));
         
         depositPane.getChildren().setAll(pane);
@@ -80,7 +77,7 @@ public class DepositController implements Initializable{
 }
     @FXML
     private void handlePaypalButtonAction( ActionEvent event){
-                      try {
+        try {
         Parent pane = FXMLLoader.load(getClass().getResource("Paypal.fxml"));
         
         depositPane.getChildren().setAll(pane);
@@ -98,11 +95,11 @@ public class DepositController implements Initializable{
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been withdrawn");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been Deposited");
             clearEntries();
             refresh();
         } else {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to add new book", "Check all the entries and try again");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to deposit amount", "Check all the entries and try again");
         }    
     }
     
