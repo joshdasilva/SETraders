@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import setraders.data.wrapper.Transaction;
-import setraders.ui.tradingaccount.TradingAccountController;
+import setraders.data.wrapper.Balance;
+
 
 
 /**
@@ -34,9 +35,35 @@ public class DataHelper {
         }
         return false;
     }
-
-
-
-
-
-}
+     
+            public static boolean updateBalanceminus(Balance balance) {
+        try {
+           PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+                  "UPDATE bal SET balance = balance - ?");
+            
+            statement.setDouble(1, balance.getBalance());
+            //statement.setString(2,balance.getAccountid());
+            return statement.executeUpdate() > 0;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+     
+        public static boolean updateBalanceplus(Balance balance) {
+        try {
+           PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement( 
+                  "UPDATE bal SET balance = balance + ?");
+            
+            statement.setDouble(1, balance.getBalance());
+            //statement.setString(2,balance.getAccountid());
+            return statement.executeUpdate() > 0;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+     
+  }

@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.PieChart;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,7 +28,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import setraders.ui.tables.Transaction;
-import setraders.ui.tradingaccount.TradingAccountController;
+
 
 
 /**
@@ -44,14 +43,18 @@ public final class DatabaseHandler {
     private static Statement stmt = null;
     
     static {
-    createConnection();
-    inflateDB();
+           createConnection();
+           inflateDB();
+  
     }
 
-    private DatabaseHandler() {
-         
-        //createtable();
+         private DatabaseHandler() {
+      //createConnection();
+      //inflateDB();
+      //dbadmin();
+      //createtable();
     }
+    
 
     public static DatabaseHandler getInstance() {
         if (handler == null) {
@@ -59,9 +62,28 @@ public final class DatabaseHandler {
         }
         return handler;
     }
+     //UPDATE BAL SET balance=? WHERE accountid=?
+    //INSERT INTO BAL (accountid, balance)\n" +
+//"VALUES ('1000', 'user1')
+    
+        public boolean dbadmin() {
+        try {
+            String updatebalance = "DELETE FROM BAL";
+            PreparedStatement stmt = conn.prepareStatement(updatebalance);
+           System.out.println("administration done");
+            int res = stmt.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     
      void createtable(){
-        String TABLE_NAME = "TRANS";
+        String TABLE_NAME = "BAL";
         try{ System.out.println("this worked");
             stmt = conn.createStatement();
             
@@ -73,11 +95,8 @@ public final class DatabaseHandler {
                 
             }else {
                 stmt.execute("CREATE TABLE " +TABLE_NAME+ "("
-                +"      transactionid varchar(200) primary key, \n"
-                +"      company varchar(200),\n"
-                +"      type varchar(200),\n"
-                +"      margin varchar(200),\n"
-                +"      time varchar(100)"
+                +"      accountid varchar(200) primary key, \n"
+                +"      balance DECIMAL(20,2)"
                 +" )");
                 
             }
