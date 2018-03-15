@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -11,23 +12,33 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="485.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.deposit.DepositController">
+<Pane fx:id="depositPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.deposit.DepositController">
    <children>
       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="SE Trader" textFill="#e7e6e6" />
-      <Label layoutX="45.0" layoutY="76.0" prefHeight="17.0" prefWidth="130.0" text="Deposit Amount:" textFill="#e7e6e6">
+      <Label layoutX="75.0" layoutY="120.0" prefHeight="38.0" prefWidth="434.0" text="Be advised your current limit to deposit is £3,100,000. Please contact &#10;us if you need to increase your deposit limits." textFill="#e7e6e6">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="65.0" layoutY="141.0" prefHeight="17.0" prefWidth="66.0" text="Pay with:" textFill="#e7e6e6">
+      <Label layoutX="164.0" layoutY="75.0" prefHeight="26.0" prefWidth="109.0" text="Deposit:" textFill="#e7e6e6">
          <font>
-            <Font size="13.5" />
+            <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton layoutX="98.0" layoutY="167.0" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #e45652;" text="Credit/Debt" textFill="#e7e6e6" />
-      <JFXButton layoutX="257.0" layoutY="167.0" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Paypal" textFill="#e7e6e6" />
-      <JFXButton layoutX="138.0" layoutY="248.0" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
-      <JFXButton layoutX="235.0" layoutY="248.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
-      <TextField layoutX="168.0" layoutY="74.0" />
+      <ImageView fitHeight="118.0" fitWidth="130.0" layoutX="381.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/Paypal.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="44.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/CC.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="79.0" layoutY="252.0" onAction="#handleCreditCardButtonAction" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #e45652;" text="Credit/Debt" textFill="#e7e6e6" />
+      <JFXButton layoutX="389.0" layoutY="252.0" onAction="#handlePaypalButtonAction" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Paypal" textFill="#e7e6e6" />
+      <JFXButton layoutX="207.0" layoutY="331.0" onAction="#handleDoneButtonAction" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
+      <JFXButton layoutX="300.0" layoutY="331.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+      <JFXTextField fx:id="transidtxt" labelFloat="true" layoutX="239.0" layoutY="67.0" promptText="Deposit Amount" />
    </children>
 </Pane>

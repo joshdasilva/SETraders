@@ -35,8 +35,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -52,7 +55,7 @@ import setraders.util.SetradersUtility;
 
 public class TradingAccountController implements Initializable {
     
-    //chart
+    //Graph
     @FXML
     private LineChart<String, Number> lineChart;
     XYChart.Series<String, Number> series, series1, series2, series3;
@@ -99,6 +102,9 @@ public class TradingAccountController implements Initializable {
     
     @FXML
     private AnchorPane mainRootPane;
+    
+    @FXML
+    private Pane fullContainer;
     
     @FXML
     private StackPane rootPane;
@@ -245,35 +251,43 @@ public class TradingAccountController implements Initializable {
     
     @FXML//deposit button
     private void handleDepositButtonAction(ActionEvent event){
-        try{
-        getStage().setIconified(true);
-        
+    try { BoxBlur blur = new BoxBlur(4, 4, 4);
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/deposit/Deposit.fxml"));
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        fullContainer.setEffect(blur);
+        stage.showAndWait();
+        fullContainer.setEffect(null);
+  
+        
+
+    } catch (IOException ex) {
+        Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
     }
+    }
+   
     
     @FXML//withdraw button
     private void handleWithdrawButtonAction(ActionEvent event){
-        try{
-        getStage().setIconified(true);
-      
+    try { //getStage().setIconified(true);
+        BoxBlur blur = new BoxBlur(4, 4, 4);
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/withdraw/Withdraw.fxml"));
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.show();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        fullContainer.setEffect(blur);
+        stage.showAndWait();
+        fullContainer.setEffect(null);
+
         } catch (IOException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -301,7 +315,7 @@ public class TradingAccountController implements Initializable {
         }
     }
             
-    @FXML
+    @FXML //create transaction receipt list functionality
     private void exportAsPDF(ActionEvent event) {
         System.out.println("This worked");
         List<List> printData = new ArrayList<>();

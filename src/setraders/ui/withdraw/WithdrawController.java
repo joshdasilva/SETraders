@@ -21,14 +21,18 @@ public class WithdrawController implements Initializable{
    
     
     
-    
     @FXML
+    private void handleDoneButtonAction( ActionEvent event){
+        
+    }
+    
+    @FXML //cancel button
     void handleWithdrawCancel(ActionEvent event) {
     Node  source = (Node)  event.getSource(); 
     Stage stage  = (Stage) source.getScene().getWindow();
     stage.close();
     }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
        

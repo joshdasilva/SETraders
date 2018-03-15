@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.tradingaccount.TradingAccountController">
+<Pane fx:id="fullContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.tradingaccount.TradingAccountController">
    <children>
       <ImageView fitHeight="38.0" fitWidth="1300.0" layoutY="1.0" onMouseDragged="#handleDrag" onMousePressed="#handleDragValue" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="14.0" layoutY="7.0" text="SE TRADERS" textFill="#e7e6e6">

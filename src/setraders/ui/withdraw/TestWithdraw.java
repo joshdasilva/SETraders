@@ -1,6 +1,9 @@
-
-
-package setraders.ui.tradingaccount;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package setraders.ui.withdraw;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,26 +12,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
-public class TestTradingAccount extends Application {
-    
+/**
+ *
+ * @author alton
+ */
+public class TestWithdraw extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-       Parent root = FXMLLoader.load(getClass().getResource("TradingAccount.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("Withdraw.fxml"));
         
         Scene scene = new Scene(root);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("SE Traders Trading Account");
-        
+        stage.setTitle("SE Traders Withdraw");
     } 
 
     public static void main(String[] args) {
         launch(args);
     }
-
-    
-} 
-
+}
