@@ -3,10 +3,11 @@ package setraders.tradingitem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class ThreadHandler{   
-    Thread cryptoPrice;
-    Thread forexPrice;
-    Thread stockPrice;
+    public static Thread cryptoPrice;
+    public static Thread forexPrice;
+    public static Thread stockPrice;
 
     public ThreadHandler() {
         
@@ -20,7 +21,10 @@ public class ThreadHandler{
                         Logger.getLogger(ThreadHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     PriceSimulator.randomGenCrypto();
+
                 }
+                
+
             }
         };
         

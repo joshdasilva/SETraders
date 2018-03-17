@@ -6,6 +6,7 @@
 package setraders.ui.tradingaccount;
 
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -51,6 +52,7 @@ import setraders.database.DatabaseHandler;
 import setraders.ui.tables.PriceTable;
 import setraders.ui.tables.Transaction;
 import setraders.util.SetradersUtility;
+import setraders.tradingitem.ThreadHandler;
 
 
 
@@ -58,8 +60,8 @@ public class TradingAccountController implements Initializable {
     
     //Graph
     @FXML
-    private LineChart<String, Number> lineChart;
-    XYChart.Series<String, Number> series, series1, series2, series3;
+    private  LineChart<String, Number> lineChart;
+    public static XYChart.Series<String, Number> series, series1, series2;
     
     //listboxes
     @FXML
@@ -102,6 +104,9 @@ public class TradingAccountController implements Initializable {
     private AnchorPane mainContainer;
     
     @FXML
+    JFXComboBox tradingitemDrop;
+    
+    @FXML
     private AnchorPane mainRootPane;
     
     @FXML
@@ -141,64 +146,65 @@ public class TradingAccountController implements Initializable {
     
     //to store transaction items when fetched from table
     ObservableList<Transaction> list = FXCollections.observableArrayList();
+    
+
    
-    /*
+    
     //list to store Forex pair data
     private ObservableList<PriceTable> forexList = FXCollections.observableArrayList(
     
-            new PriceTable("GBP/EUR","£120","2"),
-            new PriceTable("GBP/USD","2","1"),
-            new PriceTable("GBP/SGD","1","1"),
-            new PriceTable("GBP/INR","1","2"),
-            new PriceTable("GBP/HKD","2","1"),
-            new PriceTable("GBP/JPY","1","1"),
-            new PriceTable("JPMorgan Chase","1","2"),
-            new PriceTable("Bank of America","2","1"),
-            new PriceTable("Samsung Electroincs","1","1"),
-            new PriceTable("Visa","1","2"),
-            new PriceTable("Coca-Cola","2","1"),
-            new PriceTable("Oracle","1","2"),
-            new PriceTable("IBM","2","1"),
-            new PriceTable("Tesla","1","1"),
-            new PriceTable("Bose","1","2"),
-            new PriceTable("AMD","2","1"),
-            new PriceTable("Microsoft","1","1"),
-            new PriceTable("Intel","1","2"),
-            new PriceTable("Tesco","2","1"),
-            new PriceTable("Berkshire Hathaway","1","1"),
-            new PriceTable("Apple","1","2"),
-            new PriceTable("Amazon","2","1"),
-            new PriceTable("Spotify","1","1")
+
+            new PriceTable("USD/EUR ","2","1"),
+            new PriceTable("USD/JPY","1","1"),
+            new PriceTable("USD/GBP","1","2"),
+            new PriceTable("USD/AUD","2","1"),
+            new PriceTable("USD/CAD","1","1"),
+            new PriceTable("USD/CNY","1","2"),
+            new PriceTable("USD/CHF","2","1"),
+            new PriceTable("USD/MXN","1","1"),
+            new PriceTable("USD/SGD","1","2"),
+            new PriceTable("USD/KRW","2","1"),
+            new PriceTable("USD/NZD","1","2"),
+            new PriceTable("USD/HKD","2","1"),
+            new PriceTable("USD/SEK","1","1"),
+            new PriceTable("USD/TRY","1","2"),
+            new PriceTable("USD/INR","2","1"),
+            new PriceTable("USD/RUB","1","1"),
+            new PriceTable("USD/NOK","1","2"),
+            new PriceTable("USD/BRL","2","1"),
+            new PriceTable("USD/ZAR","1","1"),
+            new PriceTable("USD/TWD","1","2"),
+            new PriceTable("USD/PLN","2","1"),
+            new PriceTable("USD/OTH","1","1")
             );
     
     //list to store cryptocurrency data
     private ObservableList<PriceTable> cryptoList = FXCollections.observableArrayList(
 
-            new PriceTable("btc","£120","2"),
-            new PriceTable("eth","2","1"),
-            new PriceTable("xrp","1","1"),
-            new PriceTable("neo","1","2"),
-            new PriceTable("eos","2","1"),
-            new PriceTable("ltc","1","1"),
-            new PriceTable("JPMorgan Chase","1","2"),
-            new PriceTable("Bank of America","2","1"),
-            new PriceTable("Samsung Electroincs","1","1"),
-            new PriceTable("Visa","1","2"),
-            new PriceTable("Coca-Cola","2","1"),
-            new PriceTable("Oracle","1","2"),
-            new PriceTable("IBM","2","1"),
-            new PriceTable("Tesla","1","1"),
-            new PriceTable("Bose","1","2"),
-            new PriceTable("AMD","2","1"),
-            new PriceTable("Microsoft","1","1"),
-            new PriceTable("Intel","1","2"),
-            new PriceTable("Tesco","2","1"),
-            new PriceTable("Berkshire Hathaway","1","1"),
-            new PriceTable("Apple","1","2"),
-            new PriceTable("Amazon","2","1"),
-            new PriceTable("Spotify","1","1")
+            new PriceTable("Bitcoin (BTC)","£120","2"),
+            new PriceTable("Ether (ETH)","2","1"),
+            new PriceTable("Ripple (XRP)","1","1"),
+            new PriceTable("Bitcoin Cash (BCH)","1","2"),
+            new PriceTable("Litecoin (LTC)","2","1"),
+            new PriceTable("NEO (NEO)","1","1"),
+            new PriceTable("Cardano (ADA)","1","2"),
+            new PriceTable("Stellar (XLM)","2","1"),
+            new PriceTable("EOS (EOS)","1","1"),
+            new PriceTable("Monero (XMR)","1","2"),
+            new PriceTable("Dash (DASH)","2","1"),
+            new PriceTable("IOTA (MIOTA)","1","2"),
+            new PriceTable("NEM (XEM)","2","1"),
+            new PriceTable("Tether (USDT)","1","1"),
+            new PriceTable("VeChain (VEN)","1","2"),
+            new PriceTable("TRON (TRX)","2","1"),
+            new PriceTable("Ether Classic (ETC)","1","1"),
+            new PriceTable("Lisk (LSK)","1","2"),
+            new PriceTable("Nano (NANO)","2","1"),
+            new PriceTable("OmiseGo (OMG)","1","1"),
+            new PriceTable("Bitcoin Gold (BTG)","1","2"),
+            new PriceTable("Qtum (QTUM)","2","1")
             );
-    */
+    
     //list to store company data 
     ObservableList<PriceTable> data = FXCollections.observableArrayList(
            
@@ -222,7 +228,6 @@ public class TradingAccountController implements Initializable {
             new PriceTable("Intel","1","2"),
             new PriceTable("Tesco","2","1"),
             new PriceTable("Berkshire Hathaway","1","1"),
-            new PriceTable("Apple","1","2"),
             new PriceTable("Amazon","2","1"),
             new PriceTable("Spotify","1","1")
             );
@@ -409,20 +414,57 @@ public class TradingAccountController implements Initializable {
     @Override//loaded at start
     public void initialize(URL url, ResourceBundle rb) {
         
+        ThreadHandler threadHandler = new ThreadHandler();
+        threadHandler.cryptoPrice.start();
+        threadHandler.forexPrice.start();
+        threadHandler.stockPrice.start();
+        
+        series = new XYChart.Series<>();
+        series.setName("Apple");
+      series1 = new XYChart.Series<>();
+      series1.setName("SAM");
+      series2 = new XYChart.Series<>();
+      series2.setName("DAM");
+        lineChart.getData().add(series);
+      lineChart.getData().add(series1);
+      lineChart.getData().add(series2);
+
+        
         databaseHandler = DatabaseHandler.getInstance();
         
+        initComboBox();
         initColumns();
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
         
-        /*//line chart code
-        series = new XYChart.Series<>();
-        series.setName("Apple");
-        lineChart.getData().add(series); 
-        */
+        
+        //line chart code
+ 
+        
     }
-    
+    private void initComboBox(){
+    List<String> drop_list = new ArrayList<String>();
+        drop_list.add("Shares");
+        drop_list.add("Forex");
+        drop_list.add("Cryptocurrencies");
+        
+        ObservableList oblist_drop = FXCollections.observableList(drop_list);
+        tradingitemDrop.getItems().clear();
+        tradingitemDrop.setItems(oblist_drop);
+        
+        tradingitemDrop.setOnAction((event) -> {
+            
+        String item = (String)tradingitemDrop.getSelectionModel().getSelectedItem();
+        if (item == "Shares"){
+            priceTable.setItems(data);
+        } else if (item == "Forex"){
+            priceTable.setItems(forexList);
+        } else if (item == "Cryptocurrencies"){
+            priceTable.setItems(cryptoList);
+        }
+        });
+    }
     //initialise transaction and price table columns    
     private void initColumns(){  
         transactionidCol.setCellValueFactory(new PropertyValueFactory<>("transactionid"));
@@ -453,9 +495,6 @@ public class TradingAccountController implements Initializable {
             while (rs.next()) {
                 String bal1 = rs.getString("balance");
                 balancelabel.setText(bal1);
-                //System.out.println(transidx);
-                
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
