@@ -18,13 +18,15 @@ import setraders.ui.tradingaccount.TradingAccountController;
         private final SimpleStringProperty type;
         private final SimpleStringProperty margin;
         private final SimpleStringProperty time;
+        private final SimpleStringProperty price;
 
-        public Transaction(String tid, String cid, String tyid, String mid, String datid) {
+        public Transaction(String tid, String cid, String tyid, String mid, String datid, String pid) {
             this.transactionid = new SimpleStringProperty(tid);
             this.company = new SimpleStringProperty(cid);
             this.type = new SimpleStringProperty(tyid);
             this.margin = new SimpleStringProperty(mid);
             this.time = new SimpleStringProperty(datid);
+            this.price = new SimpleStringProperty(pid);
 
         }
 
@@ -43,7 +45,10 @@ import setraders.ui.tradingaccount.TradingAccountController;
         public String getMargin() {
             return margin.get();
         }
-         public String getTime() {
+        public String getTime() {
             return time.get();
+        }
+        public String getPrice() {
+            return price.get();
         }
     }

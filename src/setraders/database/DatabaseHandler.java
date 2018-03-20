@@ -46,7 +46,7 @@ public final class DatabaseHandler {
            createConnection();
            inflateDB();
   
-    }
+    } 
 
          private DatabaseHandler() {
       //createConnection();
@@ -68,7 +68,7 @@ public final class DatabaseHandler {
     
         public boolean dbadmin() {
         try {
-            String updatebalance = "DELETE FROM BAL";
+            String updatebalance = "INSERT INTO TRANS (transactionid,company,type,margin,time,price) VALUES('1','Apple','Buy','100','21:39 19/03/2018','1000')";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
            System.out.println("administration done");
             int res = stmt.executeUpdate();

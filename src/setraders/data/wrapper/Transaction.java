@@ -15,13 +15,15 @@ public class Transaction {
     String type;
     String margin;
     String time;
+    String price;
 
-    public Transaction(String transactionid, String company, String type, String margin, String time) {
+    public Transaction(String transactionid, String company, String type, String margin, String time, String price) {
         this.transactionid = transactionid;
         this.company = company;
         this.type = type;
         this.margin = margin;
         this.time = time;
+        this.price = price;
     }
     
  public String getTransactionid() {
@@ -62,6 +64,14 @@ public class Transaction {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
     
     

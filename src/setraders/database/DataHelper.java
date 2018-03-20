@@ -23,12 +23,13 @@ public class DataHelper {
      public static boolean insertNewTransaction(Transaction transaction) {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO TRANS(transactionid,company,type,margin,time) VALUES(?,?,?,?,?)");
+                    "INSERT INTO TRANS(transactionid,company,type,margin,time,price) VALUES(?,?,?,?,?,?)");
             statement.setString(1, transaction.getTransactionid());
             statement.setString(2, transaction.getCompany());
             statement.setString(3, transaction.getType());
             statement.setString(4, transaction.getMargin());
             statement.setString(5, transaction.getTime());
+            statement.setString(6,transaction.getPrice());
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);

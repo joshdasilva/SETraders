@@ -40,7 +40,7 @@ public class DepositController implements Initializable{
     @FXML
     private Pane depositPane;
     
-     @FXML
+    @FXML
     private JFXTextField bal;
     @FXML
     private StackPane spane;
@@ -101,6 +101,11 @@ public class DepositController implements Initializable{
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to deposit amount", "Check all the entries and try again");
         }    
+    }
+    
+    @FXML
+    private void getBalance(double balance){
+        
     }
     
     private void refresh(){
