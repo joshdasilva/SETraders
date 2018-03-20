@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.notification.NotificationController">
+ <children>
+      <StackPane fx:id="spane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <AnchorPane fx:id="apane" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="SE Trader" textFill="#e7e6e6" />
+                  <Label layoutX="218.0" layoutY="44.0" prefHeight="32.0" prefWidth="168.0" text="Set Notification" textFill="#e7e6e6">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <JFXButton layoutX="222.0" layoutY="331.0" onAction="#setNotificationHandle" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Ok" textFill="#e7e6e6" />
+                  <JFXButton layoutX="320.0" layoutY="331.0" onAction="#setCancelHandle" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+                  <JFXRadioButton fx:id="greaterThanId" layoutX="52.0" layoutY="104.0" text="Greater than" textFill="#e7e6e6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="MyGroup" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="equalsToId" layoutX="52.0" layoutY="145.0" prefHeight="27.0" prefWidth="117.0" text="Equal to" textFill="#e7e6e6" toggleGroup="$MyGroup">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="lessThanId" layoutX="53.0" layoutY="187.0" prefHeight="27.0" prefWidth="117.0" text="Less than" textFill="#e7e6e6" toggleGroup="$MyGroup">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXRadioButton>
+                  <JFXTextField fx:id="notificationText" layoutX="73.0" layoutY="237.0" prefHeight="38.0" prefWidth="223.0" promptText="Set notification" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</Pane>

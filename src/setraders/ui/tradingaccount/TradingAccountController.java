@@ -435,9 +435,7 @@ public class TradingAccountController implements Initializable {
     @Override//loaded at start
     public void initialize(URL url, ResourceBundle rb) {
         ThreadHandler threadHandler = new ThreadHandler();
-        threadHandler.cryptoPrice.start();
-        threadHandler.forexPrice.start();
-        threadHandler.stockPrice.start();
+        threadHandler.price_thread.start();
                 series = new XYChart.Series<>();
         series.setName("Apple");
       series1 = new XYChart.Series<>();

@@ -36,7 +36,7 @@ public class PriceSimulator
         for(int i = 0; i < cryptoPrice.length; i++ ){
         cryptoPrice[i] = (int) (0.1 + (15000-4000) * random.nextInt());
         TradingAccountController.stocksArray[i] = (int) cryptoPrice[i];
-        System.out.println(TradingAccountController.stocksArray[i]);
+       // System.out.println(TradingAccountController.stocksArray[i]);
       
         //series.getData().add(new XYChart.Data<>(cryptoCount+ "", cryptoPrice[i]));
         //cryptoCount++;
