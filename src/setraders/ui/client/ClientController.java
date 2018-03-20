@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -64,8 +67,9 @@ public class ClientController implements Initializable {
         String pword = DigestUtils.shaHex(password.getText());
 
         if (uname.equals(credential.getUsername()) && pword.equals(credential.getPassword())) {
-            closeStage();
+            
             loadMain();
+
         } else {
             
             username.getStyleClass().add("wrong-credentials");
@@ -119,17 +123,37 @@ public class ClientController implements Initializable {
         alert.setContentText("Capital is at risk, losses are not liable to SE Trader and or its affiliates. Futures, stocks and options trading involves substantial risk of loss and is not suitable for every investor. The valuation of futures, stocks and options may fluctuate, and, as a result, clients may lose more than their original investment.");
         alert.initStyle(StageStyle.UNDECORATED);
         
+       
         Optional<ButtonType> option = alert.showAndWait();
- 
+        
         if (option.get() == ButtonType.OK) { 
         try {
             
+            
+        List<String> choices = new ArrayList<>();
+        choices.add("USD");
+        choices.add("GBP");
+        
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("USD", choices);
+        dialog.setTitle("Local Currency Choice");
+        dialog.setHeaderText("Please choose your local currency for this session. The default currency is USD.");
+        dialog.setContentText("Choose your prefered currency");
+        dialog.initStyle(StageStyle.UNDECORATED);
+         
+        Optional<String> result = dialog.showAndWait();
+        
+       if (result.isPresent() == true){
+            closeStage();
             Parent parent = FXMLLoader.load(getClass().getResource("/setraders/ui/tradingaccount/TradingAccount.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
             stage.setTitle("SE Traders");
             stage.setScene(new Scene(parent));
             
             stage.show();
+       } 
+       if(result.isPresent() == false){
+           dialog.setHeaderText("Your currency is set to USD. Please press on Ok button to continue");
+       }
 
         } catch (IOException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);

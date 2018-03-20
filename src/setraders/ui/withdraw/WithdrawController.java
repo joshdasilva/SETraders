@@ -53,9 +53,19 @@ public class WithdrawController implements Initializable{
     
     @FXML
     private void handleDoneButtonAction( ActionEvent event){
-        
         double balance = Double.parseDouble(bal.getText());
         String accountid = "user1";
+        DatabaseHandler handler = DatabaseHandler.getInstance(); 
+        String qu = "SELECT * FROM bal";
+        ResultSet rs = handler.execQuery(qu);
+        String balancex = new String();
+        try { 
+            while (rs.next()) {
+                 balancex = rs.getString("balance");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }                
 
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceminus(bal1);

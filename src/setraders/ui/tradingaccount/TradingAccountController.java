@@ -96,7 +96,7 @@ public class TradingAccountController implements Initializable {
     
     //price table start
     @FXML
-    private TableView<PriceTable> priceTable;
+    public  TableView<PriceTable> priceTable;
         
     @FXML
     private TableColumn<PriceTable, String> companycfdCol;
@@ -212,33 +212,32 @@ public class TradingAccountController implements Initializable {
             new PriceTable("Qtum (QTUM)",23,"1")
             );
     
-    int[] priceArray = {120,100,200,2500,500,500};
-    int numbero = 226;  
+    public static int[] stocksArray = new int[22]; 
     //list to store company data 
-    ObservableList<PriceTable> data = FXCollections.observableArrayList(
+    public ObservableList<PriceTable> data = FXCollections.observableArrayList(
          
-            new PriceTable("Apple",priceArray[3],"2"),
-            new PriceTable("Alphabet",2,"1"),
-            new PriceTable("Berkshire Hathaway",1,"1"),
-            new PriceTable("Facebook",1,"2"),
-            new PriceTable("AT&T",2,"1"),
-            new PriceTable("Berkshire Hathaway",1,"1"),
-            new PriceTable("JPMorgan Chase",1,"2"),
-            new PriceTable("Bank of America",2,"1"),
-            new PriceTable("Samsung Electroincs",1,"1"),
-            new PriceTable("Visa",1,"2"),
-            new PriceTable("Coca-Cola",2,"1"),
-            new PriceTable("Oracle",21,"2"),
-            new PriceTable("IBM",23,"1"),
-            new PriceTable("Tesla",18,"1"),
-            new PriceTable("Bose",12,"2"),
-            new PriceTable("AMD",19,"1"),
-            new PriceTable("Microsoft",16,"1"),
-            new PriceTable("Intel",11,"2"),
-            new PriceTable("Tesco",2,"1"),
-            new PriceTable("Berkshire Hathaway",1,"1"),
-            new PriceTable("Amazon",2,"1"),
-            new PriceTable("Spotify",1,"1")
+            new PriceTable("Apple",stocksArray[0],"2"),
+            new PriceTable("Alphabet",stocksArray[1],"1"),
+            new PriceTable("Berkshire Hathaway",stocksArray[2],"1"),
+            new PriceTable("Facebook",stocksArray[3],"2"),
+            new PriceTable("AT&T",stocksArray[4],"1"),
+            new PriceTable("Berkshire Hathaway",stocksArray[5],"1"),
+            new PriceTable("JPMorgan Chase",stocksArray[6],"2"),
+            new PriceTable("Bank of America",stocksArray[7],"1"),
+            new PriceTable("Samsung Electroincs",stocksArray[8],"1"),
+            new PriceTable("Visa",stocksArray[9],"2"),
+            new PriceTable("Coca-Cola",stocksArray[10],"1"),
+            new PriceTable("Oracle",stocksArray[11],"2"),
+            new PriceTable("IBM",stocksArray[12],"1"),
+            new PriceTable("Tesla",stocksArray[13],"1"),
+            new PriceTable("Bose",stocksArray[14],"2"),
+            new PriceTable("AMD",stocksArray[15],"1"),
+            new PriceTable("Microsoft",stocksArray[16],"1"),
+            new PriceTable("Intel",stocksArray[17],"2"),
+            new PriceTable("Tesco",stocksArray[18],"1"),
+            new PriceTable("Berkshire Hathaway",stocksArray[19],"1"),
+            new PriceTable("Amazon",stocksArray[20],"1"),
+            new PriceTable("Spotify",stocksArray[21],"1")
             );
      
     @FXML//close button
@@ -435,13 +434,11 @@ public class TradingAccountController implements Initializable {
     
     @Override//loaded at start
     public void initialize(URL url, ResourceBundle rb) {
-        /*
         ThreadHandler threadHandler = new ThreadHandler();
         threadHandler.cryptoPrice.start();
         threadHandler.forexPrice.start();
         threadHandler.stockPrice.start();
-        
-        series = new XYChart.Series<>();
+                series = new XYChart.Series<>();
         series.setName("Apple");
       series1 = new XYChart.Series<>();
       series1.setName("SAM");
@@ -450,8 +447,7 @@ public class TradingAccountController implements Initializable {
         lineChart.getData().add(series);
       lineChart.getData().add(series1);
       lineChart.getData().add(series2);
-*/
-        
+
         databaseHandler = DatabaseHandler.getInstance();
        
         initComboBox();
@@ -459,7 +455,16 @@ public class TradingAccountController implements Initializable {
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
+        
  
+    }
+    @FXML
+    private void loadGraph(MouseEvent event){
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
+        String transCompany = companycfdCol.getCellData(selectedForBuy);
+        int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
+        String transPrice = Integer.toString(transPriceint);
+        
     }
     
     private void initComboBox(){
@@ -475,7 +480,7 @@ public class TradingAccountController implements Initializable {
         tradingitemDrop.setOnAction((event) -> {
             
         String item = (String)tradingitemDrop.getSelectionModel().getSelectedItem();
-        if (item == "Shares"){
+        if (item == "Shares"){            
             priceTable.setItems(data);
         } else if (item == "Forex"){
             priceTable.setItems(forexList);
@@ -499,7 +504,7 @@ public class TradingAccountController implements Initializable {
     
     }
     //load price table data
-    private void loadPriceTable(){
+    public void loadPriceTable(){
         priceTable.setItems(data);   
     
     }

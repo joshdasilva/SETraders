@@ -5,6 +5,7 @@
  */
 package setraders.ui.deposit;
 
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -47,14 +48,31 @@ public class DepositController implements Initializable{
     private Boolean isInEditMode = Boolean.FALSE;
     @FXML
     private AnchorPane apane;
+    
+    @FXML
+    private JFXTextField paypalEmail;
+    
+    @FXML
+    private JFXPasswordField paypalPassword;
+    
+    @FXML
+    private JFXTextField ccNumber;
+
+    @FXML
+    private JFXTextField ccCvv;
+    
+    @FXML
+    private JFXTextField ccExp;
+    
     DatabaseHandler databaseHandler;
     
     @FXML
     private Label label;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     databaseHandler = DatabaseHandler.getInstance();
-   // loadbal();
+    loadbal();
     }
     
     @FXML //cancel button
@@ -87,17 +105,49 @@ public class DepositController implements Initializable{
     }
 }
     @FXML
-    private void handleDoneButtonAction( ActionEvent event){
+    private void handlePaypalDoneButtonAction( ActionEvent event){
         
-            double balance = Double.parseDouble(bal.getText());
+        double balance = Double.parseDouble(bal.getText());
         String accountid = "user1";
+        String paypalMail = paypalEmail.getText();
+        String paypalPass = paypalPassword.getText();
 
+        if ( paypalMail.isEmpty() || paypalPass.isEmpty() ) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
+            return;
+        }
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been Deposited");
             clearEntries();
             refresh();
+           // closestage();
+        } else {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to deposit amount", "Check all the entries and try again");
+        }    
+    }
+    
+        @FXML
+    private void handleCCDoneButtonAction( ActionEvent event){
+        
+        double balance = Double.parseDouble(bal.getText());
+        String ccnumber = ccNumber.getText();
+        String cccvv = ccCvv.getText();
+        String ccexp = ccExp.getText();
+        String accountid = "user1";
+
+           if ( ccnumber.isEmpty() || cccvv.isEmpty() || ccexp.isEmpty()) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
+            return;
+        }
+  
+        setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
+        boolean result = DataHelper.updateBalanceplus(bal1);
+        if (result) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been Deposited");
+            refresh();
+           // closestage();
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to deposit amount", "Check all the entries and try again");
         }    
@@ -110,6 +160,14 @@ public class DepositController implements Initializable{
     
     private void refresh(){
         loadbal();
+    }
+    
+    private void closestage(){
+    ((Stage) apane.getScene().getWindow()).close();
+    }
+    
+        private Stage getStage() {
+        return (Stage) apane.getScene().getWindow();
     }
     
     private void loadbal(){
