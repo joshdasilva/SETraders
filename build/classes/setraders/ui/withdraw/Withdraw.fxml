@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.withdraw.WithdrawController">
+ <children>
+      <StackPane fx:id="spane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <AnchorPane fx:id="apane" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="SE Trader" textFill="#e7e6e6" />
+                  <Label layoutX="44.0" layoutY="166.0" prefHeight="49.0" prefWidth="503.0" text="Be advised your funds will be moved to your bank details which you provided&#10;when signing up. Your withdraw limit is £100,000" textFill="#e7e6e6">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="138.0" layoutY="101.0" prefHeight="26.0" prefWidth="122.0" text="Withdraw :" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <JFXButton layoutX="207.0" layoutY="331.0" onAction="#handleDoneButtonAction" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
+                  <JFXButton layoutX="300.0" layoutY="331.0" onAction="#handleWithdrawCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+                  <JFXTextField fx:id="bal" labelFloat="true" layoutX="239.0" layoutY="91.0" promptText="Withdraw Amount" />
+                  <Label fx:id="label" layoutX="259.0" layoutY="47.0" prefHeight="26.0" prefWidth="122.0" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</Pane>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="depositPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.deposit.DepositController">
+   <children>
+      <StackPane fx:id="spane" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <AnchorPane fx:id="apane" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="SE Trader" textFill="#e7e6e6" />
+                  <Label layoutX="99.0" layoutY="105.0" prefHeight="26.0" prefWidth="123.0" text="Paypal Email:" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="209.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/Paypal.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton layoutX="207.0" layoutY="331.0" onAction="#handlePaypalDoneButtonAction" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
+                  <JFXButton layoutX="300.0" layoutY="331.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+                   <JFXTextField fx:id="bal" labelFloat="true" layoutX="239.0" layoutY="39.0" promptText="Deposit Amount" />
+                  <JFXTextField fx:id="paypalEmail" labelFloat="true" layoutX="239.0" layoutY="96.0" prefHeight="38.0" prefWidth="246.0" promptText="input email address" />
+                  <Label layoutX="81.0" layoutY="166.0" prefHeight="26.0" prefWidth="129.0" text="Paypal Password:" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="240.0" layoutY="237.0" prefHeight="26.0" prefWidth="123.0" text="Powered By" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <JFXPasswordField fx:id="paypalPassword" layoutX="244.0" layoutY="155.0" prefHeight="38.0" prefWidth="246.0" promptText="Password" />
+                  <Label layoutX="132.0" layoutY="46.0" prefHeight="26.0" prefWidth="123.0" text="Amount:" textFill="#e7e6e6">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="label" layoutX="438.0" layoutY="33.0" prefHeight="17.0" prefWidth="50.0" text="Label" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</Pane>
