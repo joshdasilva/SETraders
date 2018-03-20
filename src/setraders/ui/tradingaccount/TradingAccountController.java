@@ -415,7 +415,25 @@ public class TradingAccountController implements Initializable {
     
     @FXML //notification button
     private void handleNotiToggleButtonAction(ActionEvent event){
-        double demostock=200;
+            try { BoxBlur blur = new BoxBlur(4, 4, 4);
+        Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/notification/Notification.fxml"));
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        fullContainer.setEffect(blur);
+        stage.showAndWait();
+        fullContainer.setEffect(null);
+        loadbalance();
+  
+        
+
+    } catch (IOException ex) {
+        Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        /*double demostock=200;
         Notifications notificationBuilder = Notifications.create()
         .title("Price Alert")
         .text("Your stock has hit £"+ demostock)
@@ -429,7 +447,7 @@ public class TradingAccountController implements Initializable {
             }
         });
         notificationBuilder.darkStyle();
-        notificationBuilder.showInformation();
+        notificationBuilder.showInformation();*/
     }
     
     @Override//loaded at start
