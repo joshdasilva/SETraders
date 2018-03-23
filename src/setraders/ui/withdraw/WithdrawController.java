@@ -38,7 +38,6 @@ public class WithdrawController implements Initializable{
     @FXML
     private Label label;
     
-    
     DatabaseHandler databaseHandler;
     
 
@@ -50,14 +49,15 @@ public class WithdrawController implements Initializable{
     
     @FXML
     private void handleDoneButtonAction( ActionEvent event){
-        String input = withdrawtxt.getText();
-        if(input.isEmpty()) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter withdraw amount.");
+        double balance = 0;
+        try{
+             balance = Double.parseDouble(withdrawtxt.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value");
+            clearEntries();
             return;
         }
-        
-        
-        double balance = Double.parseDouble(input);
+
         String accountid = "user1";
                 
         DatabaseHandler handler = DatabaseHandler.getInstance(); 
@@ -76,9 +76,6 @@ public class WithdrawController implements Initializable{
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }     
         
- 
-
-        
         if(check >= balance){
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceminus(bal1);
@@ -94,8 +91,7 @@ public class WithdrawController implements Initializable{
         else if (check <= balance) {
              AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "You dont have enough funds, Try a lower amount!");}
              clearEntries();
-   
-    }
+        }
     
     private void refresh(){
         loadbalance();
@@ -112,16 +108,12 @@ public class WithdrawController implements Initializable{
             while (rs.next()) {
                 String transidx = rs.getString("balance");
                 label.setText(transidx);
-                //System.out.println(transidx);
-                
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-
+   
 
     private void clearEntries() {
         withdrawtxt.clear();

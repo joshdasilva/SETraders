@@ -33,14 +33,13 @@ import setraders.ui.tradingaccount.TradingAccountController;
 
 /**
  *
- * @author alton
+ * @author Josh Da Silva
  */
 public class DepositController implements Initializable{
    
     
     @FXML
     private Pane depositPane;
-    
     @FXML
     private JFXTextField bal;
     @FXML
@@ -48,26 +47,22 @@ public class DepositController implements Initializable{
     private Boolean isInEditMode = Boolean.FALSE;
     @FXML
     private AnchorPane apane;
-    
     @FXML
     private JFXTextField paypalEmail;
-    
     @FXML
     private JFXPasswordField paypalPassword;
-    
     @FXML
     private JFXTextField ccNumber;
-
     @FXML
     private JFXTextField ccCvv;
-    
     @FXML
     private JFXTextField ccExp;
-    
-    DatabaseHandler databaseHandler;
-    
     @FXML
     private Label label;
+    
+    
+    DatabaseHandler databaseHandler;
+   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,11 +101,27 @@ public class DepositController implements Initializable{
 }
     @FXML
     private void handlePaypalDoneButtonAction( ActionEvent event){
-        
-        double balance = Double.parseDouble(bal.getText());
+        double balance = 0; 
+        try{
+             balance = Double.parseDouble(bal.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value in deposit field");
+            clearEntries();
+            return;
+        }
+
         String accountid = "user1";
         String paypalMail = paypalEmail.getText();
         String paypalPass = paypalPassword.getText();
+        
+               
+        try{
+             balance = Double.parseDouble(bal.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value");
+            clearEntries();
+            return;
+        }
 
         if ( paypalMail.isEmpty() || paypalPass.isEmpty() ) {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
@@ -119,7 +130,7 @@ public class DepositController implements Initializable{
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been Deposited");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ","£"+ balance+ " has been Deposited");
             clearEntries();
             refresh();
            // closestage();
@@ -130,14 +141,47 @@ public class DepositController implements Initializable{
     
         @FXML
     private void handleCCDoneButtonAction( ActionEvent event){
+         double balance = 0; 
+        try{
+             balance = Double.parseDouble(bal.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value in deposit field");
+            clearEntries();
+            return;
+        }
+
         
-        double balance = Double.parseDouble(bal.getText());
-        String ccnumber = ccNumber.getText();
-        String cccvv = ccCvv.getText();
-        String ccexp = ccExp.getText();
+        String t1 = ccNumber.getText();
+        String t2 = ccCvv.getText();
+        String t3 = ccExp.getText();
+      
+        try{
+            int ccnumber = Integer.parseInt(ccNumber.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value in Credit card number field");
+            ccNumber.clear();
+            return;
+        }
+         try{
+             int cccvv = Integer.parseInt(ccCvv.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value in cvv field");
+            ccCvv.clear();
+            return;
+        }
+        try{
+             int ccexp = Integer.parseInt(ccExp.getText());
+        }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value in credit card expiry field");
+            ccExp.clear();
+            return;
+        }
+         
+        
+         
         String accountid = "user1";
 
-           if ( ccnumber.isEmpty() || cccvv.isEmpty() || ccexp.isEmpty()) {
+           if ( t1.isEmpty() || t2.isEmpty() || t3.isEmpty()) {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
             return;
         }
@@ -145,9 +189,9 @@ public class DepositController implements Initializable{
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been Deposited");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ","£"+ balance + " has been Deposited");
             refresh();
-           // closestage();
+
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to deposit amount", "Check all the entries and try again");
         }    
