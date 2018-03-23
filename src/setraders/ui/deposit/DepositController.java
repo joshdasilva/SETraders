@@ -176,9 +176,7 @@ public class DepositController implements Initializable{
             ccExp.clear();
             return;
         }
-         
-        
-         
+ 
         String accountid = "user1";
 
            if ( t1.isEmpty() || t2.isEmpty() || t3.isEmpty()) {
