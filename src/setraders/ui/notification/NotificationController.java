@@ -58,7 +58,21 @@ public class NotificationController implements Initializable {
     
     public void radioSelect(ActionEvent event){
         if(lessThanId.isSelected()){
-         
+                 /*double demostock=200;
+        Notifications notificationBuilder = Notifications.create()
+        .title("Price Alert")
+        .text("Your stock has hit £"+ demostock)
+        .graphic(null)
+        .hideAfter(Duration.seconds(5))
+        .position(Pos.BOTTOM_RIGHT)
+        .onAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event1) {
+                System.out.println("Clicked on notification");
+            }
+        });
+        notificationBuilder.darkStyle();
+        notificationBuilder.showInformation();*/
         }
         if(greaterThanId.isSelected()){
             

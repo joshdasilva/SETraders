@@ -9,6 +9,7 @@ package setraders.ui.tradingaccount;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import javafx.scene.chart.LineChart;
@@ -33,7 +34,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,8 +48,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 import setraders.alert.AlertMaker; 
 import setraders.database.DataHelper;
 import setraders.database.DatabaseHandler;
@@ -62,88 +60,81 @@ import setraders.tradingitem.ThreadHandler;
 
 public class TradingAccountController implements Initializable {
     
-    //Graph
+    //Radio Boxes
+    @FXML
+    private JFXRadioButton tradeCFD;
+    @FXML
+    private JFXRadioButton tradeEquities;
+    
+    //line chart
     @FXML
     private  LineChart<String, Number> lineChart;
     public static XYChart.Series<String, Number> series, series1, series2;
     
-    //listboxes
+    
+    //listbox
     @FXML
     private JFXListView twitterListView;
    
-    //transaction table start
+    
+    //Equity transaction table start
     @FXML
     private TableView<Transaction> tableView;
-    
     @FXML
     private TableColumn<Transaction, String> companyCol;
-
     @FXML
     private TableColumn<Transaction, String> typeCol;
-    
     @FXML
     private TableColumn<Transaction, String> timeCol;
-    
     @FXML
     private TableColumn<Transaction, Number> priceCol;
-
     @FXML
     private TableColumn<Transaction, String> transactionidCol;
-    
     @FXML
     private TableColumn<Transaction, String> marginCol;
-     //transaction table end
+    //transaction table end
+    
     
     //price table start
     @FXML
-    public  TableView<PriceTable> priceTable;
-        
+    public  TableView<PriceTable> priceTable;   
     @FXML
     private TableColumn<PriceTable, String> companycfdCol;
-    
     @FXML
     private TableColumn<PriceTable, Number> pricecfdCol;
-    
     @FXML
     private TableColumn<PriceTable, String> changecfdCol;
-    
     @FXML
     private AnchorPane mainContainer;
-    
+    @FXML
+    private AnchorPane windowPane;
     @FXML
     JFXComboBox tradingitemDrop;
-    
     @FXML
     private AnchorPane mainRootPane;
-    
     @FXML
     private Pane fullContainer;
-    
     @FXML
     private Label balancelabel;
-    
     @FXML
     private StackPane rootPane;
-    
     @FXML
     private StackPane stackpane;
-    
-    private Boolean isInEditMode = Boolean.FALSE;
     //price table end
     
-    
-    
-    
-    // to make transaction
-    @FXML
-    private JFXButton sellEquities;
-    
+    // transaction buttons 
     @FXML
     private JFXButton buyEquities;
-    
+    @FXML
+    private JFXButton sellEquities;
+    @FXML
+    private JFXButton sellCFD;
+    @FXML
+    private JFXButton buyCFD;
     @FXML
     private JFXTextField amounttxt;
-    // end here
+    // end transaction buttons
+   
     
     DatabaseHandler databaseHandler;
     
@@ -159,8 +150,6 @@ public class TradingAccountController implements Initializable {
     
     //list to store Forex pair data
     private ObservableList<PriceTable> forexList = FXCollections.observableArrayList(
-    
-
             new PriceTable("USD/EUR ",43,"1"),
             new PriceTable("USD/JPY",56,"1"),
             new PriceTable("USD/GBP",67,"2"),
@@ -239,34 +228,54 @@ public class TradingAccountController implements Initializable {
             new PriceTable("Amazon",stocksArray[20],"1"),
             new PriceTable("Spotify",stocksArray[21],"1")
             );
+    
+  //----------Controls------------  
      
+    @FXML//minimise button
+    private void handleMin(MouseEvent event){
+    getStage().setIconified(true);
+    }
+    
     @FXML//close button
     private void handleClose(MouseEvent event){
     System.exit(0);
     }
     
-    private Stage getStage() {
-        return (Stage) tableView.getScene().getWindow();
-    }
-   
-    @FXML//minimise button
-    private void handleMin(MouseEvent event){
-    getStage().setIconified(true);
-    }
-   
     @FXML//drag application window
     private void handleDrag(MouseEvent event) {        
     getStage().setX(event.getScreenX()- xOffset);
     getStage().setY(event.getScreenY() -yOffset);
     }
-    
+  
     @FXML//drag value for application window
     private void handleDragValue(MouseEvent event) {
     xOffset = event.getSceneX();
     yOffset = event.getSceneY();
     }
     
-    @FXML//deposit button
+    private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
+    }
+    
+    //-------End Controls--------
+    
+    
+    //-------Logout, Deposit, notification and withdraw buttons---------
+    
+    @FXML //logout 
+    private void handleLogoutButtonAction(ActionEvent event){
+        try{
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("/setraders/ui/client/Client.fxml"));
+        Scene scene = new Scene(sceneParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML//deposit 
     private void handleDepositButtonAction(ActionEvent event){
     try { BoxBlur blur = new BoxBlur(4, 4, 4);
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/deposit/Deposit.fxml"));
@@ -280,18 +289,14 @@ public class TradingAccountController implements Initializable {
         stage.showAndWait();
         fullContainer.setEffect(null);
         loadbalance();
-  
-        
-
-    } catch (IOException ex) {
+        } catch (IOException ex) {
         Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        }
     }
    
-    
-    @FXML//withdraw button
+    @FXML //withdraw
     private void handleWithdrawButtonAction(ActionEvent event){
-    try { //getStage().setIconified(true);
+    try { 
         BoxBlur blur = new BoxBlur(4, 4, 4);
         Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/withdraw/Withdraw.fxml"));
         
@@ -310,7 +315,55 @@ public class TradingAccountController implements Initializable {
         }
     }
     
-    @FXML //test simulation to get data from text field to load to db ___use this code to add data to transaction list database
+    @FXML //set notification button
+    private void handleNotiToggleButtonAction(ActionEvent event){
+            try { BoxBlur blur = new BoxBlur(4, 4, 4);
+        Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/notification/Notification.fxml"));
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        fullContainer.setEffect(blur);
+        stage.showAndWait();
+        fullContainer.setEffect(null);
+        loadbalance();
+  
+        } catch (IOException ex) {
+        Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+//--------------------END logout, withdraw, notification and deposit buttons -------------------
+    
+//---------------------Radio Button Trading Type------------------------------------------------
+
+    @FXML
+    private void HandleTradingTypeRadioButton(ActionEvent event){
+        
+        if(tradeEquities.isSelected()){
+          
+        sellCFD.setVisible(false);
+        buyCFD.setVisible(false);
+        buyEquities.setVisible(true);
+        sellEquities.setVisible(true);
+        }
+        if(tradeCFD.isSelected()){
+        
+        sellCFD.setVisible(true);
+        buyCFD.setVisible(true);
+        buyEquities.setVisible(false);
+        sellEquities.setVisible(false);
+        }
+    }
+
+//--------------------Radio button end---------------------------------------------------------    
+    
+    
+    
+//------------------------- CFD Buy and Sell buttons ------------------------------
+    @FXML //
     private void handleBuyCFDButtonAction(ActionEvent event){
     
         DatabaseHandler handler = DatabaseHandler.getInstance();
@@ -356,23 +409,92 @@ public class TradingAccountController implements Initializable {
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
-            clearEntries();
+            amounttxt.clear();
             refreshTransactionTable();
-            enableSellEquities();
         } else {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
         }
 
     }
     
-    private void enableSellEquities(){
-       // sellEquities.setDisable(false);
-       // buyEquities.setDisable(true);
-        
+    @FXML //short button
+    private void handleShortCFDButtonAction(ActionEvent event){
         
     }
+        
+    //--------------------------END CFD buy and sell/short button-------------------------
+    
+    
+    //------------------------- Equity Buy and Sell buttons ------------------------------
+    
+    @FXML //buy equities
+    private void handleBuyEquityButtonAction(ActionEvent event){
+    
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        Date date = new Date();
+        
+        String qu = "SELECT * FROM TRANS WHERE transactionid=(SELECT MAX(transactionid) FROM TRANS)";
+        ResultSet rs = handler.execQuery(qu);
+        String transID = new String();
+        try {
+            while (rs.next()) {
+                 String result = rs.getString("transactionid");
+                 int transIDn = Integer.parseInt(result) + 1;
+                 transID = Integer.toString(transIDn);
+            }      
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();                      
+        
+        String transType = "Buy";
+        String transCompany = companycfdCol.getCellData(selectedForBuy);
+        
+        int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
+        String transPrice = Integer.toString(transPriceint);
+        
+        String transAmount = amounttxt.getText();
+        String transTime = dateFormat.format(date);
+        
+        if (selectedForBuy == null) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "No item selected", "Please select a trading item from pricelist to trade");
+            return;
+        }
+        
+        if(transAmount.isEmpty()) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter trading amount.");
+            return;
+        }
+         
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice);
+        boolean result = DataHelper.insertNewTransaction(transaction);
+        if (result) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
+            amounttxt.clear();
+            refreshTransactionTable();
+        } else {
+            AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
+        }
+
+    }
+       
+    
+    @FXML //sell/short equities button
+    private void handleSellEquityButtonAction(ActionEvent event){
+        
+    }
+    
+    //----------------------------------END CFD buy and sell/short button----------------------------------------------
+    
+    
+    
+    
+    //--------------------------------create transaction receipt list functionality-----------------------------------
             
-    @FXML //create transaction receipt list functionality
+    @FXML 
     private void exportAsPDF(ActionEvent event) {
         System.out.println("This worked");
         List<List> printData = new ArrayList<>();
@@ -390,69 +512,15 @@ public class TradingAccountController implements Initializable {
         SetradersUtility.initPDFExprot(stackpane, mainRootPane, getStage(), printData);
     }
     
-    //test simulation clear textfields
-    private void clearEntries() {
-        amounttxt.clear(); 
-    }
+    //------------------------------------------------End create reciept--------=---------------------------------------
     
-    @FXML //short button
-    private void handleShortCFDButtonAction(ActionEvent event){
-        
-    }
+   
     
-    @FXML //logout button
-    private void handleLogoutButtonAction(ActionEvent event){
-        try{
-        Parent sceneParent = FXMLLoader.load(getClass().getResource("/setraders/ui/client/Client.fxml"));
-        Scene scene = new Scene(sceneParent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-        } catch (IOException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @FXML //notification button
-    private void handleNotiToggleButtonAction(ActionEvent event){
-            try { BoxBlur blur = new BoxBlur(4, 4, 4);
-        Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/notification/Notification.fxml"));
-        
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        fullContainer.setEffect(blur);
-        stage.showAndWait();
-        fullContainer.setEffect(null);
-        loadbalance();
-  
-        
 
-    } catch (IOException ex) {
-        Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        /*double demostock=200;
-        Notifications notificationBuilder = Notifications.create()
-        .title("Price Alert")
-        .text("Your stock has hit £"+ demostock)
-        .graphic(null)
-        .hideAfter(Duration.seconds(5))
-        .position(Pos.BOTTOM_RIGHT)
-        .onAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event1) {
-                System.out.println("Clicked on notification");
-            }
-        });
-        notificationBuilder.darkStyle();
-        notificationBuilder.showInformation();*/
-    }
     
-    @Override//loaded at start
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ThreadHandler threadHandler = new ThreadHandler();
+       /* ThreadHandler threadHandler = new ThreadHandler();
         threadHandler.price_thread.start();
                 series = new XYChart.Series<>();
         series.setName("Apple");
@@ -463,25 +531,27 @@ public class TradingAccountController implements Initializable {
         lineChart.getData().add(series);
       lineChart.getData().add(series1);
       lineChart.getData().add(series2);
-
+*/
         databaseHandler = DatabaseHandler.getInstance();
        
+        initButtons();
         initComboBox();
         initColumns();
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
-        
- 
     }
-    @FXML
-    private void loadGraph(MouseEvent event){
-        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
-        String transCompany = companycfdCol.getCellData(selectedForBuy);
-        int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
-        String transPrice = Integer.toString(transPriceint);
-        
+    
+    
+    //------------------------------------hiding cfd buttons on start up---------------------------
+    
+    private void initButtons(){
+        sellCFD.setVisible(false);
+        buyCFD.setVisible(false);
     }
+    //------------------------------------End -----------------------------------------------------          
+    
+    //-----------------------------------Combobox to choose trading item--------------------------------
     
     private void initComboBox(){
     List<String> drop_list = new ArrayList<String>();
@@ -505,7 +575,12 @@ public class TradingAccountController implements Initializable {
         }
         });
     }
-    //initialise transaction and price table columns    
+    
+    //---------------------------------End Combobox---------------------------------------------------------
+    
+    
+    //-------------Initialise Columns for price and transaction tables and load price table------------------
+          
     private void initColumns(){  
         transactionidCol.setCellValueFactory(new PropertyValueFactory<>("transactionid"));
         companyCol.setCellValueFactory(new PropertyValueFactory<>("company"));
@@ -519,29 +594,13 @@ public class TradingAccountController implements Initializable {
         changecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("changecfdCol"));
     
     }
+    
     //load price table data
     public void loadPriceTable(){
         priceTable.setItems(data);   
-    
     }
     
-   private void loadbalance(){
-        
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        
-        String qu = "SELECT * FROM bal";
-        ResultSet rs = handler.execQuery(qu);
-        try {
-            while (rs.next()) {
-                String bal1 = rs.getString("balance");
-                balancelabel.setText(bal1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }    
-   
-//load transaction table data from database
+    //load transaction table data
     private void loadTransactionTable(){
         
         DatabaseHandler handler = DatabaseHandler.getInstance();
@@ -567,8 +626,47 @@ public class TradingAccountController implements Initializable {
 
         tableView.setItems(list);
     }
-    //Transaction table
+    
+        //Transaction table
     private void refreshTransactionTable(){
         loadTransactionTable();
     } 
+    
+    //---------------------------------End tables init here----------------------------------------------
+    
+    
+   
+    
+    //-------------------------------------Graph Code--------------------------------------------------
+    @FXML
+    private void loadGraph(MouseEvent event){
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
+        String transCompany = companycfdCol.getCellData(selectedForBuy);
+        int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
+        String transPrice = Integer.toString(transPriceint);
+        
+    }
+    
+    //------------------------------End graph code here-------------------------------------------------
+    
+
+
+
+    //----------------------------------loading balance ------------------------------------------------
+    private void loadbalance(){
+        
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        
+        String qu = "SELECT * FROM bal";
+        ResultSet rs = handler.execQuery(qu);
+        try {
+            while (rs.next()) {
+                String bal1 = rs.getString("balance");
+                balancelabel.setText(bal1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+  // ----------------------------------load balance end here----------------------------------------------    
 }

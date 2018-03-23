@@ -26,318 +26,141 @@
 
 <Pane fx:id="fullContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="1300.0" style="-fx-background-color: #100f20;" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.tradingaccount.TradingAccountController">
    <children>
-      <ImageView fitHeight="38.0" fitWidth="1300.0" layoutY="1.0" onMouseDragged="#handleDrag" onMousePressed="#handleDragValue" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="14.0" layoutY="7.0" text="SE TRADERS" textFill="#e7e6e6">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <JFXTabPane layoutY="37.0" prefHeight="930.0" prefWidth="1300.0">
-         <tabs>
-            <Tab closable="false" text="Equities">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;">
+      <AnchorPane fx:id="windowPane" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <HBox layoutY="60.0" prefHeight="900.0" prefWidth="1300.0">
+               <children>
+                  <VBox prefHeight="900.0" prefWidth="433.33">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <StackPane fx:id="rootPane" prefHeight="870.0" prefWidth="400.0">
                            <children>
-                              <HBox prefHeight="900.0" prefWidth="1300.0">
+                              <AnchorPane fx:id="mainContainer" prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane fx:id="rootPane" prefHeight="870.0" prefWidth="400.0">
-                                             <children>
-                                                <AnchorPane fx:id="mainContainer" prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <TableView fx:id="priceTable" onMousePressed="#loadGraph" prefHeight="670.0" prefWidth="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
-                                                         <columns>
-                                                            <TableColumn fx:id="companycfdCol" maxWidth="3100.0" prefWidth="160.0" text="Company" />
-                                                            <TableColumn fx:id="pricecfdCol" maxWidth="2500.0" prefWidth="100.0" resizable="false" text="Last Price" />
-                                                            <TableColumn fx:id="changecfdCol" maxWidth="2500.0" prefWidth="85.0" text="24h Chg%" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <JFXButton fx:id="buyEquities" layoutX="40.0" layoutY="810.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy" textFill="#e7e6e6" />
-                                                      <JFXButton fx:id="sellEquities" disable="true" layoutX="260.0" layoutY="810.0" onAction="#handleShortCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell" textFill="#e7e6e6" />
-                                                      <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="191.0" layoutY="753.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
-                                                      <Label layoutX="40.0" layoutY="755.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <JFXComboBox fx:id="tradingitemDrop" layoutX="44.0" layoutY="23.0" prefHeight="25.0" prefWidth="121.0" promptText="Select Trading Item" />
-                                                   </children>
-                                                   <StackPane.margin>
-                                                      <Insets />
-                                                   </StackPane.margin>
-                                                </AnchorPane>
-                                             </children>
-                                          </StackPane>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane prefHeight="335.0" prefWidth="500.0">
-                                             <children>
-                                                <AnchorPane prefHeight="335.0" prefWidth="500.0">
-                                                   <children>
-                                                      <LineChart fx:id="lineChart" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;" AnchorPane.topAnchor="0.0">
-                                                         <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
-                                                         </xAxis>
-                                                         <yAxis>
-                                                            <NumberAxis side="LEFT" />
-                                                         </yAxis>
-                                                      </LineChart>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets top="60.0" />
-                                             </padding>
-                                          </StackPane>
-                                          <StackPane fx:id="stackpane" prefHeight="335.0" prefWidth="500.0">
-                                             <children>
-                                                <AnchorPane id="AnchorPane" fx:id="mainRootPane" prefHeight="335.0" prefWidth="500.0">
-                                                   <children>
-                                                      <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                                         <columns>
-                                                            <TableColumn fx:id="transactionidCol" maxWidth="3100.0" prefWidth="55.0" text="ID" />
-                                                            <TableColumn fx:id="companyCol" maxWidth="2500.0" prefWidth="95.0" text="Company" />
-                                                            <TableColumn fx:id="priceCol" maxWidth="2500.0" prefWidth="78.0" text="Open/Close" />
-                                                            <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="65.0" resizable="false" text="Buy/Sell" />
-                                                            <TableColumn fx:id="marginCol" maxWidth="2500.0" prefWidth="65.0" text="Amount " />
-                                                            <TableColumn fx:id="timeCol" maxWidth="2000.0" prefWidth="140.0" text="Time and date" />
-                                                         </columns>
-                                                         <contextMenu>
-                                                            <ContextMenu styleClass="table-context">
-                                                              <items>
-                                                                <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Create Pdf Reciept" />
-                                                              </items>
-                                                            </ContextMenu>
-                                                         </contextMenu>
-                                                      </TableView>
-                                                      <Label layoutX="1.0" layoutY="6.0" prefHeight="32.0" prefWidth="142.0" text="Trade History" textFill="WHITE">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets top="10.0" />
-                                             </padding>
-                                          </StackPane>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </VBox>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane prefHeight="150.0" prefWidth="200.0">
-                                             <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <JFXListView fx:id="twitterListView" layoutY="60.0" prefHeight="670.0" prefWidth="350.0" style="-fx-background-color: #e7e6e6;" AnchorPane.rightAnchor="40.0" />
-                                                      <JFXButton layoutX="225.0" layoutY="810.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
-                                                      <JFXButton layoutX="13.0" layoutY="810.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
-                                                      <JFXButton layoutX="225.0" layoutY="10.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #897f7f;" text="Logout" textFill="WHITE" />
-                                                      <Label layoutX="14.0" layoutY="749.0" prefHeight="32.0" prefWidth="110.0" text="Balance: £" textFill="#e7e6e6" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="749.0">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label fx:id="balancelabel" layoutX="113.0" layoutY="749.0" prefHeight="27.0" prefWidth="68.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="749.0">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children></AnchorPane>
-                                             </children>
-                                          </StackPane>
-                                       </children>
-                                    </VBox>
+                                    <TableView fx:id="priceTable" onMousePressed="#loadGraph" prefHeight="670.0" prefWidth="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
+                                       <columns>
+                                          <TableColumn fx:id="companycfdCol" maxWidth="3100.0" prefWidth="160.0" text="Company" />
+                                          <TableColumn fx:id="pricecfdCol" maxWidth="2500.0" prefWidth="100.0" resizable="false" text="Last Price" />
+                                          <TableColumn fx:id="changecfdCol" maxWidth="2500.0" prefWidth="85.0" text="24h Chg%" />
+                                       </columns>
+                                    </TableView>
+                                    <JFXButton fx:id="buyEquities" layoutX="40.0" layoutY="820.0" onAction="#handleBuyEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy Equity" textFill="#e7e6e6" />
+                                    <JFXButton fx:id="sellEquities" disable="true" layoutX="260.0" layoutY="820.0" onAction="#handleSellEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell Equity" textFill="#e7e6e6" />
+                                    <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="191.0" layoutY="760.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
+                                    <Label layoutX="40.0" layoutY="763.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXComboBox fx:id="tradingitemDrop" focusColor="#909090" layoutX="44.0" layoutY="-3.0" prefHeight="25.0" prefWidth="121.0" promptText="Select Trading Item" unFocusColor="#d0d0d0" />
+                                    <JFXButton fx:id="sellCFD" layoutX="260.0" layoutY="820.0" onAction="#handleShortCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell/ShortCFD" textFill="#e7e6e6">
+                                       <font>
+                                          <Font size="7.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton fx:id="buyCFD" layoutX="40.0" layoutY="820.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy CFD" textFill="#e7e6e6" />
                                  </children>
-                              </HBox>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </AnchorPane>
                            </children>
-                        </AnchorPane>
-                        <JFXButton layoutX="597.0" layoutY="810.0" onAction="#handleNotiToggleButtonAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
-                        <StackPane layoutX="974.0" layoutY="245.0" prefHeight="150.0" prefWidth="200.0" />
+                        </StackPane>
                      </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab closable="false" text="CFD's">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: #100f20;">
+                  </VBox>
+                  <VBox prefHeight="900.0" prefWidth="433.33">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <StackPane prefHeight="335.0" prefWidth="500.0">
                            <children>
-                              <HBox prefHeight="900.0" prefWidth="1300.0">
+                              <AnchorPane prefHeight="335.0" prefWidth="500.0">
                                  <children>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane fx:id="rootPane1" prefHeight="870.0" prefWidth="400.0">
-                                             <children>
-                                                <AnchorPane fx:id="mainContainer1" prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <TableView fx:id="priceTable1" prefHeight="670.0" prefWidth="350.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
-                                                         <columns>
-                                                            <TableColumn fx:id="companycfdCol1" maxWidth="3100.0" prefWidth="160.0" text="Company" />
-                                                            <TableColumn fx:id="pricecfdCol1" maxWidth="2500.0" prefWidth="100.0" resizable="false" text="Last Price" />
-                                                            <TableColumn fx:id="changecfdCol1" maxWidth="2500.0" prefWidth="85.0" text="24h Chg%" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <Label fx:id="balancelabel1" layoutX="139.0" layoutY="18.0" prefHeight="27.0" prefWidth="68.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="18.0">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <JFXButton layoutX="40.0" layoutY="810.0" onAction="#handleBuyCFDButtonAction" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #70a800;" text="Buy" textFill="#e7e6e6" />
-                                                      <JFXTextField fx:id="amounttxt1" labelFloat="true" layoutX="191.0" layoutY="753.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
-                                                      <Label layoutX="40.0" layoutY="755.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <JFXButton layoutX="244.0" layoutY="810.0" onAction="#handleShortCFDButtonAction" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #e81414;" text="Sell/Short" textFill="#e7e6e6" />
-                                                   </children>
-                                                   <StackPane.margin>
-                                                      <Insets />
-                                                   </StackPane.margin>
-                                                </AnchorPane>
-                                             </children>
-                                          </StackPane>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane prefHeight="335.0" prefWidth="500.0">
-                                             <children>
-                                                <AnchorPane prefHeight="335.0" prefWidth="500.0">
-                                                   <children>
-                                                      <LineChart fx:id="lineChart1" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;" AnchorPane.topAnchor="0.0">
-                                                         <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
-                                                         </xAxis>
-                                                         <yAxis>
-                                                            <NumberAxis side="LEFT" />
-                                                         </yAxis>
-                                                      </LineChart>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets top="60.0" />
-                                             </padding>
-                                          </StackPane>
-                                          <StackPane fx:id="stackpane1" prefHeight="335.0" prefWidth="500.0">
-                                             <children>
-                                                <AnchorPane id="AnchorPane" fx:id="mainRootPane1" prefHeight="335.0" prefWidth="500.0">
-                                                   <children>
-                                                      <TableView fx:id="tableView1" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
-                                                         <columns>
-                                                            <TableColumn fx:id="transactionidCol1" maxWidth="3100.0" prefWidth="65.0" text="ID" />
-                                                            <TableColumn fx:id="companyCol1" maxWidth="2500.0" prefWidth="115.0" text="Item" />
-                                                            <TableColumn fx:id="typeCol1" maxWidth="2500.0" prefWidth="85.0" resizable="false" text="Buy/sell" />
-                                                            <TableColumn fx:id="marginCol1" maxWidth="2500.0" prefWidth="85.0" text="Amount " />
-                                                            <TableColumn fx:id="timeCol1" maxWidth="2000.0" prefWidth="145.0" text="Time and date" />
-                                                         </columns>
-                                                         <contextMenu>
-                                                            <ContextMenu styleClass="table-context">
-                                                               <items>
-                                                                  <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Create Pdf Reciept" />
-                                                               </items>
-                                                            </ContextMenu>
-                                                         </contextMenu>
-                                                      </TableView>
-                                                      <Label layoutX="1.0" layoutY="6.0" prefHeight="32.0" prefWidth="142.0" text="Trade History" textFill="WHITE">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                             <padding>
-                                                <Insets top="10.0" />
-                                             </padding>
-                                          </StackPane>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </VBox>
-                                    <VBox prefHeight="900.0" prefWidth="433.33">
-                                       <children>
-                                          <StackPane prefHeight="150.0" prefWidth="200.0">
-                                             <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                                   <children>
-                                                      <JFXListView fx:id="twitterListView1" layoutY="60.0" prefHeight="670.0" prefWidth="350.0" style="-fx-background-color: #e7e6e6;" AnchorPane.rightAnchor="40.0" />
-                                                      <JFXButton layoutX="225.0" layoutY="810.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
-                                                      <JFXButton layoutX="13.0" layoutY="810.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
-                                                      <JFXButton layoutX="225.0" layoutY="10.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #897f7f;" text="Logout" textFill="WHITE" />
-                                                      <Label layoutX="37.0" layoutY="753.0" prefHeight="32.0" prefWidth="110.0" text="Balance: £" textFill="#e7e6e6" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="753.0">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                          </StackPane>
-                                       </children>
-                                    </VBox>
+                                    <LineChart fx:id="lineChart" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;" AnchorPane.topAnchor="0.0">
+                                       <xAxis>
+                                          <CategoryAxis side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis side="LEFT" />
+                                       </yAxis>
+                                    </LineChart>
                                  </children>
-                              </HBox>
+                              </AnchorPane>
                            </children>
-                        </AnchorPane>
-                        <JFXButton layoutX="597.0" layoutY="810.0" onAction="#handleNotiToggleButtonAction" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
-                        <StackPane layoutX="974.0" layoutY="245.0" prefHeight="150.0" prefWidth="200.0">
+                           <padding>
+                              <Insets top="60.0" />
+                           </padding>
+                        </StackPane>
+                        <StackPane fx:id="stackpane" prefHeight="335.0" prefWidth="500.0">
                            <children>
-                              <AnchorPane id="AnchorPane" prefHeight="338.0" prefWidth="464.0" styleClass="custom-pane">
+                              <AnchorPane id="AnchorPane" fx:id="mainRootPane" prefHeight="335.0" prefWidth="500.0">
                                  <children>
-                                    <VBox layoutY="-1.0" prefHeight="327.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="-33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
-                                       <children>
-                                          <JFXTextField fx:id="transidtxt1" labelFloat="true" promptText="transaction ID">
-                                             <VBox.margin>
-                                                <Insets left="10.0" right="10.0" top="20.0" />
-                                             </VBox.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="companytxt1" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="company">
-                                             <VBox.margin>
-                                                <Insets left="10.0" right="10.0" top="20.0" />
-                                             </VBox.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="typetxt1" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Buy/Sell">
-                                             <VBox.margin>
-                                                <Insets left="10.0" right="10.0" top="20.0" />
-                                             </VBox.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="timeidtxt1" promptText="time" />
-                                          <HBox alignment="CENTER" prefHeight="38.0" prefWidth="158.0" spacing="30.0">
-                                             <padding>
-                                                <Insets bottom="20.0" />
-                                             </padding>
-                                             <VBox.margin>
-                                                <Insets top="25.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </VBox>
+                                    <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                       <columns>
+                                          <TableColumn fx:id="transactionidCol" maxWidth="3100.0" prefWidth="55.0" text="ID" />
+                                          <TableColumn fx:id="companyCol" maxWidth="2500.0" prefWidth="95.0" text="Company" />
+                                          <TableColumn fx:id="priceCol" maxWidth="2500.0" prefWidth="78.0" text="Open/Close" />
+                                          <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="65.0" resizable="false" text="Buy/Sell" />
+                                          <TableColumn fx:id="marginCol" maxWidth="2500.0" prefWidth="65.0" text="Amount " />
+                                          <TableColumn fx:id="timeCol" maxWidth="2000.0" prefWidth="140.0" text="Time and date" />
+                                       </columns>
+                                       <contextMenu>
+                                          <ContextMenu styleClass="table-context">
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Create Pdf Reciept" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu>
+                                    </TableView>
+                                    <Label layoutX="1.0" layoutY="6.0" prefHeight="32.0" prefWidth="142.0" text="Trade History" textFill="WHITE">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </StackPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="900.0" prefWidth="433.33">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXListView fx:id="twitterListView" layoutY="60.0" prefHeight="670.0" prefWidth="350.0" style="-fx-background-color: #e7e6e6;" AnchorPane.rightAnchor="40.0" />
+                                    <JFXButton layoutX="225.0" layoutY="820.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
+                                    <JFXButton layoutX="13.0" layoutY="820.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
+                                    <JFXButton layoutX="225.0" layoutY="-8.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #897f7f;" text="Logout" textFill="WHITE" />
+                                    <Label layoutX="14.0" layoutY="765.0" prefHeight="32.0" prefWidth="110.0" text="Balance: £" textFill="#e7e6e6" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="765.0">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="balancelabel" layoutX="114.0" layoutY="765.0" prefHeight="27.0" prefWidth="68.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="765.0">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children>
                         </StackPane>
                      </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
+                  </VBox>
+               </children>
+            </HBox>
+            <ImageView fitHeight="52.0" fitWidth="1300.0" onMouseDragged="#handleDrag" onMousePressed="#handleDragValue" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
       <Label layoutX="1270.0" layoutY="-3.0" onMouseClicked="#handleClose" text="X" textFill="#e7e6e6">
          <font>
             <Font size="31.0" />
@@ -348,5 +171,18 @@
             <Font size="44.0" />
          </font>
       </Label>
+      <JFXRadioButton fx:id="tradeCFD" layoutX="329.0" layoutY="63.0" onAction="#HandleTradingTypeRadioButton" text="Trade CFD's" textFill="#e7e6e6">
+         <toggleGroup>
+            <ToggleGroup fx:id="TradingType" />
+         </toggleGroup>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="tradeEquities" layoutX="190.0" layoutY="63.0" onAction="#HandleTradingTypeRadioButton" prefHeight="20.0" prefWidth="121.0" selected="true" text="Trade Equities" textFill="#e7e6e6" toggleGroup="$TradingType">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXRadioButton>
    </children>
 </Pane>

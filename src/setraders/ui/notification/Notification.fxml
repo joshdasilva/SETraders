@@ -23,8 +23,8 @@
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <JFXButton layoutX="222.0" layoutY="331.0" onAction="#setNotificationHandle" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Ok" textFill="#e7e6e6" />
-                  <JFXButton layoutX="320.0" layoutY="331.0" onAction="#setCancelHandle" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
+                  <JFXButton layoutX="68.0" layoutY="331.0" onAction="#setNotificationHandle" prefHeight="38.0" prefWidth="160.0" style="-fx-background-color: #e45652;" text="Set Notification" textFill="#e7e6e6" />
+                  <JFXButton layoutX="460.0" layoutY="331.0" onAction="#setCancelHandle" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
                   <JFXRadioButton fx:id="greaterThanId" layoutX="52.0" layoutY="104.0" text="Greater than" textFill="#e7e6e6">
                      <font>
                         <Font size="18.0" />
@@ -44,6 +44,7 @@
                      </font>
                   </JFXRadioButton>
                   <JFXTextField fx:id="notificationText" layoutX="73.0" layoutY="237.0" prefHeight="38.0" prefWidth="223.0" promptText="Set notification" />
+                  <JFXButton layoutX="244.0" layoutY="331.0" onAction="#setCancelHandle" prefHeight="38.0" prefWidth="203.0" style="-fx-background-color: #e45652;" text="Cancel All Notifications" textFill="#e7e6e6" />
                </children>
             </AnchorPane>
          </children>

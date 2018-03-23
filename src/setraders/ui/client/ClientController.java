@@ -114,6 +114,10 @@ public class ClientController implements Initializable {
     private void closeStage() {
         ((Stage) anchorPane.getScene().getWindow()).close();
     }
+    
+    public static void createObjects(String[] args){
+    
+    }
 
     void loadMain() {
        
