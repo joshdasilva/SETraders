@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package setraders.ui.withdraw;
 
 import com.jfoenix.controls.JFXTextField;
@@ -24,65 +20,88 @@ import javafx.stage.Stage;
 import setraders.alert.AlertMaker;
 import setraders.database.DataHelper;
 import setraders.database.DatabaseHandler;
-import setraders.ui.tables.Transaction;
 import setraders.ui.tradingaccount.TradingAccountController;
 
 /**
  *
- * @author alton
+ * @author Josh Da Silva
  */
 public class WithdrawController implements Initializable{
    
 
     @FXML
-    private JFXTextField bal;
+    private JFXTextField withdrawtxt;
     @FXML
     private StackPane spane;
-    private Boolean isInEditMode = Boolean.FALSE;
     @FXML
     private AnchorPane apane;
-    DatabaseHandler databaseHandler;
-    
     @FXML
     private Label label;
+    
+    
+    DatabaseHandler databaseHandler;
+    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     databaseHandler = DatabaseHandler.getInstance();
-    loadbal();
+    loadbalance();
     }
     
     @FXML
     private void handleDoneButtonAction( ActionEvent event){
-        double balance = Double.parseDouble(bal.getText());
+        String input = withdrawtxt.getText();
+        if(input.isEmpty()) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Insufficient Data", "Please enter withdraw amount.");
+            return;
+        }
+        
+        
+        double balance = Double.parseDouble(input);
         String accountid = "user1";
+                
         DatabaseHandler handler = DatabaseHandler.getInstance(); 
         String qu = "SELECT * FROM bal";
         ResultSet rs = handler.execQuery(qu);
         String balancex = new String();
+        double check = 0;
+        
         try { 
             while (rs.next()) {
                  balancex = rs.getString("balance");
+                 check = Double.parseDouble(balancex);         
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }                
+        }     
+        
+ 
 
+        
+        if(check >= balance){
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceminus(bal1);
         if (result) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount ", balance + " has been withdrawn");
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount","£"+ balance + " has been withdrawn");
             clearEntries();
             refresh();
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
-        }    
+        } 
+         
+        }   
+        else if (check <= balance) {
+             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "You dont have enough funds, Try a lower amount!");}
+             clearEntries();
+   
     }
     
     private void refresh(){
-        loadbal();
+        loadbalance();
     }
     
-    private void loadbal(){
+    private void loadbalance(){
         
         DatabaseHandler handler = DatabaseHandler.getInstance();
         
@@ -105,7 +124,7 @@ public class WithdrawController implements Initializable{
 
 
     private void clearEntries() {
-        bal.clear();
+        withdrawtxt.clear();
 
     }
     
