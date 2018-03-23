@@ -17,13 +17,13 @@ import javafx.beans.property.SimpleStringProperty;
 
         private final SimpleStringProperty companycfdCol;
         private final SimpleIntegerProperty pricecfdCol;
-        private final SimpleStringProperty changecfdCol;
+ 
 
 
-        public PriceTable(String rcc, int rpc, String rgc) {
+        public PriceTable(String rcc, int rpc) {
             this.companycfdCol = new SimpleStringProperty(rcc);
             this.pricecfdCol = new SimpleIntegerProperty(rpc);
-            this.changecfdCol = new SimpleStringProperty(rgc);
+        
         }
 
         public String getCompanycfdCol() {
@@ -40,14 +40,6 @@ import javafx.beans.property.SimpleStringProperty;
         
         public void setPricecfdCol(int v) {
              pricecfdCol.set(v);
-        }
-
-        public String getChangecfdCol() {
-            return changecfdCol.get();
-        }
-                
-        public void setChangecfdCol(String v) {
-             changecfdCol.set(v);
         }
   
     }

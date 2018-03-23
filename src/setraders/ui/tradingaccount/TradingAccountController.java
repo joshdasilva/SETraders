@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -89,6 +88,8 @@ public class TradingAccountController implements Initializable {
     @FXML
     private TableColumn<Transaction, Number> priceCol;
     @FXML
+    private TableColumn<Transaction, Number> closepriceCol;
+    @FXML
     private TableColumn<Transaction, String> transactionidCol;
     @FXML
     private TableColumn<Transaction, String> marginCol;
@@ -102,8 +103,8 @@ public class TradingAccountController implements Initializable {
     private TableColumn<PriceTable, String> companycfdCol;
     @FXML
     private TableColumn<PriceTable, Number> pricecfdCol;
-    @FXML
-    private TableColumn<PriceTable, String> changecfdCol;
+    //@FXML
+    //private TableColumn<PriceTable, String> changecfdCol;
     @FXML
     private AnchorPane mainContainer;
     @FXML
@@ -150,84 +151,85 @@ public class TradingAccountController implements Initializable {
     
     //list to store Forex pair data
     private ObservableList<PriceTable> forexList = FXCollections.observableArrayList(
-            new PriceTable("USD/EUR ",43,"1"),
-            new PriceTable("USD/JPY",56,"1"),
-            new PriceTable("USD/GBP",67,"2"),
-            new PriceTable("USD/AUD",57,"1"),
-            new PriceTable("USD/CAD",26,"1"),
-            new PriceTable("USD/CNY",37,"2"),
-            new PriceTable("USD/CHF",48,"1"),
-            new PriceTable("USD/MXN",59,"1"),
-            new PriceTable("USD/SGD",37,"2"),
-            new PriceTable("USD/KRW",26,"1"),
-            new PriceTable("USD/NZD",48,"2"),
-            new PriceTable("USD/HKD",25,"1"),
-            new PriceTable("USD/SEK",48,"1"),
-            new PriceTable("USD/TRY",62,"2"),
-            new PriceTable("USD/INR",84,"1"),
-            new PriceTable("USD/RUB",83,"1"),
-            new PriceTable("USD/NOK",14,"2"),
-            new PriceTable("USD/BRL",13,"1"),
-            new PriceTable("USD/ZAR",15,"1"),
-            new PriceTable("USD/TWD",37,"2"),
-            new PriceTable("USD/PLN",26,"1"),
-            new PriceTable("USD/OTH",48,"1")
+            new PriceTable("USD/EUR ",43),
+            new PriceTable("USD/JPY",56),
+            new PriceTable("USD/GBP",67),
+            new PriceTable("USD/AUD",57),
+            new PriceTable("USD/CAD",26),
+            new PriceTable("USD/CNY",37),
+            new PriceTable("USD/CHF",48),
+            new PriceTable("USD/MXN",59),
+            new PriceTable("USD/SGD",37),
+            new PriceTable("USD/KRW",26),
+            new PriceTable("USD/NZD",48),
+            new PriceTable("USD/HKD",25),
+            new PriceTable("USD/SEK",48),
+            new PriceTable("USD/TRY",62),
+            new PriceTable("USD/INR",84),
+            new PriceTable("USD/RUB",83),
+            new PriceTable("USD/NOK",14),
+            new PriceTable("USD/BRL",13),
+            new PriceTable("USD/ZAR",15),
+            new PriceTable("USD/TWD",37),
+            new PriceTable("USD/PLN",26),
+            new PriceTable("USD/OTH",26)
             );
     
     //list to store cryptocurrency data
     private ObservableList<PriceTable> cryptoList = FXCollections.observableArrayList(
 
-            new PriceTable("Bitcoin (BTC)",31,"2"),
-            new PriceTable("Ether (ETH)",36,"1"),
-            new PriceTable("Ripple (XRP)",58,"1"),
-            new PriceTable("Bitcoin Cash (BCH)",47,"2"),
-            new PriceTable("Litecoin (LTC)",25,"1"),
-            new PriceTable("NEO (NEO)",34,"1"),
-            new PriceTable("Cardano (ADA)",53,"2"),
-            new PriceTable("Stellar (XLM)",54,"1"),
-            new PriceTable("EOS (EOS)",36,"1"),
-            new PriceTable("Monero (XMR)",87,"2"),
-            new PriceTable("Dash (DASH)",84,"1"),
-            new PriceTable("IOTA (MIOTA)",98,"2"),
-            new PriceTable("NEM (XEM)",67,"1"),
-            new PriceTable("Tether (USDT)",98,"1"),
-            new PriceTable("VeChain (VEN)",25,"2"),
-            new PriceTable("TRON (TRX)",25,"1"),
-            new PriceTable("Ether Classic (ETC)",25,"1"),
-            new PriceTable("Lisk (LSK)",87,"2"),
-            new PriceTable("Nano (NANO)",45,"1"),
-            new PriceTable("OmiseGo (OMG)",76,"1"),
-            new PriceTable("Bitcoin Gold (BTG)",65,"2"),
-            new PriceTable("Qtum (QTUM)",23,"1")
+            new PriceTable("Bitcoin (BTC)",31),
+            new PriceTable("Ether (ETH)",36),
+            new PriceTable("Ripple (XRP)",58),
+            new PriceTable("Bitcoin Cash (BCH)",47),
+            new PriceTable("Litecoin (LTC)",25),
+            new PriceTable("NEO (NEO)",34),
+            new PriceTable("Cardano (ADA)",53),
+            new PriceTable("Stellar (XLM)",54),
+            new PriceTable("EOS (EOS)",36),
+            new PriceTable("Monero (XMR)",87),
+            new PriceTable("Dash (DASH)",84),
+            new PriceTable("IOTA (MIOTA)",98),
+            new PriceTable("NEM (XEM)",67),
+            new PriceTable("Tether (USDT)",98),
+            new PriceTable("VeChain (VEN)",25),
+            new PriceTable("TRON (TRX)",25),
+            new PriceTable("Ether Classic (ETC)",25),
+            new PriceTable("Lisk (LSK)",87),
+            new PriceTable("Nano (NANO)",45),
+            new PriceTable("OmiseGo (OMG)",76),
+            new PriceTable("Bitcoin Gold (BTG)",65),
+            new PriceTable("Qtum (QTUM)",23)
             );
     
     public static int[] stocksArray = new int[22]; 
     //list to store company data 
     public ObservableList<PriceTable> data = FXCollections.observableArrayList(
          
-            new PriceTable("Apple",stocksArray[0],"2"),
-            new PriceTable("Alphabet",stocksArray[1],"1"),
-            new PriceTable("Berkshire Hathaway",stocksArray[2],"1"),
-            new PriceTable("Facebook",stocksArray[3],"2"),
-            new PriceTable("AT&T",stocksArray[4],"1"),
-            new PriceTable("Berkshire Hathaway",stocksArray[5],"1"),
-            new PriceTable("JPMorgan Chase",stocksArray[6],"2"),
-            new PriceTable("Bank of America",stocksArray[7],"1"),
-            new PriceTable("Samsung Electroincs",stocksArray[8],"1"),
-            new PriceTable("Visa",stocksArray[9],"2"),
-            new PriceTable("Coca-Cola",stocksArray[10],"1"),
-            new PriceTable("Oracle",stocksArray[11],"2"),
-            new PriceTable("IBM",stocksArray[12],"1"),
-            new PriceTable("Tesla",stocksArray[13],"1"),
-            new PriceTable("Bose",stocksArray[14],"2"),
-            new PriceTable("AMD",stocksArray[15],"1"),
-            new PriceTable("Microsoft",stocksArray[16],"1"),
-            new PriceTable("Intel",stocksArray[17],"2"),
-            new PriceTable("Tesco",stocksArray[18],"1"),
-            new PriceTable("Berkshire Hathaway",stocksArray[19],"1"),
-            new PriceTable("Amazon",stocksArray[20],"1"),
-            new PriceTable("Spotify",stocksArray[21],"1")
+            new PriceTable("Apple",stocksArray[0]),
+            new PriceTable("Alphabet",stocksArray[1]),
+            new PriceTable("Berkshire Hathaway",stocksArray[2]),
+            new PriceTable("Facebook",stocksArray[3]),
+            new PriceTable("AT&T",stocksArray[4]),
+            new PriceTable("Berkshire Hathaway",stocksArray[5]),
+            new PriceTable("JPMorgan Chase",stocksArray[6]),
+            new PriceTable("Bank of America",stocksArray[7]),
+            new PriceTable("Samsung Electroincs",stocksArray[8]),
+            new PriceTable("Visa",stocksArray[9]),
+            new PriceTable("Coca-Cola",stocksArray[10]),
+            new PriceTable("Oracle",stocksArray[11]),
+            new PriceTable("IBM",stocksArray[12]),
+            new PriceTable("Tesla",stocksArray[13]),
+            new PriceTable("Bose",stocksArray[14]),
+            new PriceTable("AMD",stocksArray[15]),
+            new PriceTable("Microsoft",stocksArray[16]),
+            new PriceTable("Intel",stocksArray[17]),
+            new PriceTable("Tesco",stocksArray[18]),
+            new PriceTable("Berkshire Hathaway",stocksArray[19]),
+            new PriceTable("Amazon",stocksArray[20]),
+            new PriceTable("Spotify",stocksArray[21])
             );
+    
     
   //----------Controls------------  
      
@@ -366,10 +368,11 @@ public class TradingAccountController implements Initializable {
     @FXML //
     private void handleBuyCFDButtonAction(ActionEvent event){
     
+        
         DatabaseHandler handler = DatabaseHandler.getInstance();
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         Date date = new Date();
-        
+
         String qu = "SELECT * FROM TRANS WHERE transactionid=(SELECT MAX(transactionid) FROM TRANS)";
         ResultSet rs = handler.execQuery(qu);
         String transID = new String();
@@ -384,14 +387,21 @@ public class TradingAccountController implements Initializable {
         }  
         
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();                      
-        
         String transType = "Buy CFD";
         String transCompany = companycfdCol.getCellData(selectedForBuy);
-        
         int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
         String transPrice = Integer.toString(transPriceint);
+        String transClosePrice = "-";
+        double transAmount = 0;
         
-        String transAmount = amounttxt.getText();
+        try{  
+            transAmount = Double.parseDouble(amounttxt.getText());
+            }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Invalid input", "Please input a number value");
+            amounttxt.clear();
+            return;
+        }
+        String transAmounts = Double.toString(transAmount);
         String transTime = dateFormat.format(date);
         
         if (selectedForBuy == null) {
@@ -399,14 +409,18 @@ public class TradingAccountController implements Initializable {
             return;
         }
         
-        if(transAmount.isEmpty()) {
+        if(transAmounts.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter trading amount.");
             return;
         }
          
-        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice);
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmounts, transTime, transPrice, transClosePrice);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
+            
+            
+            
+            
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
             amounttxt.clear();
             refreshTransactionTable();
@@ -416,10 +430,9 @@ public class TradingAccountController implements Initializable {
 
     }
     
+    
     @FXML //short button
     private void handleShortCFDButtonAction(ActionEvent event){
-  
-    
         DatabaseHandler handler = DatabaseHandler.getInstance();
         
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
@@ -446,6 +459,8 @@ public class TradingAccountController implements Initializable {
         int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
         String transPrice = Integer.toString(transPriceint);
         
+         String transClosePrice = "-";
+        
         String transAmount = amounttxt.getText();
         String transTime = dateFormat.format(date);
         
@@ -459,7 +474,7 @@ public class TradingAccountController implements Initializable {
             return;
         }
          
-        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice);
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice,transClosePrice);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
@@ -480,7 +495,7 @@ public class TradingAccountController implements Initializable {
     @FXML //buy equities
     private void handleBuyEquityButtonAction(ActionEvent event){
     
-        DatabaseHandler handler = DatabaseHandler.getInstance();
+ DatabaseHandler handler = DatabaseHandler.getInstance();
         
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         Date date = new Date();
@@ -506,6 +521,8 @@ public class TradingAccountController implements Initializable {
         int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
         String transPrice = Integer.toString(transPriceint);
         
+          String transClosePrice = "-";
+        
         String transAmount = amounttxt.getText();
         String transTime = dateFormat.format(date);
         
@@ -519,7 +536,7 @@ public class TradingAccountController implements Initializable {
             return;
         }
          
-        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice);
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice, transClosePrice);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
@@ -528,13 +545,15 @@ public class TradingAccountController implements Initializable {
         } else {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
         }
+       
 
     }
        
     
     @FXML //sell/short equities button
     private void handleSellEquityButtonAction(ActionEvent event){
-          DatabaseHandler handler = DatabaseHandler.getInstance();
+         
+ DatabaseHandler handler = DatabaseHandler.getInstance();
         
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         Date date = new Date();
@@ -560,6 +579,8 @@ public class TradingAccountController implements Initializable {
         int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
         String transPrice = Integer.toString(transPriceint);
         
+          String transClosePrice = "-";
+        
         String transAmount = amounttxt.getText();
         String transTime = dateFormat.format(date);
         
@@ -573,7 +594,7 @@ public class TradingAccountController implements Initializable {
             return;
         }
          
-        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice);
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transCompany, transType, transAmount, transTime, transPrice, transClosePrice);
         boolean result = DataHelper.insertNewTransaction(transaction);
         if (result) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
@@ -582,7 +603,6 @@ public class TradingAccountController implements Initializable {
         } else {
             AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
         }
-
     }
     
     //----------------------------------END CFD buy and sell/short button----------------------------------------------
@@ -688,10 +708,11 @@ public class TradingAccountController implements Initializable {
         marginCol.setCellValueFactory(new PropertyValueFactory<>("margin"));
         timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        closepriceCol.setCellValueFactory(new PropertyValueFactory<>("closeprice"));
         
         companycfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("companycfdCol"));
         pricecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable,Number>("pricecfdCol"));
-        changecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("changecfdCol"));
+       // changecfdCol.setCellValueFactory(new PropertyValueFactory<PriceTable, String>("changecfdCol"));
     
     }
     
@@ -716,8 +737,9 @@ public class TradingAccountController implements Initializable {
                 String marginx = rs.getString("margin");
                 String dateandtimex = rs.getString("time");
                 String pricex = rs.getString("price");
+                String pricec = rs.getString("closeprice");
  
-                list.add(new Transaction(transidx, companyx, typex, marginx, dateandtimex, pricex));
+                list.add(new Transaction(transidx, companyx, typex, marginx, dateandtimex, pricex, pricec));
 
             }
         } catch (SQLException ex) {
@@ -740,10 +762,10 @@ public class TradingAccountController implements Initializable {
     //-------------------------------------Graph Code--------------------------------------------------
     @FXML
     private void loadGraph(MouseEvent event){
-        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
-        String transCompany = companycfdCol.getCellData(selectedForBuy);
-        int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
-        String transPrice = Integer.toString(transPriceint);
+        //PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
+        //String transCompany = companycfdCol.getCellData(selectedForBuy);
+        //int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
+        //String transPrice = Integer.toString(transPriceint);
         
     }
     

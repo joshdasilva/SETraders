@@ -16,14 +16,16 @@ public class Transaction {
     String margin;
     String time;
     String price;
+    String closeprice;
 
-    public Transaction(String transactionid, String company, String type, String margin, String time, String price) {
+    public Transaction(String transactionid, String company, String type, String margin, String time, String price, String closeprice) {
         this.transactionid = transactionid;
         this.company = company;
         this.type = type;
         this.margin = margin;
         this.time = time;
         this.price = price;
+        this.closeprice = closeprice;
     }
     
  public String getTransactionid() {
@@ -72,6 +74,14 @@ public class Transaction {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+    
+    public String getCloseprice() {
+        return closeprice;
+    }
+
+    public void setCloseprice(String closeprice) {
+        this.closeprice = closeprice;
     }
     
     
