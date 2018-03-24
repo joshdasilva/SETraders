@@ -5,6 +5,7 @@
  */
 package setraders.ui.tables;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import  setraders.ui.tradingaccount.TradingAccountController;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,13 +17,13 @@ import javafx.beans.property.SimpleStringProperty;
         public class PriceTable {
 
         private final SimpleStringProperty companycfdCol;
-        private final SimpleIntegerProperty pricecfdCol;
+        private final SimpleDoubleProperty pricecfdCol;
  
 
 
-        public PriceTable(String rcc, int rpc) {
-            this.companycfdCol = new SimpleStringProperty(rcc);
-            this.pricecfdCol = new SimpleIntegerProperty(rpc);
+        public PriceTable(String a, double b) {
+            this.companycfdCol = new SimpleStringProperty(a);
+            this.pricecfdCol = new SimpleDoubleProperty(b);
         
         }
 
@@ -34,11 +35,11 @@ import javafx.beans.property.SimpleStringProperty;
              companycfdCol.set(v);
         }
 
-        public int getPricecfdCol() {
+        public double getPricecfdCol() {
             return pricecfdCol.get();
         }
         
-        public void setPricecfdCol(int v) {
+        public void setPricecfdCol(double v) {
              pricecfdCol.set(v);
         }
   
