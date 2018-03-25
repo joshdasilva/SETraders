@@ -1,4 +1,3 @@
-
 package setraders.ui.withdraw;
 
 import com.jfoenix.controls.JFXTextField;
@@ -26,8 +25,8 @@ import setraders.ui.tradingaccount.TradingAccountController;
  *
  * @author Josh Da Silva
  */
-public class WithdrawController implements Initializable{
-   
+public class WithdrawController implements Initializable {
+
 
     @FXML
     private JFXTextField withdrawtxt;
@@ -37,71 +36,71 @@ public class WithdrawController implements Initializable{
     private AnchorPane apane;
     @FXML
     private Label label;
-    
+
     DatabaseHandler databaseHandler;
-    
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    databaseHandler = DatabaseHandler.getInstance();
-    loadbalance();
+        databaseHandler = DatabaseHandler.getInstance();
+        loadbalance();
     }
-    
+
     @FXML
-    private void handleDoneButtonAction( ActionEvent event){
+    private void handleDoneButtonAction(ActionEvent event) {
         double balance = 0;
-        try{
-             balance = Double.parseDouble(withdrawtxt.getText());
-        }catch(NumberFormatException e) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Invalid input", "Please input a number value");
+        try {
+            balance = Double.parseDouble(withdrawtxt.getText());
+        } catch (NumberFormatException e) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Invalid input", "Please input a number value");
             clearEntries();
             return;
         }
 
         String accountid = "user1";
-                
-        DatabaseHandler handler = DatabaseHandler.getInstance(); 
+
+        DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM bal";
         ResultSet rs = handler.execQuery(qu);
         String balancex = new String();
         double check = 0;
-        
-        try { 
+
+        try {
             while (rs.next()) {
-                 balancex = rs.getString("balance");
-                 check = Double.parseDouble(balancex);         
+                balancex = rs.getString("balance");
+                check = Double.parseDouble(balancex);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }     
-        
-        if(check >= balance){
-        setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
-        boolean result = DataHelper.updateBalanceminus(bal1);
-        if (result) {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Amount","£"+ balance + " has been withdrawn");
-            clearEntries();
-            refresh();
-        } else {
-            AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
-        } 
-         
-        }   
-        else if (check <= balance) {
-             AlertMaker.showMaterialDialog(spane, apane, new ArrayList<>(), "Failed to withdraw amount", "You dont have enough funds, Try a lower amount!");}
-             clearEntries();
         }
-    
-    private void refresh(){
+
+        if (check >= balance) {
+            setraders.data.wrapper.Balance bal1 = new setraders.data.wrapper.Balance(accountid, balance);
+            boolean result = DataHelper.updateBalanceminus(bal1);
+            if (result) {
+                AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Amount", "£" + balance + " has been withdrawn");
+                clearEntries();
+                refresh();
+            } else {
+                AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to withdraw amount", "Check all the entries and try again");
+            }
+
+        } else if (check <= balance) {
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to withdraw amount", "You dont have enough funds, Try a lower amount!");
+        }
+        clearEntries();
+    }
+
+    private void refresh() {
         loadbalance();
     }
-    
-    private void loadbalance(){
-        
+
+    private void loadbalance() {
+
         DatabaseHandler handler = DatabaseHandler.getInstance();
-        
-        
+
+
         String qu = "SELECT * FROM bal";
         ResultSet rs = handler.execQuery(qu);
         try {
@@ -113,18 +112,18 @@ public class WithdrawController implements Initializable{
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
+
 
     private void clearEntries() {
         withdrawtxt.clear();
 
     }
-    
+
     @FXML //cancel button
     void handleWithdrawCancel(ActionEvent event) {
-    Node  source = (Node)  event.getSource(); 
-    Stage stage  = (Stage) source.getScene().getWindow();
-    stage.close();
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
-        
+
 }

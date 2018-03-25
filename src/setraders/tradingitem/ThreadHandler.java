@@ -4,15 +4,15 @@ package setraders.tradingitem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ThreadHandler{   
+public class ThreadHandler {
     public Thread thThread;
 
     public ThreadHandler() {
-        
-        this.thThread = new Thread(){
+
+        this.thThread = new Thread() {
             @Override
-            public void run(){
-                while(true){
+            public void run() {
+                while (true) {
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException ex) {

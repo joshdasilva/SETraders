@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package setraders.util;
 
 import com.jfoenix.controls.JFXButton;
@@ -31,7 +26,7 @@ import setraders.ui.tradingaccount.TradingAccountController;
 
 /**
  *
- * @author alton
+ * @author Josh Da Silva
  */
 public class SetradersUtility {
 
@@ -54,7 +49,7 @@ public class SetradersUtility {
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -62,18 +57,17 @@ public class SetradersUtility {
     }
 
 
-    public static void initPDFExprot(StackPane rootPane, Node contentPane, Stage stage, List<List> data) {
+    public static void initPDFExprot(StackPane rootPane, Node contentPane, Stage stage, List < List > data) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as PDF");
-        FileChooser.ExtensionFilter extFilter
-                = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(extFilter);
         File saveLoc = fileChooser.showSaveDialog(stage);
         ListToPDF ltp = new ListToPDF();
         boolean flag = ltp.doPrintToPdf(data, saveLoc, ListToPDF.Orientation.LANDSCAPE);
         JFXButton okayBtn = new JFXButton("Okay");
         JFXButton openBtn = new JFXButton("View File");
-        openBtn.setOnAction((ActionEvent event1) -> {
+        openBtn.setOnAction((ActionEvent event1)-> {
             try {
                 Desktop.getDesktop().open(saveLoc);
             } catch (Exception exp) {
@@ -93,4 +87,3 @@ public class SetradersUtility {
         return DATE_FORMAT.format(date);
     }
 }
-

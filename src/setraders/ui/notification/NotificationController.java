@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package setraders.ui.notification;
 
 import com.jfoenix.controls.JFXRadioButton;
@@ -20,12 +16,12 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author alton
+ * @author Josh Da Silva
  */
 public class NotificationController implements Initializable {
 
-    
-     @FXML
+
+    @FXML
     private AnchorPane apane;
 
     @FXML
@@ -42,23 +38,23 @@ public class NotificationController implements Initializable {
 
     @FXML
     private JFXRadioButton equalsToId;
-    
-    
+
+
     @FXML
     void setNotificationHandle(ActionEvent event) {
 
     }
-    
+
     @FXML
     void setCancelHandle(ActionEvent event) {
-    Node  source = (Node)  event.getSource(); 
-    Stage stage  = (Stage) source.getScene().getWindow();
-    stage.close();
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
-    
-    public void radioSelect(ActionEvent event){
-        if(lessThanId.isSelected()){
-                 /*double demostock=200;
+
+    public void radioSelect(ActionEvent event) {
+        if (lessThanId.isSelected()) {
+            /*double demostock=200;
         Notifications notificationBuilder = Notifications.create()
         .title("Price Alert")
         .text("Your stock has hit £"+ demostock)
@@ -74,21 +70,21 @@ public class NotificationController implements Initializable {
         notificationBuilder.darkStyle();
         notificationBuilder.showInformation();*/
         }
-        if(greaterThanId.isSelected()){
-            
+        if (greaterThanId.isSelected()) {
+
         }
-        if(equalsToId.isSelected()){
-            
+        if (equalsToId.isSelected()) {
+
         }
-        
+
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

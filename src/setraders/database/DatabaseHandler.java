@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package setraders.database;
 
 import java.sql.Connection;
@@ -30,7 +25,6 @@ import org.w3c.dom.NodeList;
 import setraders.ui.tables.Transaction;
 
 
-
 /**
  *
  * @author Josh Da Silva
@@ -41,23 +35,23 @@ public final class DatabaseHandler {
     private static final String DB_URL = "jdbc:derby:database;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
- 
-    
+
+
     static {
-           createConnection();
-           inflateDB();
-    } 
-
-
-      private DatabaseHandler() {
-      //createConnection();
-      //inflateDB();
-      //dbadmin();
-      //dbadmin1();
-      //dbadmin1();
-      //createtable();
+        createConnection();
+        inflateDB();
     }
-    
+
+
+    private DatabaseHandler() {
+        //createConnection();
+        //inflateDB();
+        //dbadmin();
+        //dbadmin1();
+        //dbadmin1();
+        //createtable();
+    }
+
 
     public static DatabaseHandler getInstance() {
         if (handler == null) {
@@ -65,16 +59,16 @@ public final class DatabaseHandler {
         }
         return handler;
     }
-     //UPDATE BAL SET balance=? WHERE accountid=?
+    //UPDATE BAL SET balance=? WHERE accountid=?
     //INSERT INTO BAL (accountid, balance)\n" +
-//"VALUES ('1000', 'user1')
-     
-    
-        public boolean dbadmin2() {
+    //"VALUES ('1000', 'user1')
+
+
+    public boolean dbadmin2() {
         try {
             String updatebalance = "CREATE TABLE TRANS (transactionid int, item VARCHAR(20),type VARCHAR(20),amount DOUBLE, time VARCHAR(30),openprice DOUBLE,closeprice DOUBLE)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
-           System.out.println("administration done");
+            System.out.println("administration done");
             int res = stmt.executeUpdate();
             if (res == 1) {
                 return true;
@@ -84,14 +78,14 @@ public final class DatabaseHandler {
         }
         return false;
     }
-            
-            
-            
-        public boolean dbadmin1() {
+
+
+
+    public boolean dbadmin1() {
         try {
             String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy',1000,'21:39 19/03/2018',1000,0)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
-           System.out.println("administration done");
+            System.out.println("administration done");
             int res = stmt.executeUpdate();
             if (res == 1) {
                 return true;
@@ -101,12 +95,12 @@ public final class DatabaseHandler {
         }
         return false;
     }
-        
-        public boolean dbadmin() {
+
+    public boolean dbadmin() {
         try {
             String updatebalance = "DELETE FROM TRANS";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
-           System.out.println("administration done");
+            System.out.println("administration done");
             int res = stmt.executeUpdate();
             if (res == 1) {
                 return true;
@@ -116,41 +110,39 @@ public final class DatabaseHandler {
         }
         return false;
     }
-        
 
-    
-    
-     void createtable(){
+
+
+
+    void createtable() {
         String TABLE_NAME = "BAL";
-        try{ System.out.println("this worked");
-            stmt = conn.createStatement();
-            
-            DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(),null);
-            
-            if (tables.next()){
-                System.out.println("Table "+ TABLE_NAME + "already exists.Ready to go!");
-                
-            }else {
-                stmt.execute("CREATE TABLE " +TABLE_NAME+ "("
-                +"      accountid varchar(200) primary key, \n"
-                +"      balance DECIMAL(20,2)"
-                +" )");
-                
-            }
-        } catch (SQLException e ){
-            System.err.println(e.getMessage()+ ".....setupDatabase");
-        
-        } finally {
-            
-        }
-        
-    }
-    
-private static void inflateDB() {
-        List<String> tableData = new ArrayList<>();
         try {
-            Set<String> loadedTables = getDBTables();
+            System.out.println("this worked");
+            stmt = conn.createStatement();
+
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+
+            if (tables.next()) {
+                System.out.println("Table " + TABLE_NAME + "already exists.Ready to go!");
+
+            } else {
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "(" + "accountid varchar(200) primary key, \n" + "balance DECIMAL(20,2)" + " )");
+
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage() + ".....setupDatabase");
+
+        } finally {
+
+        }
+
+    }
+
+    private static void inflateDB() {
+        List < String > tableData = new ArrayList < > ();
+        try {
+            Set < String > loadedTables = getDBTables();
             System.out.println("Already loaded tables " + loadedTables);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -185,15 +177,17 @@ private static void inflateDB() {
         }
     }
 
-    private static Set<String> getDBTables() throws SQLException {
-        Set<String> set = new HashSet<>();
+    private static Set < String > getDBTables() throws SQLException {
+        Set < String > set = new HashSet < > ();
         DatabaseMetaData dbmeta = conn.getMetaData();
         readDBTable(set, dbmeta, "TABLE", null);
         return set;
     }
 
-    private static void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema) throws SQLException {
-        ResultSet rs = dbmeta.getTables(null, schema, null, new String[]{searchCriteria});
+    private static void readDBTable(Set < String > set, DatabaseMetaData dbmeta, String searchCriteria, String schema) throws SQLException {
+        ResultSet rs = dbmeta.getTables(null, schema, null, new String[] {
+            searchCriteria
+        });
         while (rs.next()) {
             set.add(rs.getString("TABLE_NAME").toLowerCase());
         }
@@ -207,8 +201,7 @@ private static void inflateDB() {
         } catch (SQLException ex) {
             System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
             return null;
-        } finally {
-        }
+        } finally {}
         return result;
     }
 
@@ -221,23 +214,22 @@ private static void inflateDB() {
             JOptionPane.showMessageDialog(null, "Error:" + ex.getMessage(), "Error Occured", JOptionPane.ERROR_MESSAGE);
             System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
             return false;
-        } finally {
-        }
+        } finally {}
     }
-    
-        public static void main(String[] args) throws Exception {
+
+    public static void main(String[] args) throws Exception {
         DatabaseHandler.getInstance();
     }
-    private static void createTables(List<String> tableData) throws SQLException {
+    private static void createTables(List < String > tableData) throws SQLException {
         Statement statement = conn.createStatement();
         statement.closeOnCompletion();
-        for (String command : tableData) {
+        for (String command: tableData) {
             System.out.println(command);
             statement.addBatch(command);
         }
         statement.executeBatch();
     }
-        public boolean updateTransaction(Transaction transaction) {
+    public boolean updateTransaction(Transaction transaction) {
         try {
             String update = "UPDATE TRANS SET COMPANY=?, TYPE=?, MARGIN=?,TIME=? WHERE TRANSACTIONID=?";
             PreparedStatement stmt = conn.prepareStatement(update);
@@ -245,9 +237,9 @@ private static void inflateDB() {
             stmt.setString(2, transaction.getItem());
             stmt.setString(3, transaction.getType());
             stmt.setDouble(4, transaction.getAmount());
-            stmt.setString(5,transaction.getTime());
-            stmt.setDouble(6,transaction.getOpenprice());
-            stmt.setDouble(7,transaction.getCloseprice());
+            stmt.setString(5, transaction.getTime());
+            stmt.setDouble(6, transaction.getOpenprice());
+            stmt.setDouble(7, transaction.getCloseprice());
             int res = stmt.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {
@@ -260,5 +252,5 @@ private static void inflateDB() {
         return conn;
     }
 
-    
+
 }
