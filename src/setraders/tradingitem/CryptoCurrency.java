@@ -17,9 +17,7 @@ import setraders.ui.tables.PriceTable;
 public class CryptoCurrency extends TradingItem
 {
 
-    public static ObservableList<PriceTable> getList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     private final String cryptoName;
     private double price;
     public static  String chosenCurrency;

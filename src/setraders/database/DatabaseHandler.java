@@ -50,7 +50,7 @@ public final class DatabaseHandler {
     } 
 
 
-      public DatabaseHandler() {
+      private DatabaseHandler() {
       createConnection();
       inflateDB();
       //dbadmin();

@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Math.random;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -71,9 +73,7 @@ import setraders.tradingitem.ThreadHandler;
 public class TradingAccountController implements Initializable {
     
     
-     Timer timer1 = new Timer();
-        TimerTask task;
-        Random dice = new Random();
+
     
     //Radio Boxes
     @FXML
@@ -87,8 +87,13 @@ public class TradingAccountController implements Initializable {
    // public static XYChart.Series<String, Number> series, series1, series2;
     
     @FXML
-    private LineChart<String, Number> lineChart;
-    public static XYChart.Series<String, Number> series;
+    private LineChart<Number, Number> lineChart;
+    public static XYChart.Series<Number, Number> series;
+    
+    @FXML
+    private NumberAxis xAxis ;
+    @FXML
+    private NumberAxis yAxis ;
    // public static NumberAxis yAxis;
    // private  NumberAxis xAxis;
    
@@ -169,14 +174,20 @@ public class TradingAccountController implements Initializable {
     private  double xOffset = 0;         
     private  double yOffset = 0;
     
+    public int increment =0;
  
     Timer stocksTimer;
     Timer forexTimer;
     Timer cryptoTimer;
     
+    Timer graphTimer;
+    Random dice = new Random();
+    static Random random = new Random();
+    
     boolean cryptoSelected;
     boolean stocksSelected;
     boolean forexSelected;
+    boolean graphRun = false;
     
     //to store transaction items when fetched from table
     ObservableList<Transaction> list = FXCollections.observableArrayList();
@@ -454,10 +465,11 @@ public class TradingAccountController implements Initializable {
       
         String qu1 = "SELECT item FROM TRANS WHERE type = 'buy CFD' AND item = '" + transItem+"'" ;
         ResultSet rss = handler.execQuery(qu1);
-     
+        double openpricex = 0;
         try {
             while (rss.next()) {
                  String result = rss.getString("item");
+                 openpricex = rss.getDouble("openprice");
                  System.out.println(result);
                     if (result != transItem){
                     AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Buy CFD first", "Buy CFD to sell it");
@@ -472,7 +484,24 @@ public class TradingAccountController implements Initializable {
 
         setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transItem, transType, transAmount, transTime, transOpenprice, transCloseprice);
         boolean result = DataHelper.insertNewTransaction(transaction);
+        
         if (result) {
+            
+         String qu2 = "SELECT item FROM TRANS WHERE amount ="+ transAmount+" AND type = 'Buy CFD' AND item = '" + transItem+"'" ;
+        ResultSet rs2 = handler.execQuery(qu1);
+        
+        double profit = 0;
+        try {
+            while (rs2.next()) {
+                 String resultx = rss.getString("item");
+                 double closepricex = rss.getDouble("closeprice");
+                 profit = openpricex - closepricex;
+                   
+            }      
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         
         double balance =  transAmount;
             
@@ -496,7 +525,7 @@ public class TradingAccountController implements Initializable {
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean qresult = DataHelper.updateBalanceplus(bal1);
         if (qresult) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Amount","£"+ balance + " has been added to your account");
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Amount","£"+ balance + profit + " has been added to your account");
             loadbalance();
             
              AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transItem + "'s transaction completed");
@@ -760,103 +789,87 @@ public class TradingAccountController implements Initializable {
 
         databaseHandler = DatabaseHandler.getInstance();
        
-      //  initgraph();
+       // initgraph();
         initButtons();
         initComboBox();
         initColumns();
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
-        //loadtwitter();
+      
         
     }
-    
-    private void loadtwitter(){
         
+    //-------------------------------------Graph Code--------------------------------------------------
+    @FXML
+    private void loadGraph(MouseEvent event){
         
-        String fileName = "TweetStream.txt";
-        String line;
-        ArrayList arr = new ArrayList();
+        if (graphRun == true){
+        lineChart.getData().clear();
+        increment =0;
+        graphTimer.cancel();
+        graphTimer.purge();
+   
 
-        try{
-            BufferedReader output = new BufferedReader(new FileReader(fileName));
-            if(!output.ready())
-                throw new IOException();
-
-            while((line = output.readLine()) != null) {
-                arr.add(line);
-            }
-            output.close();
-            
-        }catch(IOException e)
-        {
-            System.out.println(e);
         }
-
-        try {
-            for (int i = 0; i < arr.size(); i++) {
-                Thread.sleep(1000);
-                System.out.println(arr.get(i).toString());
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private void initgraph(){
-        /*
-        yAxis = new NumberAxis();
-        xAxis = new NumberAxis(0, PriceSimulator.MAX_DATA_POINTS, PriceSimulator.MAX_DATA_POINTS / 10);
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
+        String transCompany = companycfdCol.getCellData(selectedForBuy);
+        //int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
+        //String transPrice = Integer.toString(transPriceint);
         xAxis.setForceZeroInRange(false);
         xAxis.setAutoRanging(false);
         xAxis.setTickLabelsVisible(false);
         xAxis.setTickMarkVisible(false);
         xAxis.setMinorTickVisible(false);
-        
-        lineChart = new LineChart<Number, Number>(xAxis, yAxis) {
-            @Override
-            protected void dataItemAdded(XYChart.Series<Number, Number> series, int itemIndex, XYChart.Data<Number, Number> item) {
-            }
-        };
-
-        lineChart.setAnimated(false);
-        lineChart.setTitle("Price chart");
+        lineChart.setTitle(transCompany);
         lineChart.setHorizontalGridLinesVisible(true);
         
-        
-        series = new XYChart.Series<>();
-        series.setName("Crypto");
-        ThreadHandler threadHandler = new ThreadHandler();
-        threadHandler.price_thread.start(); 
+ 
+        XYChart.Series<Number,Number> series = new XYChart.Series<Number,Number>();
         lineChart.getData().add(series);
-        */
+        graphRun = true;
         
-  XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
-
-
-
-    series.getData().add(new XYChart.Data<String,Number>("1",0));
-
-    lineChart.getData().add(series);
-   // xAxis.setForceZeroInRange(false);
-
-    task = new TimerTask(){
-        int secondsPassed = 0;
-        @Override
-        public void run() {
-            secondsPassed++;
-            //System.out.println(secondsPassed);
-            int number;
-            number = 1+dice.nextInt(6);
-            series.getData().add(new XYChart.Data<String,Number>(String.valueOf(secondsPassed),number));
+        graphTimer = new Timer();
+             graphTimer.schedule(new TimerTask() {
+                
+@Override
+    public void run() {
+       
+    Platform.runLater(new Runnable() {
+        
+       public void run() {
+           if (cryptoSelected ==true){
+            double cryptoPrice = Math.round((0 + (15000 - 4000) * random.nextDouble())*100)/100.0;
+            series.getData().add(new XYChart.Data<Number,Number>(increment,cryptoPrice));
+                increment++;
+           } else if (forexSelected ==true){
+            double forexPrice =  Math.round((0 + (4 - 1) * random.nextDouble())*100)/100.0;
+            series.getData().add(new XYChart.Data<Number,Number>(increment,forexPrice));
+                increment++;
+           } else if (stocksSelected == true){
+            double stocksPrice = Math.round((0 + (500 - 100) * random.nextDouble())*100)/100.0;
+            series.getData().add(new XYChart.Data<Number,Number>(increment,stocksPrice));
+               increment++;
+           }
+           
+      }
+    });
+}
+},0,5000);
+        
         }
-
-    };
-
-    timer1.scheduleAtFixedRate(task, 1000, 1000);      
-    }
+                
+              
     
+    //------------------------------End graph code here-------------------------------------------------
+    
+    
+    private void initgraph(){
+        
+  
+            }
+    
+
     
     //------------------------------------hiding cfd buttons on start up---------------------------
     
@@ -1039,20 +1052,7 @@ public class TradingAccountController implements Initializable {
     
     
    
-    
-    //-------------------------------------Graph Code--------------------------------------------------
-    @FXML
-    private void loadGraph(MouseEvent event){
-        
-        //PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
-        //String transCompany = companycfdCol.getCellData(selectedForBuy);
-        //int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
-        //String transPrice = Integer.toString(transPriceint);
-        
-    }
-    
-    //------------------------------End graph code here-------------------------------------------------
-    
+
 
 
 

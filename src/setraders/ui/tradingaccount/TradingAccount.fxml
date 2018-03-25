@@ -78,10 +78,10 @@
                                  <children>
                                     <LineChart fx:id="lineChart" legendVisible="false" prefHeight="335.0" prefWidth="500.0" style="-fx-background-color: #e7e6e6;" AnchorPane.topAnchor="0.0">
                                        <xAxis>
-                                          <CategoryAxis side="BOTTOM" />
+                                          <NumberAxis side="BOTTOM" fx:id="xAxis" />
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis side="LEFT" />
+                                          <NumberAxis side="LEFT"  fx:id="yAxis" />
                                        </yAxis>
                                     </LineChart>
                                  </children>
