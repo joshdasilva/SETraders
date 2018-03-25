@@ -145,7 +145,7 @@
                                           <Font size="22.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="balancelabel" layoutX="114.0" layoutY="765.0" prefHeight="27.0" prefWidth="68.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="765.0">
+                                    <Label fx:id="balancelabel" layoutX="114.0" layoutY="765.0" prefHeight="32.0" prefWidth="113.0" text="0.00" textFill="#e7e6e6" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="765.0">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -160,7 +160,7 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="609.0" prefWidth="329.0">
                                              <children>
                                                 <Label layoutX="23.0" layoutY="24.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label layoutX="23.0" layoutY="49.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
+                                                <Label fx:id="tweet1" layoutX="23.0" layoutY="49.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
                                                 <Label layoutX="23.0" layoutY="139.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
                                                 <Label layoutX="23.0" layoutY="114.0" text="\@name" textFill="#2a7fd6" />
                                                 <Label layoutX="23.0" layoutY="207.0" text="\@name" textFill="#2a7fd6" />

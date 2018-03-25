@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -24,9 +26,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -38,6 +42,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -65,6 +70,11 @@ import setraders.tradingitem.ThreadHandler;
 
 public class TradingAccountController implements Initializable {
     
+    
+     Timer timer1 = new Timer();
+        TimerTask task;
+        Random dice = new Random();
+    
     //Radio Boxes
     @FXML
     private JFXRadioButton tradeCFD;
@@ -72,14 +82,24 @@ public class TradingAccountController implements Initializable {
     private JFXRadioButton tradeEquities;
     
     //line chart
+    //@FXML
+   // private  LineChart<String, Number> lineChart;
+   // public static XYChart.Series<String, Number> series, series1, series2;
+    
     @FXML
-    private  LineChart<String, Number> lineChart;
-    public static XYChart.Series<String, Number> series, series1, series2;
+    private LineChart<String, Number> lineChart;
+    public static XYChart.Series<String, Number> series;
+   // public static NumberAxis yAxis;
+   // private  NumberAxis xAxis;
+   
     
-    
-    //listbox
+    //twitter
     @FXML
     private JFXListView twitterListView;
+    @FXML
+    private Label tweet1;
+    @FXML
+    private Label tweet2;
    
     
     //Equity transaction table start
@@ -160,10 +180,6 @@ public class TradingAccountController implements Initializable {
     
     //to store transaction items when fetched from table
     ObservableList<Transaction> list = FXCollections.observableArrayList();
-    public static ObservableList<PriceTable> fxList;
-    public static ObservableList<PriceTable> sList;
-    public static ObservableList<PriceTable> cList;
-
    
   //----------Controls------------  
      
@@ -426,8 +442,8 @@ public class TradingAccountController implements Initializable {
         String transType = "Buy Equity";
         String accountid = "user1";
         String transCompany = companycfdCol.getCellData(selectedForBuy);
-         int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
-        String transPrice = Integer.toString(transPriceint);
+        double transPricedouble = Double.parseDouble(pricecfdCol.getCellData(selectedForBuy).toString());
+        String transPrice = Double.toString(transPricedouble);
         String transClosePrice = "-";
         double transAmount = 0;
         
@@ -446,7 +462,7 @@ public class TradingAccountController implements Initializable {
             return;
         }
         
-        if(transAmounts.isEmpty()) {
+        if(transAmounts.isEmpty()||selectedForBuy.equals(null)) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter trading amount.");
             return;
         }
@@ -472,24 +488,28 @@ public class TradingAccountController implements Initializable {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }     
         
+        if (transAmount<= check){
         
         setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
         boolean qresult = DataHelper.updateBalanceminus(bal1);
         if (qresult) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Amount","£"+ balance + " has been withdrawn");
             loadbalance();
-        } else {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
-        }             
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
+            
+             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transCompany + "'s transaction completed");
             amounttxt.clear();
             refreshTransactionTable();
-        } else {
-            AlertMaker.showMaterialDialog( rootPane, mainContainer, new ArrayList<>(), "Failed to create new transaction", "Check all the entries and try again");
+            priceTable.refresh();
+            
+            
+        }} else {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
+            
         }
+    
+    } 
        
-
-    }
+}
        
     
     @FXML //sell/short equities button
@@ -537,28 +557,101 @@ public class TradingAccountController implements Initializable {
 
         databaseHandler = DatabaseHandler.getInstance();
        
-        //initgraph();
+      //  initgraph();
         initButtons();
         initComboBox();
         initColumns();
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
+        //loadtwitter();
         
     }
     
+    private void loadtwitter(){
+        
+        
+        String fileName = "TweetStream.txt";
+        String line;
+        ArrayList arr = new ArrayList();
+
+        try{
+            BufferedReader output = new BufferedReader(new FileReader(fileName));
+            if(!output.ready())
+                throw new IOException();
+
+            while((line = output.readLine()) != null) {
+                arr.add(line);
+            }
+            output.close();
+            
+        }catch(IOException e)
+        {
+            System.out.println(e);
+        }
+
+        try {
+            for (int i = 0; i < arr.size(); i++) {
+                Thread.sleep(1000);
+                System.out.println(arr.get(i).toString());
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void initgraph(){
-        ThreadHandler threadHandler = new ThreadHandler();
-        threadHandler.price_thread.start();
+        /*
+        yAxis = new NumberAxis();
+        xAxis = new NumberAxis(0, PriceSimulator.MAX_DATA_POINTS, PriceSimulator.MAX_DATA_POINTS / 10);
+        xAxis.setForceZeroInRange(false);
+        xAxis.setAutoRanging(false);
+        xAxis.setTickLabelsVisible(false);
+        xAxis.setTickMarkVisible(false);
+        xAxis.setMinorTickVisible(false);
+        
+        lineChart = new LineChart<Number, Number>(xAxis, yAxis) {
+            @Override
+            protected void dataItemAdded(XYChart.Series<Number, Number> series, int itemIndex, XYChart.Data<Number, Number> item) {
+            }
+        };
+
+        lineChart.setAnimated(false);
+        lineChart.setTitle("Price chart");
+        lineChart.setHorizontalGridLinesVisible(true);
+        
+        
         series = new XYChart.Series<>();
-        series.setName("Cryto");
-        series1 = new XYChart.Series<>();
-        series1.setName("Stocks");
-        series2 = new XYChart.Series<>();
-        series2.setName("Forex");
+        series.setName("Crypto");
+        ThreadHandler threadHandler = new ThreadHandler();
+        threadHandler.price_thread.start(); 
         lineChart.getData().add(series);
-        lineChart.getData().add(series1);
-        lineChart.getData().add(series2);
+        */
+        
+  XYChart.Series<String,Number> series = new XYChart.Series<String,Number>();
+
+
+
+    series.getData().add(new XYChart.Data<String,Number>("1",0));
+
+    lineChart.getData().add(series);
+   // xAxis.setForceZeroInRange(false);
+
+    task = new TimerTask(){
+        int secondsPassed = 0;
+        @Override
+        public void run() {
+            secondsPassed++;
+            //System.out.println(secondsPassed);
+            int number;
+            number = 1+dice.nextInt(6);
+            series.getData().add(new XYChart.Data<String,Number>(String.valueOf(secondsPassed),number));
+        }
+
+    };
+
+    timer1.scheduleAtFixedRate(task, 1000, 1000);      
     }
     
     
@@ -657,13 +750,7 @@ public class TradingAccountController implements Initializable {
                 }
             }, 0, 5000);  
     }});}
-    
-
-
-    
-    
-    
- 
+     
     /*
     
     
@@ -691,7 +778,26 @@ public class TradingAccountController implements Initializable {
     
     //load price table data
     public void loadPriceTable(){
-        priceTable.setItems(Stock.getStockList());   
+       stocksSelected = true;
+     
+            stocksTimer = new Timer();
+            stocksTimer.schedule(
+                    
+            new TimerTask() {
+            
+                @Override
+                public void run()   {
+                    if(stocksSelected == true) { 
+                    priceTable.setItems(Stock.getStockList());
+                    //priceTable.refresh();
+                    }
+            
+                    else if (stocksSelected == false){
+                    stocksTimer.cancel();
+                    stocksTimer.purge();
+                    }        
+                }
+            }, 0, 5000);   
     }
     
     //load transaction table data

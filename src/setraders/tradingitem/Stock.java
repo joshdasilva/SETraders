@@ -37,7 +37,7 @@ public class Stock extends TradingItem
            double [] stockPrice = new double [22];
         
         for(int i = 0; i < stockPrice.length; i++ ){
-            stockPrice[i] =  (0 + (15000-2000) * random.nextDouble());
+            stockPrice[i] = Math.round((0 + (500 - 200) * random.nextDouble())*100)/100.0;
         }
         
      

@@ -139,14 +139,23 @@ public class ClientController implements Initializable {
         choices.add("GBP");
         
         ChoiceDialog<String> dialog = new ChoiceDialog<>("USD", choices);
-        dialog.setTitle("Local Currency Choice");
-        dialog.setHeaderText("Please choose your local currency for this session. The default currency is USD.");
+        dialog.setTitle("Trading Currency Choice");
+        dialog.setHeaderText("Please choose your trading currency for this session. The default trading currency is USD.");
         dialog.setContentText("Choose your prefered currency");
         dialog.initStyle(StageStyle.UNDECORATED);
          
         Optional<String> result = dialog.showAndWait();
         
        if (result.isPresent() == true){
+           if (result.isPresent() && result.get().equals("USD")){
+             setraders.tradingitem.CryptoCurrency.selectedcryptoUSDCurrency();  
+             setraders.tradingitem.Forex.selectedforexUSDCurrency();
+           }
+           else if (result.isPresent() && result.get().equals("GBP")){      
+             setraders.tradingitem.CryptoCurrency.selectedcryptoGBPCurrency();
+             setraders.tradingitem.Forex.selectedforexGBPCurrency();
+           } 
+           
             closeStage();
             Parent parent = FXMLLoader.load(getClass().getResource("/setraders/ui/tradingaccount/TradingAccount.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
