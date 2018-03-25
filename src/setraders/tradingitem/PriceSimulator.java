@@ -6,65 +6,27 @@
 package setraders.tradingitem;
 
 import java.util.Random;
-import javafx.scene.chart.XYChart;
-import static setraders.ui.tradingaccount.TradingAccountController.series;
 
-
-
-
-
-/**
- *
- * @author alton
- */
 public class PriceSimulator
 {
+    public static double cryptoPrice;
+    public static double forexPrice;
+    public static double stockPrice;
+    public static Random random = new Random();
 
-    double stockPrice;
-    double cryptoPrice;
-    double forexPrice;
-   
-     Random random = new Random();
-     int cryptoCount = 0;
-     
-    
-    public  void randomGenCrypto()
-    {    
+    public static void randomGenCrypto()
+    {
         cryptoPrice = 0 + (15000-4000) * random.nextDouble();
-        
-        
-        
-        
-        
-        
-        //series.getData().add(new XYChart.Data<>(cryptoCount+ "", cryptoPrice));
-        //cryptoCount++;
-        
-        
-
-        
     }
     
-    public void randomGenForex()
+    public static void randomGenForex()
     {
-      //forexPrice = 0 + (4-1) * random.nextDouble();
-       //series1.getData().add(new XYChart.Data<>(forexCount+ "", forexPrice));
-       //forexCount++;
-                forexPrice = 0 + (4-1) * random.nextDouble();
-       
-      
+        forexPrice = 0 + (4-1) * random.nextDouble();
     }
     
-    public void randomGenStock()
+    public static void randomGenStock()
     {
-      stockPrice = 0 + (500 - 200) * random.nextDouble();  
-        
-    }
+        stockPrice = 0 + (500 - 200) * random.nextDouble();
+    }    
 }
-
-       
-
-        
-
-
 

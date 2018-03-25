@@ -46,13 +46,12 @@ public final class DatabaseHandler {
     static {
            createConnection();
            inflateDB();
-  
     } 
 
 
       private DatabaseHandler() {
-      createConnection();
-      inflateDB();
+      //createConnection();
+      //inflateDB();
       //dbadmin();
       //dbadmin1();
       //dbadmin1();

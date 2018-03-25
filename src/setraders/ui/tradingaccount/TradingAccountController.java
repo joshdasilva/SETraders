@@ -82,21 +82,19 @@ public class TradingAccountController implements Initializable {
     private JFXRadioButton tradeEquities;
     
     //line chart
-    //@FXML
-   // private  LineChart<String, Number> lineChart;
-   // public static XYChart.Series<String, Number> series, series1, series2;
-    
     @FXML
     private LineChart<Number, Number> lineChart;
     public static XYChart.Series<Number, Number> series;
-    
     @FXML
     private NumberAxis xAxis ;
     @FXML
     private NumberAxis yAxis ;
-   // public static NumberAxis yAxis;
-   // private  NumberAxis xAxis;
-   
+
+    //confindence indicator
+    @FXML
+    private Label confidenceLabel;
+    @FXML
+    private Label confidenceItemName;
     
     //twitter
     @FXML
@@ -796,13 +794,14 @@ public class TradingAccountController implements Initializable {
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
-      
+        
         
     }
         
     //-------------------------------------Graph Code--------------------------------------------------
     @FXML
     private void loadGraph(MouseEvent event){
+        initConfidenceIndicator();
         
         if (graphRun == true){
         lineChart.getData().clear();
@@ -814,6 +813,7 @@ public class TradingAccountController implements Initializable {
         }
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();  
         String transCompany = companycfdCol.getCellData(selectedForBuy);
+        confidenceItemName.setText(transCompany);
         //int transPriceint = Integer.parseInt(pricecfdCol.getCellData(selectedForBuy).toString());
         //String transPrice = Integer.toString(transPriceint);
         xAxis.setForceZeroInRange(false);
@@ -830,7 +830,7 @@ public class TradingAccountController implements Initializable {
         graphRun = true;
         
         graphTimer = new Timer();
-             graphTimer.schedule(new TimerTask() {
+        graphTimer.schedule(new TimerTask() {
                 
 @Override
     public void run() {
@@ -864,18 +864,35 @@ public class TradingAccountController implements Initializable {
     //------------------------------End graph code here-------------------------------------------------
     
     
-    private void initgraph(){
+    private void initConfidenceIndicator(){
         
-  
-            }
+        Confidence c = new Confidence();
+        ThreadHandler th = new ThreadHandler();
+        th.thThread.start();
+        c.cThread.start();
+   }
+    
+    public void setConfidence(String c){
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() { 
+            confidenceLabel.setText(c);
+
+            }     
+        });
+        
+        
+                           
+     
+    }
     
 
     
     //------------------------------------hiding cfd buttons on start up---------------------------
     
     private void initButtons(){
-        sellCFD.setVisible(false);
-        buyCFD.setVisible(false);
+        sellCFD.setVisible(true);
+        buyCFD.setVisible(true);
     }
     //------------------------------------End -----------------------------------------------------          
     
@@ -1074,8 +1091,96 @@ public class TradingAccountController implements Initializable {
     }
   // ----------------------------------load balance end here----------------------------------------------    
 
-  
 
+public class Confidence{
+    public Thread cThread;
+    private double[] prices;
+    private double average;
+    private String indicator;
+    private String type;
+    
+    public Confidence(){
+        this.cThread = new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    //getType(); <------ GET STRING OF TYPE OF TRADING ITEM
+                    type = "Cryptocurrency"; // HARDCODED AS CRYPTO
+                    prices = new double[3];
+                    switch (type) {
+                        case "Cryptocurrency":
+                            prices[0] = PriceSimulator.cryptoPrice;
+                            break;
+                        case "Forex":
+                            prices[0] = PriceSimulator.forexPrice;
+                            break;
+                        case "Stock":
+                            prices[0] = PriceSimulator.stockPrice;
+                            break;
+                        default:
+                            break;
+                    }
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Confidence.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    switch (type) {
+                        case "Cryptocurrency":
+                            prices[1] = PriceSimulator.cryptoPrice;
+                            break;
+                        case "Forex":
+                            prices[1] = PriceSimulator.forexPrice;
+                            break;
+                        case "Stock":
+                            prices[1] = PriceSimulator.stockPrice;
+                            break;
+                        default:
+                            break;
+                    }
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Confidence.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    switch (type) {
+                        case "Cryptocurrency":
+                            prices[2] = PriceSimulator.cryptoPrice;
+                            break;
+                        case "Forex":
+                            prices[2] = PriceSimulator.forexPrice;
+                            break;
+                        case "Stock":
+                            prices[2] = PriceSimulator.stockPrice;
+                            break;
+                        default:
+                            break;
+                    }
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Confidence.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    average = (prices[0] + prices[1] + prices[2])/3;
+                    if(prices[2]>average){
+                        indicator = "up";
+                    }
+                    else if(prices[2]<average){
+                        indicator = "down";
+                    }
+                    else{
+                        indicator = "to stay steady";
+                    }
+                   
+                    String result = ("The price is likely going " + indicator);
+                    setConfidence(result);
+                }
+            }
+        };
+    }
+
+
+}
 
 }
 
