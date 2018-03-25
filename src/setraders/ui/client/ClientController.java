@@ -47,7 +47,7 @@ public class ClientController implements Initializable {
     @FXML
     private JFXPasswordField password;
     @FXML
-    private Label label;
+    private Label invalidCredentials;
     @FXML 
     private AnchorPane anchorPane;
     
@@ -60,6 +60,7 @@ public class ClientController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         credential = Credentials.getCredentials();
+        invalidCredentials.setVisible(false);
     }    
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
@@ -71,7 +72,7 @@ public class ClientController implements Initializable {
             loadMain();
 
         } else {
-            
+            invalidCredentials.setVisible(true);
             username.getStyleClass().add("wrong-credentials");
             password.getStyleClass().add("wrong-credentials");
         }

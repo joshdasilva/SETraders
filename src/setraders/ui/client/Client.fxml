@@ -39,7 +39,7 @@
             <JFXButton layoutX="41.0" layoutY="264.0" onAction="#handleLoginButtonAction" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: #e45652;" text="Login" textFill="#c3c3c3" />
             <JFXTextField fx:id="username" blendMode="SCREEN" focusColor="WHITE" layoutX="41.0" layoutY="120.0" prefHeight="25.0" prefWidth="240.0" promptText="username" unFocusColor="#c3c3c3" />
             <JFXPasswordField fx:id="password" blendMode="SCREEN" focusColor="WHITE" layoutX="41.0" layoutY="190.0" onAction="#handleLoginButtonAction" prefHeight="25.0" prefWidth="240.0" promptText="password" unFocusColor="#c3c3c3" />
-            <Label fx:id="label" layoutX="71.0" layoutY="306.0" prefHeight="17.0" prefWidth="181.0" textFill="#c3c3c3" />
+            <Label fx:id="invalidCredentials" layoutX="113.0" layoutY="304.0" prefHeight="17.0" prefWidth="99.0" text="invalid Credentials" textFill="WHITE" visible="false" />
          </children>
       </AnchorPane>
       <Label layoutX="1005.0" layoutY="14.0" onMouseClicked="#handleClose" text="X" textFill="#c3c3c3">
