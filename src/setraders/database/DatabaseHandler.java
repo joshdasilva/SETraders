@@ -49,11 +49,12 @@ public final class DatabaseHandler {
   
     } 
 
-      private DatabaseHandler() {
-      //createConnection();
-      //inflateDB();
+
+      public DatabaseHandler() {
+      createConnection();
+      inflateDB();
       //dbadmin();
-      //dbadmin();
+      //dbadmin1();
       //dbadmin1();
       //createtable();
     }
@@ -70,7 +71,7 @@ public final class DatabaseHandler {
 //"VALUES ('1000', 'user1')
      
     
-            public boolean dbadmin2() {
+        public boolean dbadmin2() {
         try {
             String updatebalance = "CREATE TABLE TRANS (transactionid int, item VARCHAR(20),type VARCHAR(20),amount DOUBLE, time VARCHAR(30),openprice DOUBLE,closeprice DOUBLE)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
@@ -87,9 +88,9 @@ public final class DatabaseHandler {
             
             
             
-        public boolean dbadmin() {
+        public boolean dbadmin1() {
         try {
-            String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy',1000,'21:39 19/03/2018',1000,1200)";
+            String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy',1000,'21:39 19/03/2018',1000,0)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
            System.out.println("administration done");
             int res = stmt.executeUpdate();
@@ -102,7 +103,7 @@ public final class DatabaseHandler {
         return false;
     }
         
-        public boolean dbadmin1() {
+        public boolean dbadmin() {
         try {
             String updatebalance = "DELETE FROM TRANS";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);

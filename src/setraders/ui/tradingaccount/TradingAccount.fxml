@@ -98,7 +98,7 @@
                                     <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
                                        <columns>
                                           <TableColumn fx:id="transactionidCol" maxWidth="3100.0" prefWidth="36.0" text="ID" />
-                                          <TableColumn fx:id="itemCol" maxWidth="2500.0" prefWidth="101.0" text="Company" />
+                                          <TableColumn fx:id="itemCol" maxWidth="2500.0" prefWidth="101.0" text="Item" />
                                           <TableColumn fx:id="openpriceCol" maxWidth="2500.0" prefWidth="81.0" text="Open price" />
                                           <TableColumn fx:id="closepriceCol" maxWidth="2500.0" prefWidth="73.0" text="Close price" />
                                           <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="72.0" resizable="false" text="Type" />

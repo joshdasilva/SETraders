@@ -317,13 +317,197 @@ public class TradingAccountController implements Initializable {
 //------------------------- CFD Buy and Sell buttons ------------------------------
     @FXML //
     private void handleBuyCFDButtonAction(ActionEvent event){
+     DatabaseHandler handler = DatabaseHandler.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        Date date = new Date();
+        
+        String qu = "SELECT * FROM TRANS WHERE transactionid=(SELECT MAX(transactionid) FROM TRANS)";
+        ResultSet rs = handler.execQuery(qu);
+        int transID = 0;
+        try {
+            while (rs.next()) {
+                 int result = rs.getInt("transactionid");
+                  transID = result + 1;        // transaction id
+                
+            }      
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        
+        String accountid = "user1";
+        
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem(); 
+        String transItem = companycfdCol.getCellData(selectedForBuy);  // item name 
+        String transType = "Buy CFD";                               //type
+        double transOpenprice = 0;        
+        transOpenprice = Double.parseDouble(pricecfdCol.getCellData(selectedForBuy).toString());   //open price
+        double transCloseprice = 0;                                    //close price
+        double transAmount = 0;                                       //initalise amount
+        String transTime = dateFormat.format(date);                   //date
+        
+        
+        String toCheck = amounttxt.getText();
+        if (toCheck.isEmpty()) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "No amount input", "Please input an amount in amount field");
+            return;
+        }
+        
+        try{  
+            transAmount = Double.parseDouble(amounttxt.getText());   //validation
+            }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Invalid input", "Please input a number value in item shares");
+            amounttxt.clear();
+            return;
+        }
+          
+
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transItem, transType, transAmount, transTime, transOpenprice, transCloseprice);
+        boolean result = DataHelper.insertNewTransaction(transaction);
+        if (result) {
+        
+        double balance =  transAmount;
+            
+        String query = "SELECT * FROM bal";
+        ResultSet rs1 = handler.execQuery(query);
+        String balancex = new String();
+        double check = 0;
+        
+        try { 
+            while (rs1.next()) {
+                 balancex = rs1.getString("balance");
+                 check = Double.parseDouble(balancex);         
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+        
+        if (transAmount<= check){
+        
+        setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
+        boolean qresult = DataHelper.updateBalanceminus(bal1);
+        if (qresult) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Amount","£"+ balance + " has been withdrawn");
+            loadbalance();
+            
+             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transItem + "'s transaction completed");
+            amounttxt.clear();
+            refreshTransactionTable();
+            priceTable.refresh();
+            
+            
+            }} else {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Failed to withdraw amount", "Check all the entries and try again");
+            
+        }
     
+        } 
   
     }
     
     @FXML //short button
     private void handleShortCFDButtonAction(ActionEvent event){
-  
+   DatabaseHandler handler = DatabaseHandler.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        Date date = new Date();
+        
+        String qu = "SELECT * FROM TRANS WHERE transactionid=(SELECT MAX(transactionid) FROM TRANS)";
+        ResultSet rs = handler.execQuery(qu);
+        int transID = 0;
+        try {
+            while (rs.next()) {
+                 int result = rs.getInt("transactionid");
+                  transID = result + 1;        // transaction id
+                
+            }      
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        
+        String accountid = "user1";
+        
+        PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem(); 
+        String transItem = companycfdCol.getCellData(selectedForBuy);  // item name 
+        String transType = "Sell CFD";                               //type       
+        double transOpenprice = 0;   //open price
+        double transCloseprice = Double.parseDouble(pricecfdCol.getCellData(selectedForBuy).toString()); //close price
+        double transAmount = 0;                                       //initalise amount
+        String transTime = dateFormat.format(date);                   //date
+        
+        
+        String toCheck = amounttxt.getText();
+        if (toCheck.isEmpty()) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "No amount input", "Please input an amount in amount field");
+            return;
+        }
+        
+        try{  
+            transAmount = Double.parseDouble(amounttxt.getText());   //validation
+            }catch(NumberFormatException e) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Invalid input", "Please input a number value in item shares");
+            amounttxt.clear();
+            return;
+        }
+        
+      
+        String qu1 = "SELECT item FROM TRANS WHERE type = 'buy CFD' AND item = '" + transItem+"'" ;
+        ResultSet rss = handler.execQuery(qu1);
+     
+        try {
+            while (rss.next()) {
+                 String result = rss.getString("item");
+                 System.out.println(result);
+                    if (result != transItem){
+                    AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Buy CFD first", "Buy CFD to sell it");
+                    amounttxt.clear();
+                    return;
+                    }
+            }      
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+
+        setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transItem, transType, transAmount, transTime, transOpenprice, transCloseprice);
+        boolean result = DataHelper.insertNewTransaction(transaction);
+        if (result) {
+        
+        double balance =  transAmount;
+            
+        String query = "SELECT * FROM bal";
+        ResultSet rs1 = handler.execQuery(query);
+        String balancex = new String();
+        double check = 0;
+        
+        try { 
+            while (rs1.next()) {
+                 balancex = rs1.getString("balance");
+                 check = Double.parseDouble(balancex);         
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+        
+       
+        
+        setraders.data.wrapper.Balance bal1 = new  setraders.data.wrapper.Balance(accountid, balance);
+        boolean qresult = DataHelper.updateBalanceplus(bal1);
+        if (qresult) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Amount","£"+ balance + " has been added to your account");
+            loadbalance();
+            
+             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "New transaction created", transItem + "'s transaction completed");
+            amounttxt.clear();
+            refreshTransactionTable();
+            priceTable.refresh();
+            
+            
+        } 
+    
+    } 
     
 
     }
@@ -380,25 +564,7 @@ public class TradingAccountController implements Initializable {
             amounttxt.clear();
             return;
         }
-        
-        
-        String qu1 = "SELECT item FROM TRANS WHERE type = 'Sell Equity' and item = '" + transItem+"'" ;
-        ResultSet rss = handler.execQuery(qu1);
-     
-        try {
-            while (rss.next()) {
-                 String result = rss.getString("item");
-                 System.out.println(result);
-                    if (result != transItem){
-                    AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Equity has been bought already", "Try Selling it to buy more");
-                    amounttxt.clear();
-                    return;
-                    }
-            }      
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          
 
         setraders.data.wrapper.Transaction transaction = new setraders.data.wrapper.Transaction(transID, transItem, transType, transAmount, transTime, transOpenprice, transCloseprice);
         boolean result = DataHelper.insertNewTransaction(transaction);
@@ -492,7 +658,7 @@ public class TradingAccountController implements Initializable {
         }
         
       
-        String qu1 = "SELECT item FROM TRANS WHERE type = 'Sell Equity' AND item ='"+transItem+"'" ;
+        String qu1 = "SELECT item FROM TRANS WHERE type = 'buy equity' AND item = '" + transItem+"'" ;
         ResultSet rss = handler.execQuery(qu1);
      
         try {
