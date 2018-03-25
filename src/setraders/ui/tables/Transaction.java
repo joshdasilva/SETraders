@@ -5,6 +5,8 @@
  */
 package setraders.ui.tables;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 /**
  *
@@ -12,48 +14,48 @@ import javafx.beans.property.SimpleStringProperty;
  */
      public class Transaction {
 
-        private final SimpleStringProperty transactionid;
-        private final SimpleStringProperty company;
+        private final SimpleIntegerProperty transactionid;
+        private final SimpleStringProperty item;
         private final SimpleStringProperty type;
-        private final SimpleStringProperty margin;
+        private final SimpleDoubleProperty amount;
         private final SimpleStringProperty time;
-        private final SimpleStringProperty price;
-        private final SimpleStringProperty closeprice;
+        private final SimpleDoubleProperty openprice;
+        private final SimpleDoubleProperty closeprice;
 
-        public Transaction(String tid, String cid, String tyid, String mid, String datid, String pid, String pic) {
-            this.transactionid = new SimpleStringProperty(tid);
-            this.company = new SimpleStringProperty(cid);
+        public Transaction(int tid, String iid, String tyid, double aid, String datid, double op, double cp) {
+            this.transactionid = new SimpleIntegerProperty(tid);
+            this.item = new SimpleStringProperty(iid);
             this.type = new SimpleStringProperty(tyid);
-            this.margin = new SimpleStringProperty(mid);
+            this.amount = new SimpleDoubleProperty(aid);
             this.time = new SimpleStringProperty(datid);
-            this.price = new SimpleStringProperty(pid);
-            this.closeprice = new SimpleStringProperty(pic);
+            this.openprice = new SimpleDoubleProperty(op);
+            this.closeprice = new SimpleDoubleProperty(cp);
             
 
         }
 
-        public String getTransactionid() {
+        public int getTransactionid() {
             return transactionid.get();
         }
 
-        public String getCompany() {
-            return company.get();
+        public String getItem() {
+            return item.get();
         }
 
         public String getType() {
             return type.get();
         }
 
-        public String getMargin() {
-            return margin.get();
+        public double getAmount() {
+            return amount.get();
         }
         public String getTime() {
             return time.get();
         }
-        public String getPrice() {
-            return price.get();
+        public double getOpenprice() {
+            return openprice.get();
         }
-        public String getCloseprice() {
+        public double getCloseprice() {
             return closeprice.get();
         }
     }

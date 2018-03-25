@@ -10,38 +10,38 @@ package setraders.data.wrapper;
  * @author alton
  */
 public class Transaction {
-    String transactionid;
-    String company;
+    int transactionid;
+    String item;
     String type;
-    String margin;
+    double amount;
     String time;
-    String price;
-    String closeprice;
+    double openprice;
+    double closeprice;
 
-    public Transaction(String transactionid, String company, String type, String margin, String time, String price, String closeprice) {
+    public Transaction(int transactionid, String item, String type, double amount, String time, double openprice, double closeprice) {
         this.transactionid = transactionid;
-        this.company = company;
+        this.item = item;
         this.type = type;
-        this.margin = margin;
+        this.amount = amount;
         this.time = time;
-        this.price = price;
+        this.openprice = openprice;
         this.closeprice = closeprice;
     }
     
- public String getTransactionid() {
+ public int getTransactionid() {
         return transactionid;
     }
 
-    public void setTransactionid(String transactionid) {
+    public void setTransactionid(int transactionid) {
         this.transactionid = transactionid;
     }
 
-    public String getCompany() {
-        return company;
+    public String getItem() {
+        return item;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getType() {
@@ -52,12 +52,12 @@ public class Transaction {
         this.type = type;
     }
 
-    public String getMargin() {
-        return margin;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setMargin(String margin) {
-        this.margin = margin;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public String getTime() {
@@ -68,19 +68,19 @@ public class Transaction {
         this.time = time;
     }
 
-    public String getPrice() {
-        return price;
+    public double getOpenprice() {
+        return openprice;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setOpenprice(double openprice) {
+        this.openprice = openprice;
     }
     
-    public String getCloseprice() {
+    public double getCloseprice() {
         return closeprice;
     }
 
-    public void setCloseprice(String closeprice) {
+    public void setCloseprice(double closeprice) {
         this.closeprice = closeprice;
     }
     

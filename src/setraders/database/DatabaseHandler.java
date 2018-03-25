@@ -41,6 +41,7 @@ public final class DatabaseHandler {
     private static final String DB_URL = "jdbc:derby:database;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
+ 
     
     static {
            createConnection();
@@ -49,8 +50,9 @@ public final class DatabaseHandler {
     } 
 
       private DatabaseHandler() {
-      createConnection();
-      inflateDB();
+      //createConnection();
+      //inflateDB();
+      //dbadmin();
       //dbadmin();
       //dbadmin1();
       //createtable();
@@ -66,10 +68,28 @@ public final class DatabaseHandler {
      //UPDATE BAL SET balance=? WHERE accountid=?
     //INSERT INTO BAL (accountid, balance)\n" +
 //"VALUES ('1000', 'user1')
+     
     
+            public boolean dbadmin2() {
+        try {
+            String updatebalance = "CREATE TABLE TRANS (transactionid int, item VARCHAR(20),type VARCHAR(20),amount DOUBLE, time VARCHAR(30),openprice DOUBLE,closeprice DOUBLE)";
+            PreparedStatement stmt = conn.prepareStatement(updatebalance);
+           System.out.println("administration done");
+            int res = stmt.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+            
+            
+            
         public boolean dbadmin() {
         try {
-            String updatebalance = "INSERT INTO TRANS (transactionid,company,type,margin,time,price,closeprice) VALUES('1','Apple','Buy','100','21:39 19/03/2018','1000','1200')";
+            String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy',1000,'21:39 19/03/2018',1000,1200)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
            System.out.println("administration done");
             int res = stmt.executeUpdate();
@@ -96,6 +116,8 @@ public final class DatabaseHandler {
         }
         return false;
     }
+        
+
     
     
      void createtable(){
@@ -219,11 +241,13 @@ private static void inflateDB() {
         try {
             String update = "UPDATE TRANS SET COMPANY=?, TYPE=?, MARGIN=?,TIME=? WHERE TRANSACTIONID=?";
             PreparedStatement stmt = conn.prepareStatement(update);
-            stmt.setString(1, transaction.getTransactionid());
-            stmt.setString(2, transaction.getCompany());
+            stmt.setInt(1, transaction.getTransactionid());
+            stmt.setString(2, transaction.getItem());
             stmt.setString(3, transaction.getType());
-            stmt.setString(4, transaction.getMargin());
+            stmt.setDouble(4, transaction.getAmount());
             stmt.setString(5,transaction.getTime());
+            stmt.setDouble(6,transaction.getOpenprice());
+            stmt.setDouble(7,transaction.getCloseprice());
             int res = stmt.executeUpdate();
             return (res > 0);
         } catch (SQLException ex) {

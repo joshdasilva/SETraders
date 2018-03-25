@@ -47,7 +47,7 @@
                                        </columns>
                                     </TableView>
                                     <JFXButton fx:id="buyEquities" layoutX="40.0" layoutY="820.0" onAction="#handleBuyEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy Equity" textFill="#e7e6e6" />
-                                    <JFXButton fx:id="sellEquities" disable="true" layoutX="260.0" layoutY="820.0" onAction="#handleSellEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell Equity" textFill="#e7e6e6" />
+                                    <JFXButton fx:id="sellEquities" layoutX="260.0" layoutY="820.0" onAction="#handleSellEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell Equity" textFill="#e7e6e6" />
                                     <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="191.0" layoutY="760.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
                                     <Label layoutX="40.0" layoutY="763.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
                                        <font>
@@ -98,11 +98,11 @@
                                     <TableView fx:id="tableView" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
                                        <columns>
                                           <TableColumn fx:id="transactionidCol" maxWidth="3100.0" prefWidth="36.0" text="ID" />
-                                          <TableColumn fx:id="companyCol" maxWidth="2500.0" prefWidth="101.0" text="Company" />
-                                          <TableColumn fx:id="priceCol" maxWidth="2500.0" prefWidth="81.0" text="Open price" />
+                                          <TableColumn fx:id="itemCol" maxWidth="2500.0" prefWidth="101.0" text="Company" />
+                                          <TableColumn fx:id="openpriceCol" maxWidth="2500.0" prefWidth="81.0" text="Open price" />
                                           <TableColumn fx:id="closepriceCol" maxWidth="2500.0" prefWidth="73.0" text="Close price" />
                                           <TableColumn fx:id="typeCol" maxWidth="2500.0" prefWidth="72.0" resizable="false" text="Type" />
-                                          <TableColumn fx:id="marginCol" maxWidth="2500.0" prefWidth="61.0" text="Amount " />
+                                          <TableColumn fx:id="amountCol" maxWidth="2500.0" prefWidth="61.0" text="Amount " />
                                           <TableColumn fx:id="timeCol" maxWidth="2000.0" prefWidth="152.0" text="Time and date" />
                                        </columns>
                                        <contextMenu>
@@ -161,7 +161,7 @@
                                              <children>
                                                 <Label layoutX="23.0" layoutY="24.0" text="\@name" textFill="#2a7fd6" />
                                                 <Label fx:id="tweet1" layoutX="23.0" layoutY="49.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="139.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
+                                                <Label fx:id="tweet2" layoutX="23.0" layoutY="139.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
                                                 <Label layoutX="23.0" layoutY="114.0" text="\@name" textFill="#2a7fd6" />
                                                 <Label layoutX="23.0" layoutY="207.0" text="\@name" textFill="#2a7fd6" />
                                                 <Label layoutX="23.0" layoutY="232.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
