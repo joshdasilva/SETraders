@@ -48,7 +48,7 @@
                                     </TableView>
                                     <JFXButton fx:id="buyEquities" layoutX="40.0" layoutY="820.0" onAction="#handleBuyEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy Equity" textFill="#e7e6e6" />
                                     <JFXButton fx:id="sellEquities" layoutX="260.0" layoutY="820.0" onAction="#handleSellEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell Equity" textFill="#e7e6e6" />
-                                    <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="185.0" layoutY="768.0" prefHeight="38.0" prefWidth="195.0" promptText="Input purchase amount" />
+                                    <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="185.0" layoutY="768.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
                                     <Label layoutX="37.0" layoutY="771.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
                                        <font>
                                           <Font size="22.0" />
@@ -251,7 +251,7 @@
                                                                         <Font name="Arial Italic" size="13.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <ImageView fitHeight="78.0" fitWidth="86.0" layoutX="123.0" layoutY="28.0">
+                                                                  <ImageView fitHeight="46.0" fitWidth="51.0" layoutX="142.0" layoutY="44.0">
                                                                      <image>
                                                                         <Image url="@../../images/Twitter.png" />
                                                                      </image>

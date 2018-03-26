@@ -56,7 +56,10 @@ public class WithdrawController implements Initializable {
             clearEntries();
             return;
         }
-
+ 
+        String regex = "[0-9]+";
+        if (withdrawtxt.getText().matches(regex)){
+         
         String accountid = "user1";
 
         DatabaseHandler handler = DatabaseHandler.getInstance();
@@ -90,6 +93,10 @@ public class WithdrawController implements Initializable {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to withdraw amount", "You dont have enough funds, Try a lower amount!");
         }
         clearEntries();
+         }
+        else 
+        {   AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to withdraw amount", "Check all the entries and try again");  
+        }
     }
 
     private void refresh() {

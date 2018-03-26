@@ -179,7 +179,7 @@ public class TradingAccountController implements Initializable {
     @FXML
     private JFXTextField amounttxt;
     // end transaction buttons
-
+    
 
     DatabaseHandler databaseHandler;
 
@@ -354,13 +354,12 @@ public class TradingAccountController implements Initializable {
             while (rs.next()) {
                 int result = rs.getInt("transactionid");
                 transID = result + 1; // transaction id
-
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         String accountid = "user1";
 
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();
@@ -377,13 +376,12 @@ public class TradingAccountController implements Initializable {
         double transAmount = 0; //initalise amount
         String transTime = dateFormat.format(date); //date
 
-
         String toCheck = amounttxt.getText();
         if (toCheck.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "No amount input", "Please input an amount in amount field");
             return;
         }
-
+        
         try {
             transAmount = Double.parseDouble(amounttxt.getText()); //validation
         } catch (NumberFormatException e) {
@@ -409,7 +407,7 @@ public class TradingAccountController implements Initializable {
                     balancex = rs1.getString("balance");
                     check = Double.parseDouble(balancex);
                 }
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -426,16 +424,11 @@ public class TradingAccountController implements Initializable {
                     amounttxt.clear();
                     refreshTransactionTable();
                     priceTable.refresh();
-
-
                 }
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Failed to withdraw amount", "Check all the entries and try again");
-
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Failed to withdraw amount", "The amount you've selected is too high. Deposit first to continue with trade");
             }
-
         }
-
     }
 
     @FXML //short button
@@ -451,7 +444,6 @@ public class TradingAccountController implements Initializable {
             while (rs.next()) {
                 int result = rs.getInt("transactionid");
                 transID = result + 1; // transaction id
-
             }
 
         } catch (SQLException ex) {
@@ -488,15 +480,15 @@ public class TradingAccountController implements Initializable {
             return;
         }
 
-
-        String qu1 = "SELECT item FROM TRANS WHERE type = 'buy CFD' AND item = '" + transItem + "'";
+//fix this
+        String qu1 = "SELECT item FROM TRANS WHERE type = 'Buy CFD' AND item = '" + transItem + "'";
         ResultSet rss = handler.execQuery(qu1);
         double openpricex = 0;
         try {
             while (rss.next()) {
                 String result = rss.getString("item");
                 openpricex = rss.getDouble("openprice");
-                System.out.println(result);
+                System.out.println(openpricex - transCloseprice);
                 if (result != transItem) {
                     AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Buy CFD first", "Buy CFD to sell it");
                     amounttxt.clear();
@@ -512,7 +504,7 @@ public class TradingAccountController implements Initializable {
         boolean result = DataHelper.insertNewTransaction(transaction);
 
         if (result) {
-
+            
             String qu2 = "SELECT item FROM TRANS WHERE amount =" + transAmount + " AND type = 'Buy CFD' AND item = '" + transItem + "'";
             ResultSet rs2 = handler.execQuery(qu1);
 
@@ -522,13 +514,12 @@ public class TradingAccountController implements Initializable {
                     String resultx = rss.getString("item");
                     double closepricex = rss.getDouble("closeprice");
                     profit = openpricex - closepricex;
-
                 }
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
             double balance = transAmount;
 
             String query = "SELECT * FROM bal";
@@ -546,8 +537,6 @@ public class TradingAccountController implements Initializable {
                 Logger.getLogger(TradingAccountController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-
-
             setraders.data.wrapper.Balance bal1 = new setraders.data.wrapper.Balance(accountid, balance);
             boolean qresult = DataHelper.updateBalanceplus(bal1);
             if (qresult) {
@@ -558,15 +547,9 @@ public class TradingAccountController implements Initializable {
                 amounttxt.clear();
                 refreshTransactionTable();
                 priceTable.refresh();
-
-
             }
-
         }
-
-
     }
-
 
     //--------------------------END CFD buy and sell/short button-------------------------
 
@@ -663,7 +646,7 @@ public class TradingAccountController implements Initializable {
 
                 }
             } else {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Failed to withdraw amount", "Check all the entries and try again");
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Failed to withdraw amount", "The amount you've selected is too high. Deposit first to continue with trade");
 
             }
 
