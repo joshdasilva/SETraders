@@ -43,7 +43,7 @@
                   <JFXButton layoutX="389.0" layoutY="252.0" onAction="#handlePaypalButtonAction" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #e45652;" text="Paypal" textFill="#e7e6e6" />
                   <JFXButton layoutX="251.0" layoutY="331.0" onAction="#handleDepositCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
                 
-                  <Label fx:id="label" layoutX="286.0" layoutY="75.0" prefHeight="26.0" prefWidth="75.0" text="0.0" textFill="#c3c3c3">
+                  <Label fx:id="label" layoutX="286.0" layoutY="75.0" prefHeight="26.0" prefWidth="231.0" text="0.0" textFill="#c3c3c3">
                      <font>
                         <Font size="17.0" />
                      </font></Label>

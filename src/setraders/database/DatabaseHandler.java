@@ -83,7 +83,7 @@ public final class DatabaseHandler {
 
     public boolean dbadmin1() {
         try {
-            String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy',1000,'21:39 19/03/2018',1000,0)";
+            String updatebalance = "INSERT INTO TRANS (transactionid,item,type,amount,time,openprice,closeprice) VALUES(1,'Apple','Buy CFD',1000,'21:39 19/03/2018',1000,0)";
             PreparedStatement stmt = conn.prepareStatement(updatebalance);
             System.out.println("administration done");
             int res = stmt.executeUpdate();

@@ -115,7 +115,7 @@ public class DepositController implements Initializable {
         String paypalMail = paypalEmail.getText();
         String paypalPass = paypalPassword.getText();
 
-
+        
         try {
             balance = Double.parseDouble(bal.getText());
         } catch (NumberFormatException e) {
@@ -128,6 +128,10 @@ public class DepositController implements Initializable {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Insufficient Data", "Please enter data in all fields.");
             return;
         }
+        
+        String regex = "[0-9]+";
+        if (bal.getText().matches(regex)){
+        
         setraders.data.wrapper.Balance bal1 = new setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
@@ -137,6 +141,9 @@ public class DepositController implements Initializable {
             // closestage();
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to deposit amount", "Check all the entries and try again");
+        }
+        }else{
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to deposit amount", "Input in amount is not a number.");
         }
     }
 
@@ -191,6 +198,10 @@ public class DepositController implements Initializable {
             return;
         }
 
+        String regex = "[0-9]+";
+        if (bal.getText().matches(regex)){
+            
+        
         setraders.data.wrapper.Balance bal1 = new setraders.data.wrapper.Balance(accountid, balance);
         boolean result = DataHelper.updateBalanceplus(bal1);
         if (result) {
@@ -199,6 +210,9 @@ public class DepositController implements Initializable {
 
         } else {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to deposit amount", "Check all the entries and try again");
+        }
+        }else{
+            AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Failed to deposit amount", "Input in amount is not a number.");
         }
     }
 
@@ -223,15 +237,12 @@ public class DepositController implements Initializable {
 
         DatabaseHandler handler = DatabaseHandler.getInstance();
 
-
         String qu = "SELECT * FROM bal";
         ResultSet rs = handler.execQuery(qu);
         try {
             while (rs.next()) {
                 String transidx = rs.getString("balance");
                 label.setText(transidx);
-               
-
 
             }
         } catch (SQLException ex) {
@@ -241,7 +252,5 @@ public class DepositController implements Initializable {
 
     private void clearEntries() {
         bal.clear();
-
     }
-
 }
