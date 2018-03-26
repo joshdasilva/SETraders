@@ -340,6 +340,11 @@ public class TradingAccountController implements Initializable {
         String accountid = "user1";
 
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();
+        if (priceTable.getSelectionModel().isEmpty()){
+             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Invalid input", "Please select an item from the trading list");
+            amounttxt.clear();
+            return;
+        }
         String transItem = companycfdCol.getCellData(selectedForBuy); // item name 
         String transType = "Buy CFD"; //type
         double transOpenprice = 0;
@@ -432,6 +437,11 @@ public class TradingAccountController implements Initializable {
         String accountid = "user1";
 
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();
+        if (priceTable.getSelectionModel().isEmpty()){
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Invalid input", "Please select an item from the trading list");
+            amounttxt.clear();
+            return;
+        }
         String transItem = companycfdCol.getCellData(selectedForBuy); // item name 
         String transType = "Sell CFD"; //type       
         double transOpenprice = 0; //open price
@@ -517,7 +527,7 @@ public class TradingAccountController implements Initializable {
             setraders.data.wrapper.Balance bal1 = new setraders.data.wrapper.Balance(accountid, balance);
             boolean qresult = DataHelper.updateBalanceplus(bal1);
             if (qresult) {
-                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Amount", "£" + balance + profit + " has been added to your account");
+                AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Amount", "£" + balance + " has been added to your account");
                 loadbalance();
 
                 AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "New transaction created", transItem + "'s transaction completed");
@@ -563,6 +573,11 @@ public class TradingAccountController implements Initializable {
         String accountid = "user1";
 
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();
+            if (priceTable.getSelectionModel().isEmpty()){
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Invalid input", "Please select an item from the trading list");
+            amounttxt.clear();
+            return;
+        }
         String transItem = companycfdCol.getCellData(selectedForBuy); // item name 
         String transType = "Buy Equity"; //type
         double transOpenprice = 0;
@@ -657,6 +672,11 @@ public class TradingAccountController implements Initializable {
         String accountid = "user1";
 
         PriceTable selectedForBuy = priceTable.getSelectionModel().getSelectedItem();
+            if (priceTable.getSelectionModel().isEmpty()){
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList < > (), "Invalid input", "Please select an item from the trading list");
+            amounttxt.clear();
+            return;
+        }
         String transItem = companycfdCol.getCellData(selectedForBuy); // item name 
         String transType = "Sell Equity"; //type       
         double transOpenprice = 0; //open price
@@ -843,22 +863,21 @@ public class TradingAccountController implements Initializable {
                         if (cryptoSelected == true) {
                             double cryptoPrice = Math.round((0 + (15000 - 4000) * random.nextDouble()) * 100) / 100.0;
                             series.getData().add(new XYChart.Data < Number, Number > (increment, cryptoPrice));
-                            increment++;
+                             increment = increment +2;
                         } else if (forexSelected == true) {
                             double forexPrice = Math.round((0 + (4 - 1) * random.nextDouble()) * 100) / 100.0;
                             series.getData().add(new XYChart.Data < Number, Number > (increment, forexPrice));
-                            increment++;
+                             increment = increment +2;
                         } else if (stocksSelected == true) {
                             double stocksPrice = Math.round((0 + (500 - 100) * random.nextDouble()) * 100) / 100.0;
                             series.getData().add(new XYChart.Data < Number, Number > (increment, stocksPrice));
-                            increment++;
+                            increment = increment +2;
                         }
 
                     }
                 });
             }
         }, 0, 5000);
-
     }
 
 

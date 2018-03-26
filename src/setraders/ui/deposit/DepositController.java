@@ -218,7 +218,7 @@ public class DepositController implements Initializable {
             while (rs.next()) {
                 String transidx = rs.getString("balance");
                 label.setText(transidx);
-                //System.out.println(transidx);
+               
 
 
             }

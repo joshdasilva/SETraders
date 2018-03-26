@@ -23,19 +23,14 @@ public class NotificationController implements Initializable {
 
     @FXML
     private AnchorPane apane;
-
     @FXML
     private StackPane spane;
-
     @FXML
     private JFXTextField notificationText;
-
     @FXML
     private JFXRadioButton lessThanId;
-
     @FXML
     private JFXRadioButton greaterThanId;
-
     @FXML
     private JFXRadioButton equalsToId;
 

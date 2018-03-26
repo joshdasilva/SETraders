@@ -117,7 +117,7 @@ public final class DatabaseHandler {
     void createtable() {
         String TABLE_NAME = "BAL";
         try {
-            System.out.println("this worked");
+            
             stmt = conn.createStatement();
 
             DatabaseMetaData dbm = conn.getMetaData();

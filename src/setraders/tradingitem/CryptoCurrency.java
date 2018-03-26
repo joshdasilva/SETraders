@@ -12,7 +12,7 @@ import setraders.ui.tables.PriceTable;
 
 /**
  *
- * @author alton
+ * @author Josh Da Silva
  */
 public class CryptoCurrency extends TradingItem {
 
@@ -39,7 +39,7 @@ public class CryptoCurrency extends TradingItem {
         }
 
 
-        System.out.println(chosenCurrency);
+       
         ObservableList < PriceTable > cryptolist = FXCollections.observableArrayList(
             new PriceTable(chosenCurrency + "/Bitcoin (BTC)", cryptoPrice[0]),
             new PriceTable(chosenCurrency + "/Ether (ETH)", cryptoPrice[1]),
