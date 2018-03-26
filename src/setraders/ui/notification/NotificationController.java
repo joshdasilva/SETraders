@@ -66,7 +66,7 @@ public class NotificationController implements Initializable {
         notificationBuilder.showInformation();*/
         }
         if (greaterThanId.isSelected()) {
-
+         
         }
         if (equalsToId.isSelected()) {
 

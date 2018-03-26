@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #100f20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="setraders.ui.faq.FaqController">
+   <children>
+      <ImageView fitHeight="23.0" fitWidth="600.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #080711;" />
+      <Label layoutX="14.0" layoutY="4.0" text="SE TRADERS" textFill="#e7e6e6">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="23.0" prefHeight="46.0" prefWidth="123.0" text="FAQs" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="84.0" prefHeight="27.0" prefWidth="165.0" text="Q: How do I deposit? " textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="106.0" prefHeight="52.0" prefWidth="569.0" text="A: To deposit, simply press the 'Deposit' button, from there you get 3 methods&#10;of payments you can chose from.&#10;" textFill="WHITE" />
+      <Label layoutX="29.0" layoutY="169.0" prefHeight="27.0" prefWidth="403.0" text="Q: How long does withdrawl to my bank account take?" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="192.0" prefHeight="62.0" prefWidth="569.0" text="A: When you place a sell order or withdraw USD/GBP to a US/Uk bank account, &#10;the money usually arrives within 4-6 business days. If and only if users choose &#10;to create a receipt for their payments, a transaction logg will be created. " textFill="WHITE" />
+      <Label layoutX="32.0" layoutY="272.0" prefHeight="27.0" prefWidth="403.0" text="Q: Can I make payments using Cryptocurrency?" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="291.0" prefHeight="52.0" prefWidth="569.0" text="A: As of this moment, we have not enabled users to make payments&#10;using Cryptocurrencies. Therefore, we are only accepting Fiat currency (USD, GBP)" textFill="WHITE" />
+      <Button layoutX="527.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleFaqCancel" prefHeight="27.0" prefWidth="53.0" style="-fx-background-color: #e45652;" text="Done" textFill="WHITE" />
+   </children>
+</Pane>

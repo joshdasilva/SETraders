@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -80,6 +82,36 @@ public class TradingAccountController implements Initializable {
     private NumberAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+    
+    //Twitter list view
+    @FXML
+    private JFXListView twitterListView;
+    @FXML
+    private Label tweet1;
+    @FXML
+    private Label tweet2;
+    @FXML
+    private Label tweet3;
+    @FXML
+    private Label tweet4;
+    @FXML
+    private Label tweet5;
+    @FXML
+    private Label tweet6;
+    
+    //Twitter handles
+    @FXML
+    private Label handle1;
+    @FXML
+    private Label handle2;
+    @FXML
+    private Label handle3;
+    @FXML
+    private Label handle4;
+    @FXML
+    private Label handle5;
+    @FXML
+    private Label handle6;
 
     //confindence indicator
     @FXML
@@ -87,16 +119,8 @@ public class TradingAccountController implements Initializable {
     @FXML
     private Label confidenceItemName;
 
-    //twitter
-    @FXML
-    private JFXListView twitterListView;
-    @FXML
-    private Label tweet1;
-    @FXML
-    private Label tweet2;
-
-
-    //Equity transaction table start
+    
+   //Equity transaction table start
     @FXML
     private TableView < Transaction > tableView;
     @FXML
@@ -269,10 +293,10 @@ public class TradingAccountController implements Initializable {
     }
 
     @FXML //set notification button
-    private void handleNotiToggleButtonAction(ActionEvent event) {
+    private void handleFaqButton(ActionEvent event) {
         try {
             BoxBlur blur = new BoxBlur(4, 4, 4);
-            Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/notification/Notification.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/setraders/ui/faq/Faq.fxml"));
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -806,7 +830,6 @@ public class TradingAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-
         databaseHandler = DatabaseHandler.getInstance();
 
         // initgraph();
@@ -816,9 +839,77 @@ public class TradingAccountController implements Initializable {
         loadPriceTable();
         loadTransactionTable();
         loadbalance();
-
-
+        loadTweets();
     }
+    //--------------------------------Twitter code -------------------------------------------------
+     
+    
+    public void loadTweets() {
+
+  String fileName = "TwitterStream.txt";
+  String line;
+  ArrayList < String > arr = new ArrayList < > ();
+
+  try {
+   BufferedReader output = new BufferedReader(new FileReader(fileName));
+   if (!output.ready())
+    throw new IOException();
+
+   while ((line = output.readLine()) != null) {
+    arr.add(line);
+   }
+   output.close();
+  } catch (IOException e) {
+   System.out.println(e);
+  }
+
+  try {
+   handle1.setText(arr.get(0));
+   tweet1.setText(arr.get(1));
+   tweet1.setWrapText(true);
+   tweet1.setWrapText(true);
+
+   //second tweet
+   handle2.setText(arr.get(2));
+   tweet2.setText(arr.get(3));
+   tweet2.setWrapText(true);
+   tweet2.setWrapText(true);
+
+   //third tweet.
+   handle3.setText(arr.get(4));
+   tweet3.setText(arr.get(5));
+   tweet3.setWrapText(true);
+   tweet3.setWrapText(true);
+
+   //fourth tweet.
+   handle4.setText(arr.get(6));
+   tweet4.setText(arr.get(7));
+   tweet4.setWrapText(true);
+   tweet4.setWrapText(true);
+
+   //fifth tweet.
+   handle5.setText(arr.get(8));
+   tweet5.setText(arr.get(9));
+   tweet5.setWrapText(true);
+   tweet5.setWrapText(true);
+
+   //sixth tweet.
+   handle6.setText(arr.get(10));
+   tweet6.setText(arr.get(11));
+   tweet6.setWrapText(true);
+   tweet6.setWrapText(true);
+
+  } catch (Exception e) {
+   e.printStackTrace();
+  }
+
+ }
+    
+    
+    
+    
+    
+    
 
     //-------------------------------------Graph Code--------------------------------------------------
     @FXML

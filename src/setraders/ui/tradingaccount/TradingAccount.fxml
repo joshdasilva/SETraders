@@ -48,7 +48,7 @@
                                     </TableView>
                                     <JFXButton fx:id="buyEquities" layoutX="40.0" layoutY="820.0" onAction="#handleBuyEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #70a800;" text="Buy Equity" textFill="#e7e6e6" />
                                     <JFXButton fx:id="sellEquities" layoutX="260.0" layoutY="820.0" onAction="#handleSellEquityButtonAction" prefHeight="38.0" prefWidth="132.0" style="-fx-background-color: #ea0070;" text="Sell Equity" textFill="#e7e6e6" />
-                                    <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="185.0" layoutY="768.0" prefHeight="38.0" prefWidth="195.0" promptText="Number of item shares" />
+                                    <JFXTextField fx:id="amounttxt" labelFloat="true" layoutX="185.0" layoutY="768.0" prefHeight="38.0" prefWidth="195.0" promptText="Input purchase amount" />
                                     <Label layoutX="37.0" layoutY="771.0" prefHeight="32.0" prefWidth="138.0" text="Item Amount:" textFill="WHITE">
                                        <font>
                                           <Font size="22.0" />
@@ -177,7 +177,7 @@
                                     <JFXListView fx:id="twitterListView" layoutY="60.0" prefHeight="670.0" prefWidth="350.0" style="-fx-background-color: #323540;" AnchorPane.rightAnchor="40.0" />
                                     <JFXButton layoutX="225.0" layoutY="820.0" onAction="#handleWithdrawButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Withdraw" textFill="#e7e6e6" />
                                     <JFXButton layoutX="11.0" layoutY="820.0" onAction="#handleDepositButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #e45652;" text="Deposit" textFill="#e7e6e6" />
-                                    <JFXButton layoutX="225.0" layoutY="-8.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #897f7f;" text="Logout" textFill="WHITE" />
+                                    <JFXButton layoutX="225.0" layoutY="-8.0" onAction="#handleLogoutButtonAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #c9302c;" text="Logout" textFill="WHITE" />
                                     <Label layoutX="11.0" layoutY="771.0" prefHeight="32.0" prefWidth="110.0" text="Balance: £" textFill="#e7e6e6" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="771.0">
                                        <font>
                                           <Font size="22.0" />
@@ -193,26 +193,74 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <ScrollPane layoutX="20.0" layoutY="108.0" prefHeight="610.0" prefWidth="330.0" style="-fx-background-color: #897f7f;">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="609.0" prefWidth="329.0">
-                                             <children>
-                                                <Label layoutX="23.0" layoutY="24.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label fx:id="tweet1" layoutX="23.0" layoutY="49.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label fx:id="tweet2" layoutX="23.0" layoutY="139.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="114.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label layoutX="23.0" layoutY="207.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label layoutX="23.0" layoutY="232.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="321.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="296.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label layoutX="23.0" layoutY="380.0" text="\@name" textFill="#2a7fd6" />
-                                                <Label layoutX="23.0" layoutY="405.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="492.0" prefHeight="46.0" prefWidth="251.0" style="-fx-background-color: #e7e6e6;" text="Tweet content" />
-                                                <Label layoutX="23.0" layoutY="467.0" text="\@name" textFill="#2a7fd6" />
-                                             </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </ScrollPane>
+                                            <ScrollPane layoutX="10.0" layoutY="60.0" prefHeight="670.0" prefWidth="350.0">
+                                                        <content>
+                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="669.0" prefWidth="349.0">
+                                                               <children>
+                                                                  <Label fx:id="tweet3" alignment="TOP_LEFT" layoutX="1.0" layoutY="325.0" prefHeight="49.0" prefWidth="331.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="tweet4" alignment="TOP_LEFT" layoutY="412.0" prefHeight="49.0" prefWidth="331.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="tweet5" alignment="TOP_LEFT" layoutX="1.0" layoutY="500.0" prefHeight="49.0" prefWidth="330.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="tweet6" alignment="TOP_LEFT" layoutX="1.0" layoutY="588.0" prefHeight="49.0" prefWidth="330.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4" wrapText="true">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="tweet2" alignment="TOP_LEFT" layoutX="1.0" layoutY="238.0" prefHeight="49.0" prefWidth="331.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="124.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="handle1" layoutX="2.0" layoutY="123.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="tweet1" alignment="TOP_LEFT" layoutX="2.0" layoutY="151.0" prefHeight="49.0" prefWidth="330.0" style="-fx-border-radius: 5; -fx-border-color: #1dcaff;" text="Label" textFill="#0084b4">
+                                                                     <font>
+                                                                        <Font size="12.0" />
+                                                                     </font></Label>
+                                                                  <Label fx:id="handle2" layoutX="2.0" layoutY="215.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="handle3" layoutX="2.0" layoutY="301.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="handle4" layoutX="2.0" layoutY="389.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="handle5" layoutX="2.0" layoutY="477.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="handle6" layoutX="2.0" layoutY="563.0" prefHeight="17.0" prefWidth="120.0" text="Label" textFill="#1d6880">
+                                                                     <font>
+                                                                        <Font name="Arial Italic" size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fitHeight="78.0" fitWidth="86.0" layoutX="123.0" layoutY="28.0">
+                                                                     <image>
+                                                                        <Image url="@../../images/Twitter.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                      </ScrollPane>
+                                                      <Button layoutX="53.0" layoutY="-8.0" mnemonicParsing="false" onAction="#handleFaqButton" prefHeight="38.0" prefWidth="74.0" text="FAQs" />                           
                                  </children>
                               </AnchorPane>
                            </children>

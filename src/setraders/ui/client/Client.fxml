@@ -52,6 +52,5 @@
             <Font size="44.0" />
          </font>
       </Label>
-      <JFXButton layoutX="148.0" layoutY="354.0" onAction="#handleFAQButtonAction" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: #e45652;" text="Find out More" textFill="#c3c3c3" />
    </children>
 </AnchorPane>
