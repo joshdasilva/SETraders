@@ -31,7 +31,7 @@
                   <JFXButton layoutX="207.0" layoutY="331.0" onAction="#handleDoneButtonAction" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #e45652;" text="Done" textFill="#e7e6e6" />
                   <JFXButton layoutX="300.0" layoutY="331.0" onAction="#handleWithdrawCancel" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #e45652;" text="Cancel" textFill="#e7e6e6" />
                   <JFXTextField fx:id="withdrawtxt" labelFloat="true" layoutX="239.0" layoutY="91.0" onAction="#handleDoneButtonAction" promptText="Withdraw Amount" />
-                  <Label fx:id="label" layoutX="334.0" layoutY="30.0" prefHeight="26.0" prefWidth="62.0" text="0" textFill="#e7e6e6">
+                  <Label fx:id="label" layoutX="334.0" layoutY="30.0" prefHeight="26.0" prefWidth="173.0" text="0" textFill="#e7e6e6">
                      <font>
                         <Font size="17.0" />
                      </font>

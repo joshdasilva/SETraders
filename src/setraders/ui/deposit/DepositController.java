@@ -104,6 +104,12 @@ public class DepositController implements Initializable {
             clearEntries();
             return;
         }
+        
+         if (balance>= 10000){
+           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,0000, Please contact administrator to change this.");
+            bal.clear();
+            return;   
+        }
 
         String accountid = "user1";
         String paypalMail = paypalEmail.getText();
@@ -143,6 +149,12 @@ public class DepositController implements Initializable {
             AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Invalid input", "Please input a number value in deposit field");
             clearEntries();
             return;
+        }
+        
+        if (balance>= 10000){
+           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,0000, Please contact administrator to change this.");
+            bal.clear();
+            return;   
         }
 
 
