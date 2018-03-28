@@ -106,7 +106,7 @@ public class DepositController implements Initializable {
         }
         
          if (balance>= 10000){
-           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,0000, Please contact administrator to change this.");
+           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,000, Please contact administrator to change this.");
             bal.clear();
             return;   
         }
@@ -159,7 +159,7 @@ public class DepositController implements Initializable {
         }
         
         if (balance>= 10000){
-           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,0000, Please contact administrator to change this.");
+           AlertMaker.showMaterialDialog(spane, apane, new ArrayList < > (), "Value too high", "Your limit is £10,000, Please contact administrator to change this.");
             bal.clear();
             return;   
         }
